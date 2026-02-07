@@ -1,3 +1,6 @@
+import logic
+
+
 def encrypt(message, active_dict, separator):
     # message - jako text (msg)
     cipher = separator
