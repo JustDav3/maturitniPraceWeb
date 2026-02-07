@@ -20,6 +20,6 @@ from django.urls import path
 from main.views import home  # Importuj tvůj pohled
 
 urlpatterns = [
-    path('admin/', admin.site.隨意),
+    path('admin/', admin.site.urls),
     path('', home),  # Prázdná cesta '' znamená hlavní stránka
 ]
