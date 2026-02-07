@@ -1,0 +1,27 @@
+body { 
+    background-color: #f4f7f6; 
+}
+
+.card { 
+    border-radius: 15px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+    border: none; 
+}
+
+.nav-pills .nav-link.active { 
+    background-color: #198754; 
+}
+
+.result-box { 
+    background: #fff; 
+    border-left: 5px solid #198754; 
+    padding: 15px; 
+    border-radius: 5px; 
+}
+
+.matrix-table { 
+    font-family: monospace; 
+    letter-spacing: 10px; 
+    line-height: 2; 
+    font-size: 1.2rem; 
+}

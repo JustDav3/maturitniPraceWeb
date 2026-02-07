@@ -21,5 +21,5 @@ from main.views import home  # Importuj tvůj pohled
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),  # Prázdná cesta '' znamená hlavní stránka
+    path('', home), # Tato jedna cesta obslouží celou stránku
 ]
