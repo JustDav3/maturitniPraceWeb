@@ -17,7 +17,9 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+from main.views import home  # Importuj tvůj pohled
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path('admin/', admin.site.隨意),
+    path('', home),  # Prázdná cesta '' znamená hlavní stránka
 ]
