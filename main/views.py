@@ -16,11 +16,11 @@ def home(request):
             mode = request.POST.get("mode", "1")
             if akce == "sifrovat":
                 d = m_consts.morse_dict if mode == "1" else m_consts.morse_reverse
-                context['vysledek_morse'] = m_logic.encrypt(vstup.upper(), d, " ")
+                context['vysledek_morse'] = m_logic.encrypt(vstup.upper(), d, m_consts.separator)
             else:
                 up_d = m_consts.morse_uppercase if mode == "1" else m_consts.morse_reverse_uppercase
                 low_d = m_consts.morse_lowercase if mode == "1" else m_consts.morse_reverse_lowercase
-                context['vysledek_morse'] = m_logic.decrypt_logic(vstup, up_d, low_d, " ")
+                context['vysledek_morse'] = m_logic.decrypt_logic(vstup, up_d, low_d, m_consts.separator)
             context['text_morse'] = vstup
 
         # 2. ČÍSELNÝ KÓD
