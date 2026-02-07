@@ -25,3 +25,21 @@ body {
     line-height: 2; 
     font-size: 1.2rem; 
 }
+
+/* Styl pro mřížku matice */
+.matrix-table-styled {
+    border-collapse: collapse;
+    background-color: white;
+    margin: 0 auto;
+}
+
+.matrix-cell {
+    border: 1px solid #dee2e6 !important;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.matrix-cell:hover {
+    background-color: #f8f9fa; 
+}
