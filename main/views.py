@@ -11,16 +11,37 @@ def home(request):
         vstup = request.POST.get("vstup", "")
 
         # 1. MORSEOVKA
+        # Upravená část ve views.py pro Morseovku
         if projekt == "morse":
             akce = request.POST.get("akce")
             mode = request.POST.get("mode", "1")
+            
+            # Načtení tvých vlastních znaků z webu
+            c_dot = request.POST.get("custom_dot", ".")
+            c_dash = request.POST.get("custom_dash", "-")
+            c_sep = request.POST.get("custom_sep", "|")
+
+            # Výběr základního slovníku
+            d = m_consts.morse_dict if mode == "1" else m_consts.morse_reverse
+            up_d = m_consts.morse_uppercase if mode == "1" else m_consts.morse_reverse_uppercase
+            low_d = m_consts.morse_lowercase if mode == "1" else m_consts.morse_reverse_lowercase
+
+            # Pokud uživatel zadal jiné znaky než . a -, vytvoříme upravený slovník
+            if c_dot != "." or c_dash != "-":
+                def transform_web(slovnik):
+                    return {k: v.replace('-', c_dash).replace('.', c_dot) for k, v in slovnik.items()}
+                
+                d = transform_web(d)
+                up_d = transform_web(up_d)
+                low_d = transform_web(low_d)
+
             if akce == "sifrovat":
-                d = m_consts.morse_dict if mode == "1" else m_consts.morse_reverse
-                context['vysledek_morse'] = m_logic.encrypt(vstup.upper(), d, m_consts.separator)
+                # Použijeme tvou funkci encrypt a vložíme do ní zvolený oddělovač c_sep
+                context['vysledek_morse'] = m_logic.encrypt(vstup.upper(), d, c_sep)
             else:
-                up_d = m_consts.morse_uppercase if mode == "1" else m_consts.morse_reverse_uppercase
-                low_d = m_consts.morse_lowercase if mode == "1" else m_consts.morse_reverse_lowercase
-                context['vysledek_morse'] = m_logic.decrypt_logic(vstup, up_d, low_d, m_consts.separator)
+                # To samé pro dešifrování
+                context['vysledek_morse'] = m_logic.decrypt_logic(vstup, up_d, low_d, c_sep)
+            
             context['text_morse'] = vstup
 
         # 2. ČÍSELNÝ KÓD
