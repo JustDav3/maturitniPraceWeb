@@ -37,9 +37,5 @@ body {
     border: 1px solid #dee2e6 !important;
     font-weight: bold;
     font-size: 1.1rem;
-    color: #333;
-}
-
-.matrix-cell:hover {
-    background-color: #f8f9fa; 
+    color: #198754;
 }
