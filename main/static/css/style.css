@@ -72,7 +72,7 @@ h2 {
 }
 
 /* Styly pro formuláře v panelech */
-.form-select, .form-control {
+.form-select{
     width: 100%;
     background: rgba(255, 255, 255, 0.9);
     border: none;
@@ -80,6 +80,20 @@ h2 {
     margin-top: 5px;
     border-radius: 2px;
     box-sizing: border-box;
+}
+
+
+.form-control {
+    width: 100%;            
+    max-width: 100%;        
+    box-sizing: border-box; 
+    resize: vertical;       /* Uživatel může měnit výšku, ale ne šířku */
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 2px;
+    color: #333;
 }
 
 .btn-submit {
