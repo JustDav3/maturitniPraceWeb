@@ -1,142 +1,150 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="cs">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webová Aplikace pro TK Rozrazil</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+
 <body>
 
-<div id="django-data" 
-     data-show-sifry="{% if vysledek_morse or vysledek_number or vysledek_matrix %}true{% else %}false{% endif %}" 
-     style="display: none;">
-</div>
+    <div id="django-data"
+        data-show-sifry="{% if vysledek_morse or vysledek_number or vysledek_matrix %}true{% else %}false{% endif %}"
+        style="display: none;">
+    </div>
 
-<div class="container">
-    <nav class="panel">
-        <div class="panel-content">
-            <h2>Menu</h2>
-            <ul class="menu-list">
-                <li id="btn-o-mne">O mě</li>
-                <li id="btn-sifry">Šifry</li>
-                <li>Uzly</li>
-                <li>Test</li>
-                <li>Výsledky testu</li>
-            </ul>
-        </div>
-    </nav>
-
-    <main class="panel">
-        <div class="panel-content">
-            <div id="section-uvod">
-                <h2>Vítejte</h2>
-                <p>Vítej v aplikaci TK Rozrazil. Vyber sekci z menu pro pokračování.</p>
+    <div class="container">
+        <nav class="panel">
+            <div class="panel-content">
+                <h2>Menu</h2>
+                <ul class="menu-list">
+                    <li id="btn-o-mne">O mě</li>
+                    <li id="btn-sifry">Šifry</li>
+                    <li>Uzly</li>
+                    <li>Test</li>
+                    <li>Výsledky testu</li>
+                </ul>
             </div>
+        </nav>
 
-            <div id="section-sifry" style="display: none;">
-                <h2>Šifrovací nástroje</h2>
-                <form method="POST">
-                    {% csrf_token %}
-                    
-                    <div class="form-group">
-                        <label>Vyber šifru:</label>
-                        <select name="projekt" id="cipher-type" class="form-select">
-                            <option value="morse" {% if projekt == 'morse' %}selected{% endif %}>Morseovka</option>
-                            <option value="number_code" {% if projekt == 'number_code' %}selected{% endif %}>Číselný kód</option>
-                            <option value="matrix" {% if projekt == 'matrix' %}selected{% endif %}>Matice (Spirála, Šnek, Had)</option>
-                        </select>
-                    </div>
-
-                    <div id="options-morse" class="cipher-options mt-3">
-                        <div class="row">
-                            <div class="col">
-                                <label>Režim:</label>
-                                <select name="mode" class="form-select">
-                                    <option value="1">Klasická (.-)</option>
-                                    <option value="2">Obrácená (-.)</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="options-matrix" class="cipher-options mt-3" style="display:none;">
-                        <div class="row">
-                            <div class="col">
-                                <label>Typ obrazce:</label>
-                                <select name="typ_matice" class="form-select">
-                                    <option value="spirala">Spirála</option>
-                                    <option value="snek">Šnek</option>
-                                    <option value="had">Had</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <label>Startovní bod:</label>
-                                <select name="start_bod" class="form-select">
-                                    <option value="1">Levý dolní</option>
-                                    <option value="2">Levý horní</option>
-                                    <option value="3">Pravý horní</option>
-                                    <option value="4">Pravý dolní</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-3">
-                        <label>Vstupní text:</label>
-                        <textarea name="vstup" class="form-control" rows="3">{{ vstup|default:"" }}</textarea>
-                    </div>
-
-                    <div class="mt-3">
-                        <label>Operace:</label>
-                        <select name="akce" class="form-select">
-                            <option value="sifrovat">Zašifrovat</option>
-                            <option value="desifrovat">Dešifrovat</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn-submit">Provést operaci</button>
-                </form>
-
-                {% if vysledek_morse or vysledek_number %}
-                <div class="result-area mt-4">
-                    <h3 style="color: #d4f0c7;">Výsledek:</h3>
-                    <p class="result-text">{{ vysledek_morse }}{{ vysledek_number }}</p>
-                    <hr style="opacity: 0.2;">
-                    <small>Verze pro přepis:</small>
-                    <p class="result-text-copy">| {{ vysledek_morse }}{{ vysledek_number }} |</p>
+        <main class="panel">
+            <div class="panel-content">
+                <div id="section-uvod">
+                    <h2>Vítejte</h2>
+                    <p>Vítej v aplikaci TK Rozrazil. Vyber sekci z menu pro pokračování.</p>
                 </div>
-                {% endif %}
 
-                {% if vysledek_matrix %}
-                <div class="result-area mt-4">
-                    <h3 style="color: #d4f0c7;">Maticový výsledek ({{ rozmer_matrix }}x{{ rozmer_matrix }}):</h3>
-                    <div class="matrix-display">
-                        {% for radek in vysledek_matrix %}
+                <div id="section-sifry" style="display: none;">
+                    <h2>Šifrovací nástroje</h2>
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label>Vyber šifru:</label>
+                            <select name="projekt" id="cipher-type" class="form-select">
+                                <option value="morse" {% if projekt=='morse' %}selected{% endif %}>Morseovka</option>
+                                <option value="number_code" {% if projekt=='number_code' %}selected{% endif %}>Číselný
+                                    kód</option>
+                                <option value="matrix" {% if projekt=='matrix' %}selected{% endif %}>Matice (Spirála,
+                                    Šnek, Had)</option>
+                            </select>
+                        </div>
+
+                        <div id="options-morse" class="cipher-options mt-3">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Režim:</label>
+                                    <select name="mode" class="form-select">
+                                        <option value="1">Klasická (.-)</option>
+                                        <option value="2">Obrácená (-.)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="options-matrix" class="cipher-options mt-3" style="display:none;">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Typ obrazce:</label>
+                                    <select name="typ_matice" class="form-select">
+                                        <option value="spirala">Spirála</option>
+                                        <option value="snek">Šnek</option>
+                                        <option value="had">Had</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label>Startovní bod:</label>
+                                    <select name="start_bod" class="form-select">
+                                        <option value="1">Levý dolní</option>
+                                        <option value="2">Levý horní</option>
+                                        <option value="3">Pravý horní</option>
+                                        <option value="4">Pravý dolní</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <label>Vstupní text:</label>
+                            <textarea name="vstup" class="form-control" rows="3">{{ vstup|default:"" }}</textarea>
+                        </div>
+
+                        <div class="mt-3">
+                            <label>Operace:</label>
+                            <select name="akce" class="form-select">
+                                <option value="sifrovat">Zašifrovat</option>
+                                <option value="desifrovat">Dešifrovat</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-submit">Provést operaci</button>
+                    </form>
+
+                    {% if vysledek_morse or vysledek_number %}
+                    <div class="result-area mt-4">
+                        <h3 style="color: #d4f0c7;">Výsledek:</h3>
+                        <p class="result-text">{{ vysledek_morse }}{{ vysledek_number }}</p>
+
+                        <hr style="border-color: rgba(255,255,255,0.1)">
+                        <small style="color: #d4f0c7;">Verze pro přepis:</small>
+                        <p style="font-family: monospace; background: rgba(255,255,255,0.05); padding: 5px;">
+                            {{ vysledek_prepis }}
+                        </p>
+                    </div>
+                    {% endif %}
+
+                    {% if vysledek_matrix %}
+                    <div class="result-area mt-4">
+                        <h3 style="color: #d4f0c7;">Maticový výsledek ({{ rozmer_matrix }}x{{ rozmer_matrix }}):</h3>
+                        <div class="matrix-display">
+                            {% for radek in vysledek_matrix %}
                             <div class="matrix-row">
                                 {% for char in radek %}<span class="matrix-cell">[{{ char }}]</span>{% endfor %}
                             </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
-        </div>
-    </main>
+        </main>
 
-    <aside class="panel">
-        <div class="panel-content">
-            <h2>Přihlášení</h2>
-            <div class="login-form">
-                <input type="text" placeholder="Jméno">
-                <input type="password" placeholder="Heslo">
-                <button class="btn-login">Vstoupit</button>
+        <aside class="panel">
+            <div class="panel-content">
+                <h2>Přihlášení</h2>
+                <div class="login-form">
+                    <input type="text" placeholder="Jméno">
+                    <input type="password" placeholder="Heslo">
+                    <button class="btn-login">Vstoupit</button>
+                </div>
             </div>
-        </div>
-    </aside>
-</div>
+        </aside>
+    </div>
 
-<script src="{% static 'js/scripts.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
 </body>
+
 </html>
