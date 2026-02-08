@@ -46,12 +46,14 @@ def home(request):
         # 2. ČÍSELNÝ KÓD
         elif projekt == "number_code":
             typ = int(request.POST.get("typ_abecedy", 1))
-            posun = int(request.POST.get("posun") or 0)
+            posun = int(request.POST.get("posun") or 0) # Načtení posunu
             
+            # Výběr správné abecedy z constants.py
             enc_dict = n_consts.alphabet_dict if typ == 1 else n_consts.czech_alphabet
             up_dict = n_consts.alphabet_uppercase if typ == 1 else {k:v for k,v in n_consts.czech_alphabet.items() if k.isupper()}
             low_dict = n_consts.alphabet_lowercase if typ == 1 else {k:v for k,v in n_consts.czech_alphabet.items() if k.islower()}
 
+            # Aplikace posunu, pokud není nula
             if posun != 0:
                 enc_dict = n_logic.shift_alphabet(enc_dict, posun)
                 up_dict = n_logic.shift_alphabet(up_dict, posun)
@@ -61,9 +63,6 @@ def home(request):
                 vysledek = n_logic.encrypt(vstup.upper(), enc_dict)
             else:
                 vysledek = n_logic.decrypt(vstup, up_dict, low_dict)
-            
-            context['vysledek_number'] = vysledek
-            context['vysledek_prepis'] = f"| {vysledek} |"
 
         # 3. MATICE
         elif projekt == "matrix":

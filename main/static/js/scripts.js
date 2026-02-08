@@ -17,6 +17,41 @@ document.addEventListener('DOMContentLoaded', function() {
     if (btnSifry) btnSifry.addEventListener('click', () => switchSection(secSifry));
     if (btnOMne) btnOMne.addEventListener('click', () => switchSection(secUvod));
 
+    // Rozšíření logiky přepínání pro Číselný kód
+if (cipherType) {
+    cipherType.addEventListener('change', function() {
+        const val = this.value;
+        document.getElementById('options-morse').style.display = (val === 'morse') ? 'block' : 'none';
+        document.getElementById('options-matrix').style.display = (val === 'matrix') ? 'block' : 'none';
+        document.getElementById('options-number').style.display = (val === 'number_code') ? 'block' : 'none';
+    });
+}
+
+// Speciální chování pro Hada - změna na Shora/Zdola
+const matrixType = document.getElementById('matrix-type');
+const startLabel = document.getElementById('start-label');
+const startSelect = document.getElementById('start-point-select');
+
+if (matrixType) {
+    matrixType.addEventListener('change', function() {
+        if (this.value === 'had') {
+            startLabel.innerText = 'Výběr:';
+            startSelect.innerHTML = `
+                <option value="shora">Hora (shora)</option>
+                <option value="zdola">Zdola</option>
+            `;
+        } else {
+            startLabel.innerText = 'Startovní bod:';
+            startSelect.innerHTML = `
+                <option value="1">Levý dolní</option>
+                <option value="2">Levý horní</option>
+                <option value="3">Pravý horní</option>
+                <option value="4">Pravý dolní</option>
+            `;
+        }
+    });
+}
+
     // Dynamické zobrazení polí (Morse vs Matice)
     if (cipherType) {
         cipherType.addEventListener('change', function() {
