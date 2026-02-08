@@ -5,19 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webová Aplikace pro TK Rozrazil</title>
-    
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
 <div class="container">
-    
     <nav class="panel">
         <div class="panel-content">
             <h2>Menu</h2>
             <ul class="menu-list">
                 <li>O mě</li>
-                <li>Šifry</li>
+                <li onclick="location.reload()">Šifry</li>
                 <li>Uzly</li>
                 <li>Test</li>
                 <li>Výsledky testu</li>
@@ -27,7 +25,54 @@
 
     <main class="panel">
         <div class="panel-content">
-            <p class="placeholder-text">Vyberte sekci z menu...</p>
+            <h2>Šifrovací nástroje</h2>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <div class="cipher-selection">
+                    <label>Vyber šifru:</label>
+                    <select name="projekt" id="cipher-type" class="form-select">
+                        <option value="morse">Morseovka</option>
+                        <option value="number_code">Číselný kód</option>
+                        <option value="matrix">Matice (Spirála, Šnek, Had)</option>
+                    </select>
+                </div>
+
+                <div class="mt-3">
+                    <label>Vstupní text:</label>
+                    <textarea name="vstup" class="form-control" rows="3">{{ vstup|default:"" }}</textarea>
+                </div>
+
+                <div id="dynamic-options" class="mt-3">
+                    <label>Operace:</label>
+                    <select name="akce" class="form-select">
+                        <option value="sifrovat">Zašifrovat</option>
+                        <option value="desifrovat">Dešifrovat</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-submit">Provést operaci</button>
+            </form>
+
+            {% if vysledek_morse or vysledek_number %}
+            <div class="result-area mt-4">
+                <h3 style="color: #d4f0c7;">Výsledek:</h3>
+                <p class="result-text">{{ vysledek_morse }}{{ vysledek_number }}</p>
+            </div>
+            {% endif %}
+
+            {% if vysledek_matrix %}
+            <div class="result-area mt-4">
+                <h3 style="color: #d4f0c7;">Maticový výsledek:</h3>
+                <div class="matrix-display">
+                    {% for radek in vysledek_matrix %}
+                        <div class="matrix-row">
+                            {% for char in radek %}<span class="matrix-cell">[{{ char }}]</span>{% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
         </div>
     </main>
 
@@ -37,17 +82,12 @@
             <div class="login-form">
                 <label for="username">Uživatel</label>
                 <input type="text" id="username" placeholder="Jméno">
-                
                 <label for="password">Heslo</label>
                 <input type="password" id="password" placeholder="Heslo">
-                
-                <button class="btn-login" onclick="alert('Zatím neaktivní')">
-                    Vstoupit
-                </button>
+                <button class="btn-login">Vstoupit</button>
             </div>
         </div>
     </aside>
-
 </div>
 
 <script src="{% static 'js/scripts.js' %}"></script>
