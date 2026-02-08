@@ -5,26 +5,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const secSifry = document.getElementById('section-sifry');
     const cipherType = document.getElementById('cipher-type');
 
-    // Funkce pro přepnutí na šifry
-    function showSifry() {
-        if (secUvod && secSifry) {
-            secUvod.style.display = 'none';
-            secSifry.style.display = 'block';
-        }
+    // Funkce pro skrytí všeho a ukázání jedné sekce
+    function switchSection(toShow) {
+        secUvod.style.display = 'none';
+        secSifry.style.display = 'none';
+        // Zde můžeš přidat další sekce (uzly, testy), až je vytvoříš
+        
+        toShow.style.display = 'block';
     }
 
-    // Obsluha menu
-    if (btnSifry) {
-        btnSifry.addEventListener('click', showSifry);
-    }
-    if (btnOMne) {
-        btnOMne.addEventListener('click', () => {
-            secSifry.style.display = 'none';
-            secUvod.style.display = 'block';
-        });
-    }
+    if (btnSifry) btnSifry.addEventListener('click', () => switchSection(secSifry));
+    if (btnOMne) btnOMne.addEventListener('click', () => switchSection(secUvod));
 
-    // Dynamické zobrazení polí podle typu šifry
+    // Dynamické zobrazení polí (Morse vs Matice)
     if (cipherType) {
         cipherType.addEventListener('change', function() {
             const val = this.value;
@@ -36,16 +29,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Automatické otevření sekce po operaci (pokud Django poslalo data)
+    // Automatické otevření po odeslání (Django data)
     const djangoData = document.getElementById('django-data');
     if (djangoData) {
         const shouldShow = djangoData.getAttribute('data-show-sifry') === 'true';
         if (shouldShow) {
-            showSifry();
-            // Aktualizace viditelnosti pod-voleb
-            if (cipherType) {
-                cipherType.dispatchEvent(new Event('change'));
-            }
+            switchSection(secSifry);
+            if (cipherType) cipherType.dispatchEvent(new Event('change'));
         }
     }
 });
