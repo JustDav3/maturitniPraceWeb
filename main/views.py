@@ -1,3 +1,8 @@
+from django.shortcuts import render
+from .morse import logic as m_logic, constants as m_consts
+from .number_code import logic as n_logic, constants as n_consts
+from .matrix import logic as mat_logic
+
 def home(request):
     context = {}
     
