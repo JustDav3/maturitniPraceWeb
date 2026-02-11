@@ -38,9 +38,10 @@ body {
     color: #333;
     margin-top: 5px;
 }
-/* ZMĚNA: Odstranění teček u menu a přidání interaktivity */
+
+/* Odstranění teček u menu a přidání interaktivity */
 .menu-list {
-    list-style: none; /* Odstraňuje tečky */
+    list-style: none;
     padding: 0;
 }
 
@@ -48,30 +49,29 @@ body {
     padding: 12px 15px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     cursor: pointer;
-    transition: background 0.3s ease; /* Plynulý efekt */
+    transition: background 0.3s ease;
     border-radius: 4px;
 }
 
 .menu-list li:hover {
-    background: rgba(255, 255, 255, 0.15); /* Zesvětlení při najetí kurzorem */
+    background: rgba(255, 255, 255, 0.15);
 }
 
-/* ZMĚNA: Třída pro zmenšení ovládacích prvků na 1/4 nebo auto šířku */
+/* Třída pro zmenšení ovládacích prvků na 1/4 nebo auto šířku */
 .small-select {
     width: auto !important;
     min-width: 160px;
-    display: block;
-    margin: 5px auto 0;
+    display: inline-block;
 }
 
-/* ZMĚNA: Stylování a centrování tlačítka */
+/* Stylování a centrování tlačítka */
 .btn-container {
     text-align: center;
     margin-top: 25px;
 }
 
 .btn-submit {
-    background-color: #1a2a16; /* Tmavší barva */
+    background-color: #1a2a16;
     color: white;
     border: 1px solid #4a6d3f;
     padding: 12px 40px;
