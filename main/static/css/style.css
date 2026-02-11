@@ -52,25 +52,22 @@ body {
     margin: 5px;
 }
 
-/* --- 4. TLAČÍTKA A CENTROVÁNÍ --- */
+/* 4. TLAČÍTKA A CENTROVÁNÍ */
 .btn-container {
     margin-top: 25px;
-    text-align: center; /* Toto vycentruje tlačítko uvnitř */
+    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 .btn-submit {
-    /* Layout & Box Model */
-    display: flex;
-    justify-content: center;
     padding: 12px 40px;
     margin-bottom: 5px;
     
-    /* Typografie */
     color: white;
     font-weight: bold;
     text-decoration: none;
     
-    /* Vizuál */
     background-color: #1a2a16;
     border: 1px solid #4a6d3f;
     cursor: pointer;
