@@ -58,7 +58,7 @@ body {
 
 /* ZMĚNA: Třída pro zmenšení ovládacích prvků na 1/4 nebo auto šířku */
 .small-select {
-    width: auto !important;
+    width: 25% !important;
     min-width: 160px;
     display: inline-block; /* Zmenšení pole */
 }
