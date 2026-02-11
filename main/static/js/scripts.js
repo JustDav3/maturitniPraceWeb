@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (optMorse) optMorse.style.display = 'block';
         } 
         else if (val === 'number_code') {
-            document.getElementById('options-number').style.display = 'block';
+            const optNumber = document.getElementById('options-number');
+            if (optNumber) optNumber.style.display = 'block';
         }
         else if (val === 'spirala' || val === 'snek') {
             const optMatrix = document.getElementById('options-matrix-standard');

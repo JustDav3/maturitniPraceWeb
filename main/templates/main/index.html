@@ -46,12 +46,12 @@
                         <div class="form-group">
                             <label>Vyber šifru:</label>
                             <select name="projekt" id="cipher-type" class="form-select small-select">
-                                <option value="morse" {% if projekt=='morse' %}selected{% endif %}>Morseovka</option>
-                                <option value="number_code" {% if projekt=='number_code' %}selected{% endif %}>Číselný
+                                <option value="morse" {% if projekt == 'morse' %}selected{% endif %}>Morseovka</option>
+                                <option value="number_code" {% if projekt == 'number_code' %}selected{% endif %}>Číselný
                                     kód</option>
-                                <option value="spirala" {% if projekt=='spirala' %}selected{% endif %}>Spirála</option>
-                                <option value="snek" {% if projekt=='snek' %}selected{% endif %}>Šnek</option>
-                                <option value="had" {% if projekt=='had' %}selected{% endif %}>Had</option>
+                                <option value="spirala" {% if projekt == 'spirala' %}selected{% endif %}>Spirála</option>
+                                <option value="snek" {% if projekt == 'snek' %}selected{% endif %}>Šnek</option>
+                                <option value="had" {% if projekt == 'had' %}selected{% endif %}>Had</option>
                             </select>
                         </div>
 
