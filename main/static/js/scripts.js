@@ -1,40 +1,40 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const btnSifry = document.getElementById('btn-sifry');
-    const btnOMne = document.getElementById('btn-o-mne');
-    const secUvod = document.getElementById('section-uvod');
-    const secSifry = document.getElementById('section-sifry');
-    const cipherType = document.getElementById('cipher-type');
+/**
+ * scripts.js - Webová Aplikace pro TK Rozrazil
+ * Struktura: Konstanty -> Pomocné funkce -> Handlery -> Event Listenery
+ */
 
-    // Funkce pro skrytí všeho a ukázání jedné sekce
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. KONSTANTY (Výběr všech potřebných elementů)
+    const btnSifry    = document.getElementById('btn-sifry');
+    const btnOMne     = document.getElementById('btn-o-mne');
+    const secUvod     = document.getElementById('section-uvod');
+    const secSifry    = document.getElementById('section-sifry');
+    
+    const cipherType  = document.getElementById('cipher-type');
+    const matrixType  = document.getElementById('matrix-type');
+    const startLabel  = document.getElementById('start-label');
+    const startSelect = document.getElementById('start-point-select');
+    const djangoData  = document.getElementById('django-data');
+
+    // 2. POMOCNÉ FUNKCE (Znovupoužitelná logika)
+    
+    // Funkce pro přepínání hlavních sekcí webu
     function switchSection(toShow) {
+        if (!secUvod || !secSifry) return;
+        
         secUvod.style.display = 'none';
         secSifry.style.display = 'none';
-        // Zde můžeš přidat další sekce (uzly, testy), až je vytvoříš
+        // Zde v budoucnu přidáš další sekce: secUzly.style.display = 'none';
         
-        toShow.style.display = 'block';
+        if (toShow) toShow.style.display = 'block';
     }
 
-    if (btnSifry) btnSifry.addEventListener('click', () => switchSection(secSifry));
-    if (btnOMne) btnOMne.addEventListener('click', () => switchSection(secUvod));
+    // Aktualizace HTML pro výběr startovního bodu u maticových šifer
+    function updateMatrixOptions(type) {
+        if (!startLabel || !startSelect) return;
 
-    // Rozšíření logiky přepínání pro Číselný kód
-if (cipherType) {
-    cipherType.addEventListener('change', function() {
-        const val = this.value;
-        document.getElementById('options-morse').style.display = (val === 'morse') ? 'block' : 'none';
-        document.getElementById('options-matrix').style.display = (val === 'matrix') ? 'block' : 'none';
-        document.getElementById('options-number').style.display = (val === 'number_code') ? 'block' : 'none';
-    });
-}
-
-// Speciální chování pro Hada - změna na Shora/Zdola
-const matrixType = document.getElementById('matrix-type');
-const startLabel = document.getElementById('start-label');
-const startSelect = document.getElementById('start-point-select');
-
-if (matrixType) {
-    matrixType.addEventListener('change', function() {
-        if (this.value === 'had') {
+        if (type === 'had') {
             startLabel.innerText = 'Výběr:';
             startSelect.innerHTML = `
                 <option value="shora">Hora (shora)</option>
@@ -49,28 +49,49 @@ if (matrixType) {
                 <option value="4">Pravý dolní</option>
             `;
         }
-    });
-}
+    }
 
-    // Dynamické zobrazení polí (Morse vs Matice)
+    // 3. HANDLERY (Obsluha konkrétních změn v UI)
+
+    // Sjednocená funkce pro zobrazení pod-možností šifer
+    function handleCipherChange(val) {
+        const optMorse  = document.getElementById('options-morse');
+        const optMatrix = document.getElementById('options-matrix');
+        const optNumber = document.getElementById('options-number');
+
+        if (optMorse)  optMorse.style.display  = (val === 'morse') ? 'block' : 'none';
+        if (optMatrix) optMatrix.style.display = (val === 'matrix') ? 'block' : 'none';
+        if (optNumber) optNumber.style.display = (val === 'number_code') ? 'block' : 'none';
+    }
+
+    // 4. EVENT LISTENERY (Reakce na akce uživatele)
+
+    // Kliknutí v hlavním menu
+    if (btnSifry) btnSifry.addEventListener('click', () => switchSection(secSifry));
+    if (btnOMne)  btnOMne.addEventListener('click', () => switchSection(secUvod));
+
+    // Změna typu šifry v selectu
     if (cipherType) {
         cipherType.addEventListener('change', function() {
-            const val = this.value;
-            const optMorse = document.getElementById('options-morse');
-            const optMatrix = document.getElementById('options-matrix');
-            
-            if (optMorse) optMorse.style.display = (val === 'morse') ? 'block' : 'none';
-            if (optMatrix) optMatrix.style.display = (val === 'matrix') ? 'block' : 'none';
+            handleCipherChange(this.value);
         });
     }
 
-    // Automatické otevření po odeslání (Django data)
-    const djangoData = document.getElementById('django-data');
+    // Změna typu matice (např. přepnutí na Hada)
+    if (matrixType) {
+        matrixType.addEventListener('change', function() {
+            updateMatrixOptions(this.value);
+        });
+    }
+
+    // 5. INICIALIZACE (Nastavení stavu po načtení stránky)
+    
     if (djangoData) {
         const shouldShow = djangoData.getAttribute('data-show-sifry') === 'true';
         if (shouldShow) {
             switchSection(secSifry);
-            if (cipherType) cipherType.dispatchEvent(new Event('change'));
+            // Synchronizace UI s aktuální vybranou šifrou
+            if (cipherType) handleCipherChange(cipherType.value);
         }
     }
 });

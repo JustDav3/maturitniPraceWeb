@@ -48,7 +48,7 @@ body {
 
 .small-select {
     display: block;
-    width: 50% !important;
+    width: 20% !important;
     margin: 5px;
 }
 
@@ -62,7 +62,7 @@ body {
 
 .btn-submit {
     padding: 12px 40px;
-    margin-bottom: 5px;
+    margin: 5px auto;
     
     color: white;
     font-weight: bold;
