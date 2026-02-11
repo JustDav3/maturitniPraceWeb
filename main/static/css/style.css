@@ -1,108 +1,129 @@
+/* --- 1. GLOBÁLNÍ NASTAVENÍ (Základní kameny) --- */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #080d07;
-    color: white;
-    margin: 0;
-    padding: 40px 20px;
     display: flex;
     justify-content: center;
+    margin: 0;
+    padding: 40px 20px;
+    background-color: #080d07;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* --- 2. LAYOUT STRÁNKY (Mřížka a panely) --- */
 .container {
     display: grid;
     grid-template-columns: 250px 1fr 240px;
     gap: 20px;
-    max-width: 1200px;
     width: 100%;
+    max-width: 1200px;
 }
 
 .panel {
     position: relative;
-    border-radius: 4px;
-    overflow: hidden;
+    min-height: 450px;
     padding: 25px 20px;
     background: linear-gradient(180deg, #5b8a4d 0%, #2d4526 100%);
     box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
-    min-height: 450px;
-}
-
-.form-control, .form-select {
-    width: 100%; 
-    max-width: 100%;
-    box-sizing: border-box; 
-    resize: vertical; 
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    padding: 10px;
-    border-radius: 2px;
-    color: #333;
-}
-
-/* Odstranění teček u menu a přidání interaktivity */
-.menu-list {
-    list-style: none;
-    padding: 0;
-}
-
-.menu-list li {
-    padding: 12px 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    cursor: pointer;
-    transition: background 0.3s ease;
     border-radius: 4px;
+    overflow: hidden;
 }
 
-.menu-list li:hover {
-    background: rgba(255, 255, 255, 0.15);
+/* Pomocné třídy pro rozvržení */
+.row { display: flex; gap: 10px; }
+.col { flex: 1; }
+
+/* --- 3. KOMPONENTY FORMULÁŘE --- */
+.form-control, 
+.form-select {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border: none;
+    border-radius: 2px;
+    resize: vertical;
 }
 
-/* Třída pro zmenšení ovládacích prvků na 1/4 nebo auto šířku */
 .small-select {
-    width: 50% !important;
     display: block;
+    width: 50% !important;
     margin: 5px;
 }
 
-/* Stylování a centrování tlačítka */
+/* --- 4. TLAČÍTKA A CENTROVÁNÍ --- */
 .btn-container {
-    text-align: center;
     margin-top: 25px;
+    text-align: center; /* Toto vycentruje tlačítko uvnitř */
 }
 
 .btn-submit {
-    background-color: #1a2a16;
-    color: white;
-    border: 1px solid #4a6d3f;
+    /* Layout & Box Model */
+    display: inline-block;
     padding: 12px 40px;
-    cursor: pointer;
+    margin-bottom: 5px;
+    
+    /* Typografie */
+    color: white;
     font-weight: bold;
-    transition: 0.3s;
-    margin: 0 auto 5px auto;
+    text-decoration: none;
+    
+    /* Vizuál */
+    background-color: #1a2a16;
+    border: 1px solid #4a6d3f;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
 
 .btn-submit:hover {
     background-color: #2d4526;
 }
 
-.row { display: flex; gap: 10px; }
-.col { flex: 1; }
+/* --- 5. MENU A NAVIGACE --- */
+.menu-list {
+    padding: 0;
+    list-style: none;
+}
 
-.result-area {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 15px;
+.menu-list li {
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 4px;
-    border-left: 4px solid #77a868;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.menu-list li:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* --- 6. VÝSLEDKY A MATICE --- */
+.result-area {
     margin-top: 10px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 4px solid #77a868;
+    border-radius: 4px;
 }
 
 .result-text-copy {
-    font-family: monospace;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 8px;
-    margin-top: 5px;
     display: block;
+    margin-top: 5px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    font-family: monospace;
     word-break: break-all;
 }
 
-.matrix-display { text-align: center; font-family: monospace; margin-top: 10px; }
-.matrix-cell { display: inline-block; width: 35px; font-weight: bold; }
+.matrix-display {
+    margin-top: 10px;
+    text-align: center;
+    font-family: monospace;
+}
+
+.matrix-cell {
+    display: inline-block;
+    width: 35px;
+    font-weight: bold;
+}
