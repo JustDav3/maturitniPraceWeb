@@ -46,12 +46,12 @@
                         <div class="form-group">
                             <label>Vyber šifru:</label>
                             <select name="projekt" id="cipher-type" class="form-select small-select">
-                                <option value="morse" {% if projekt == 'morse' %}selected{% endif %}>Morseovka</option>
-                                <option value="number_code" {% if projekt == 'number_code' %}selected{% endif %}>Číselný
+                                <option value="morse" {% if projekt=='morse' %}selected{% endif %}>Morseovka</option>
+                                <option value="number_code" {% if projekt=='number_code' %}selected{% endif %}>Číselný
                                     kód</option>
-                                <option value="spirala" {% if projekt == 'spirala' %}selected{% endif %}>Spirála</option>
-                                <option value="snek" {% if projekt == 'snek' %}selected{% endif %}>Šnek</option>
-                                <option value="had" {% if projekt == 'had' %}selected{% endif %}>Had</option>  
+                                <option value="spirala" {% if projekt=='spirala' %}selected{% endif %}>Spirála</option>
+                                <option value="snek" {% if projekt=='snek' %}selected{% endif %}>Šnek</option>
+                                <option value="had" {% if projekt=='had' %}selected{% endif %}>Had</option>
                             </select>
                         </div>
 
@@ -61,6 +61,23 @@
                                 <option value="1">Klasická (.-)</option>
                                 <option value="2">Obrácená (-.)</option>
                             </select>
+                        </div>
+
+                        <div id="options-number" class="cipher-options mt-3" style="display:none;">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Typ abecedy:</label>
+                                    <select name="typ_abecedy" class="form-select small-select">
+                                        <option value="1">Anglická (26)</option>
+                                        <option value="2">Česká (42)</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label>Posun (klíč):</label>
+                                    <input type="number" name="posun" class="form-control small-select"
+                                        value="{{ posun|default:0 }}">
+                                </div>
+                            </div>
                         </div>
 
                         <div id="options-matrix-standard" class="cipher-options mt-3" style="display:none;">
