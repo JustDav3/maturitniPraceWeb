@@ -16,7 +16,7 @@ def home(request):
         context['vstup'] = vstup
         context['akce'] = akce
 
-        # 1. MORSEOVKA
+        # 1. MORSEOVKA (Řádek 20)
         if projekt == "morse":
             mode = request.POST.get("mode", "1")
             c_dot = request.POST.get("custom_dot", ".")
@@ -40,20 +40,17 @@ def home(request):
                 vysledek = m_logic.decrypt_logic(vstup, up_d, low_d, c_sep)
             
             context['vysledek_morse'] = vysledek
-            # PŘIDÁNO: Verze pro přepis
             context['vysledek_prepis'] = f"| {vysledek} |"
 
-        # 2. ČÍSELNÝ KÓD
+        # 2. ČÍSELNÝ KÓD (Řádek 48)
         elif projekt == "number_code":
             typ = int(request.POST.get("typ_abecedy", 1))
-            posun = int(request.POST.get("posun") or 0) # Načtení posunu
+            posun = int(request.POST.get("posun") or 0)
             
-            # Výběr správné abecedy z constants.py
             enc_dict = n_consts.alphabet_dict if typ == 1 else n_consts.czech_alphabet
             up_dict = n_consts.alphabet_uppercase if typ == 1 else {k:v for k,v in n_consts.czech_alphabet.items() if k.isupper()}
             low_dict = n_consts.alphabet_lowercase if typ == 1 else {k:v for k,v in n_consts.czech_alphabet.items() if k.islower()}
 
-            # Aplikace posunu, pokud není nula
             if posun != 0:
                 enc_dict = n_logic.shift_alphabet(enc_dict, posun)
                 up_dict = n_logic.shift_alphabet(up_dict, posun)
@@ -63,26 +60,34 @@ def home(request):
                 vysledek = n_logic.encrypt(vstup.upper(), enc_dict)
             else:
                 vysledek = n_logic.decrypt(vstup, up_dict, low_dict)
-
-        # 3. MATICE
-        elif projekt == "matrix":
-            volba = request.POST.get("typ_matice")
             
-            # Pokud je vybrán had, načteme 'smer_had', jinak 'start_bod'
-            # Druhý parametr u .get() je výchozí hodnota pro případ, že klíč v POST chybí
-            if volba == "had":
-                finalni_orientace = request.POST.get("smer_had", "shora")
-            else:
-                finalni_orientace = request.POST.get("start_bod", "1")
+            # OPRAVA: Musíme výsledek uložit do vysledek_number, aby ho HTML vidělo
+            context['vysledek_number'] = vysledek
 
-            # Voláme tvou logiku s upraveným parametrem
-            # Předpokládám, že mat_logic.vytvor_matice_sifry umí zpracovat i stringy 'shora'/'zleva'
-            matice, rozmer = mat_logic.vytvor_matice_sifry(vstup, volba, finalni_orientace)
+        # 3. SPIRÁLA A ŠNEK (Řádek 70)
+        elif projekt in ["spirala", "snek"]:
+            start_bod = request.POST.get("start_bod", "1")
+            matice, rozmer = mat_logic.vytvor_matice_sifry(vstup, projekt, start_bod)
+            context['vysledek_matrix'] = matice
+            context['rozmer_matrix'] = rozmer
+            context['start_bod'] = start_bod # Pro udržení výběru v selectu
+
+        # 4. HAD
+        elif projekt == "had":
+            smer_text = request.POST.get("smer_had", "shora")
+            
+            # PŘEKLADAČ: Tady převedeme text z webu na čísla, která tvoje logika už zná.
+            # Uprav si čísla 1 a 2 podle toho, co tvoje funkce pro hada skutečně používá.
+            if smer_text == "shora":
+                finalni_parametr = "1" 
+            else: # zleva
+                finalni_parametr = "2"
+
+            # Tvoje funkce zůstává beze změny, jen do ní pošleme to správné ID
+            matice, rozmer = mat_logic.vytvor_matice_sifry(vstup, "had", finalni_parametr)
             
             context['vysledek_matrix'] = matice
             context['rozmer_matrix'] = rozmer
-            # Uložíme volbu směru zpět do kontextu pro udržení stavu po refreshu
-            context['typ_matice'] = volba
-            context['start_bod'] = finalni_orientace
+            context['smer_had'] = smer_text
 
     return render(request, "main/index.html", context)
