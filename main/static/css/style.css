@@ -61,7 +61,8 @@ body {
 .small-select {
     width: auto !important;
     min-width: 160px;
-    display: inline-block;
+    display: block;
+    margin: 5px auto 0;
 }
 
 /* Stylování a centrování tlačítka */
