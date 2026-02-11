@@ -67,9 +67,22 @@ def home(request):
         # 3. MATICE
         elif projekt == "matrix":
             volba = request.POST.get("typ_matice")
-            start_bod = request.POST.get("start_bod", "1")
-            matice, rozmer = mat_logic.vytvor_matice_sifry(vstup, volba, start_bod)
+            
+            # Pokud je vybrán had, načteme 'smer_had', jinak 'start_bod'
+            # Druhý parametr u .get() je výchozí hodnota pro případ, že klíč v POST chybí
+            if volba == "had":
+                finalni_orientace = request.POST.get("smer_had", "shora")
+            else:
+                finalni_orientace = request.POST.get("start_bod", "1")
+
+            # Voláme tvou logiku s upraveným parametrem
+            # Předpokládám, že mat_logic.vytvor_matice_sifry umí zpracovat i stringy 'shora'/'zleva'
+            matice, rozmer = mat_logic.vytvor_matice_sifry(vstup, volba, finalni_orientace)
+            
             context['vysledek_matrix'] = matice
             context['rozmer_matrix'] = rozmer
+            # Uložíme volbu směru zpět do kontextu pro udržení stavu po refreshu
+            context['typ_matice'] = volba
+            context['start_bod'] = finalni_orientace
 
     return render(request, "main/index.html", context)
