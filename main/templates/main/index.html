@@ -47,10 +47,10 @@
                         <div class="form-group">
                             <label>Vyber šifru:</label>
                             <select name="projekt" id="cipher-type" class="form-select small-select">
-                                <option value="morse" {% if projekt == 'morse' %}selected{% endif %}>Morseovka</option>
-                                <option value="number_code" {% if projekt == 'number_code' %}selected{% endif %}>Číselný
+                                <option value="morse" {% if projekt=='morse' %}selected{% endif %}>Morseovka</option>
+                                <option value="number_code" {% if projekt=='number_code' %}selected{% endif %}>Číselný
                                     kód</option>
-                                <option value="matrix" {% if projekt == 'matrix' %}selected{% endif %}>Matice (Spirála,
+                                <option value="matrix" {% if projekt=='matrix' %}selected{% endif %}>Matice (Spirála,
                                     Šnek, Had)</option>
                             </select>
                         </div>
@@ -77,14 +77,24 @@
                                         <option value="had">Had</option>
                                     </select>
                                 </div>
-                                <div class="col">
-                                    <label>Startovní bod:</label>
-                                    <select name="start_bod" class="form-select small-select">
-                                        <option value="1">Levý dolní</option>
-                                        <option value="2">Levý horní</option>
-                                        <option value="3">Pravý horní</option>
-                                        <option value="4">Pravý dolní</option>
-                                    </select>
+                                <div class="form-group mt-3">
+                                    <div id="wrapper-start-point" class="matrix-option-group">
+                                        <label>Startovní bod:</label>
+                                        <select name="start_bod" class="form-select small-select">
+                                            <option value="1">Levý dolní</option>
+                                            <option value="2">Levý horní</option>
+                                            <option value="3">Pravý horní</option>
+                                            <option value="4">Pravý dolní</option>
+                                        </select>
+                                    </div>
+
+                                    <div id="wrapper-snake-direction" class="matrix-option-group" style="display:none;">
+                                        <label>Směr vlnovky:</label>
+                                        <select name="smer_had" class="form-select small-select">
+                                            <option value="shora">Shora (svisle)</option>
+                                            <option value="zleva">Zleva (vodorovně)</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
