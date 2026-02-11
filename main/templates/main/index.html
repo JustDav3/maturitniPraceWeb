@@ -47,10 +47,10 @@
                         <div class="form-group">
                             <label>Vyber šifru:</label>
                             <select name="projekt" id="cipher-type" class="form-select small-select">
-                                <option value="morse" {% if projekt=='morse' %}selected{% endif %}>Morseovka</option>
-                                <option value="number_code" {% if projekt=='number_code' %}selected{% endif %}>Číselný
+                                <option value="morse" {% if projekt == 'morse' %}selected{% endif %}>Morseovka</option>
+                                <option value="number_code" {% if projekt == 'number_code' %}selected{% endif %}>Číselný
                                     kód</option>
-                                <option value="matrix" {% if projekt=='matrix' %}selected{% endif %}>Matice (Spirála,
+                                <option value="matrix" {% if projekt == 'matrix' %}selected{% endif %}>Matice (Spirála,
                                     Šnek, Had)</option>
                             </select>
                         </div>
