@@ -69,7 +69,7 @@ body {
 .btn-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     text-align: center;
     margin-top: 25px;
 }
@@ -83,6 +83,9 @@ body {
     cursor: pointer;
     font-weight: bold;
     transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .btn-submit:hover {
