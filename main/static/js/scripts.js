@@ -1,8 +1,3 @@
-/**
- * scripts.js - Webová Aplikace pro TK Rozrazil
- * Struktura: Konstanty -> Pomocné funkce -> Handlery -> Event Listenery
- */
-
 document.addEventListener('DOMContentLoaded', function () {
 
     // 1. KONSTANTY
@@ -15,82 +10,74 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 2. FUNKCE PRO PŘEPÍNÁNÍ ŠIFER
     function handleCipherChange(val) {
-        // Skryje všechny skupiny pod-voleb
+        // Skryje všechny skupiny a VYPNEME jejich inputy
         document.querySelectorAll('.cipher-options').forEach(el => {
             el.style.display = 'none';
-            // Najde všechny selecty a inputy v této sekci a vypne je
             el.querySelectorAll('select, input').forEach(input => {
                 input.disabled = true;
             });
         });
 
-        // Definice, co se má pro jakou volbu ukázat
+        let activeDiv = null;
         if (val === 'morse') {
-            const optMorse = document.getElementById('options-morse');
-            if (optMorse) optMorse.style.display = 'block';
-        }
+            activeDiv = document.getElementById('options-morse');
+        } 
         else if (val === 'number_code') {
-            const optNumber = document.getElementById('options-number');
-            if (optNumber) optNumber.style.display = 'block';
+            activeDiv = document.getElementById('options-number');
         }
         else if (val === 'spirala') {
-            document.getElementById('options-spirala').style.display = 'block';
-        }
+            activeDiv = document.getElementById('options-spirala');
+        } 
         else if (val === 'snek') {
-            document.getElementById('options-snek').style.display = 'block';
+            activeDiv = document.getElementById('options-snek');
         }
         else if (val === 'had') {
-            const optHad = document.getElementById('options-had');
-            if (optHad) optHad.style.display = 'block';
+            activeDiv = document.getElementById('options-had');
+        }
+
+        if (activeDiv) {
+            activeDiv.style.display = 'block';
+            activeDiv.querySelectorAll('select, input').forEach(input => {
+                input.disabled = false;
+            });
         }
     }
 
-    // Pokud jsme našli správnou sekci, ukážeme ji a ZAPNEME její prvky
-    if (activeDiv) {
-        activeDiv.style.display = 'block';
-        activeDiv.querySelectorAll('select, input').forEach(input => {
-            input.disabled = false;
+    // 3. EVENT LISTENERY (S kontrolou existence, aby se JS nesekl)
+    if (cipherType) {
+        cipherType.addEventListener('change', function() {
+            handleCipherChange(this.value);
         });
     }
-    
 
-    // 3. EVENT LISTENERY (Interakce)
-
-    // Změna šifry v selectu
-    if (cipherType) {
-    cipherType.addEventListener('change', function () {
-        handleCipherChange(this.value);
-    });
-    }
-
-    // Přepínání sekcí v menu
-    if (btnSifry) {
+    if (btnSifry && secSifry && secUvod) {
         btnSifry.addEventListener('click', () => {
             secUvod.style.display = 'none';
             secSifry.style.display = 'block';
         });
     }
 
-    if (btnOMne) {
+    if (btnOMne && secSifry && secUvod) {
         btnOMne.addEventListener('click', () => {
             secSifry.style.display = 'none';
             secUvod.style.display = 'block';
         });
     }
 
-    // 4. INICIALIZACE (Po načtení nebo návratu z Django)
-
-    // Nastavíme správné viditelné pod-volby podle aktuální hodnoty
-    if (cipherType) {
-        handleCipherChange(cipherType.value);
-    }
-
-    // Pokud Django poslalo data, otevřeme rovnou sekci Šifry
+    // 4. INICIALIZACE - POŘADÍ JE DŮLEŽITÉ
+    
+    // Nejdřív zjistíme, jestli máme ukázat šifry (návrat z Django)
+    let showingSifry = false;
     if (djangoData) {
-        const shouldShow = djangoData.getAttribute('data-show-sifry') === 'true';
-        if (shouldShow) {
+        showingSifry = djangoData.getAttribute('data-show-sifry') === 'true';
+        if (showingSifry && secUvod && secSifry) {
             secUvod.style.display = 'none';
             secSifry.style.display = 'block';
         }
+    }
+
+    // Až pak nastavíme správný select (aby disabled sedělo)
+    if (cipherType) {
+        handleCipherChange(cipherType.value);
     }
 });
