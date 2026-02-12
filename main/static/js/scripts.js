@@ -15,11 +15,20 @@ document.addEventListener('DOMContentLoaded', function () {
     function handleCipherChange(val) {
         // Skryje všechny skupiny a VYPNEME jejich inputy
         document.querySelectorAll('.cipher-options').forEach(el => {
-            el.style.display = 'none';
-            el.querySelectorAll('select, input').forEach(input => {
-                input.disabled = true;
-            });
+        el.style.display = 'none';
+        el.querySelectorAll('select, input').forEach(input => input.disabled = true);
         });
+
+        const shiftContainer = document.getElementById('shift-container');
+        const shiftInput = shiftContainer.querySelector('input');
+
+        if (val === 'number_code' || val === 'binary') {
+            shiftContainer.style.display = 'block';
+            shiftInput.disabled = false;
+        } else {
+            shiftContainer.style.display = 'none';
+            shiftInput.disabled = true;
+        }
 
         let activeDiv = null;
         if (val === 'morse') {

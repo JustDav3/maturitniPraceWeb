@@ -55,7 +55,6 @@ def home(request):
         # 2. ČÍSELNÝ KÓD
         elif project == "number_code":
             alphabet_type = int(request.POST.get("typ_abecedy", 1))
-            shift = int(request.POST.get("posun") or 0)
             reverse_order = request.POST.get("obratit") == "on"
 
             context['posun'] = shift
@@ -89,7 +88,6 @@ def home(request):
         # 3. BINÁRNÍ ŠIFRA (Využívá tvůj soubor logic.py)
         elif project == "binary":
             separator = request.POST.get("binary_sep", ";")
-            shift = int(request.POST.get("shift") or 0)
             invert_bits = request.POST.get("binary_invert") == "on"
 
             context['binary_sep'] = separator
