@@ -34,6 +34,13 @@ document.addEventListener('DOMContentLoaded', function () {
             carka.style.display = 'none';
             oddelovac.style.display = 'none';
         }
+
+        else if (val === 'binary') {
+            activeDiv = document.getElementById('options-binary');
+            tecka.style.display = 'none';
+            carka.style.display = 'none';
+            oddelovac.style.display = 'none';
+}
         else if (val === 'spirala') {
             activeDiv = document.getElementById('options-spirala');
             tecka.style.display = 'none';

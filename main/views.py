@@ -1,125 +1,183 @@
 from django.shortcuts import render
-from .morse import logic as m_logic, constants as m_consts
-from .number_code import logic as n_logic, constants as n_consts
-from .matrix import logic as mat_logic
+from .morse import logic as morse_logic, constants as morse_consts
+from .number_code import logic as number_logic, constants as number_consts
+from .matrix import logic as matrix_logic
+from .binary import logic as binary_logic
 
 def home(request):
     context = {}
     
     if request.method == "POST":
-        projekt = request.POST.get("projekt")
-        vstup = request.POST.get("vstup", "")
-        akce = request.POST.get("akce")
+        project = request.POST.get("projekt")
+        user_input = request.POST.get("vstup", "")
+        action = request.POST.get("akce")
 
-        # Uložíme vstupní data zpět do kontextu, aby zůstala ve formuláři
-        context['projekt'] = projekt
-        context['vstup'] = vstup
-        context['akce'] = akce
+        # Uložení dat zpět do kontextu pro zachování ve formuláři
+        context['projekt'] = project
+        context['vstup'] = user_input
+        context['akce'] = action
 
-        # 1. MORSEOVKA (Řádek 20)
-        if projekt == "morse":
+        # 1. MORSEOVKA
+        if project == "morse":
             mode = request.POST.get("mode", "1")
-            
-            # NEJDŘÍVE načteme hodnoty z formuláře
-            c_dot = request.POST.get("custom_dot", ".")
-            c_dash = request.POST.get("custom_dash", "-")
-            c_sep = request.POST.get("custom_sep", "|")
+            custom_dot = request.POST.get("custom_dot", ".")
+            custom_dash = request.POST.get("custom_dash", "-")
+            custom_sep = request.POST.get("custom_sep", "|")
 
-            # POTOM je uložíme do kontextu, aby zůstaly v políčkách
-            context['custom_dot'] = c_dot
-            context['custom_dash'] = c_dash
-            context['custom_sep'] = c_sep
+            context['custom_dot'] = custom_dot
+            context['custom_dash'] = custom_dash
+            context['custom_sep'] = custom_sep
             context['mode'] = mode
 
-            # Logika výběru slovníků
-            d = m_consts.morse_dict if mode == "1" else m_consts.morse_reverse
-            up_d = m_consts.morse_uppercase if mode == "1" else m_consts.morse_reverse_uppercase
-            low_d = m_consts.morse_lowercase if mode == "1" else m_consts.morse_reverse_lowercase
+            # Výběr správného slovníku podle módu
+            main_dict = morse_consts.morse_dict if mode == "1" else morse_consts.morse_reverse
+            upper_dict = morse_consts.morse_uppercase if mode == "1" else morse_consts.morse_reverse_uppercase
+            lower_dict = morse_consts.morse_lowercase if mode == "1" else morse_consts.morse_reverse_lowercase
 
-            # Transformace na vlastní znaky
-            if c_dot != "." or c_dash != "-":
-                def transform_web(slovnik):
-                    return {k: v.replace('-', c_dash).replace('.', c_dot) for k, v in slovnik.items()}
-                d = transform_web(d)
-                up_d = transform_web(up_d)
-                low_d = transform_web(low_d)
+            # Transformace na vlastní znaky (tečky/čárky)
+            if custom_dot != "." or custom_dash != "-":
+                def transform_chars(dictionary):
+                    return {k: v.replace('-', custom_dash).replace('.', custom_dot) for k, v in dictionary.items()}
+                main_dict = transform_chars(main_dict)
+                upper_dict = transform_chars(upper_dict)
+                lower_dict = transform_chars(lower_dict)
 
-            # Samotný výpočet
-            if akce == "sifrovat":
-                vysledek = m_logic.encrypt(vstup.upper(), d, c_sep)
+            if action == "sifrovat":
+                result = morse_logic.encrypt(user_input.upper(), main_dict, custom_sep)
             else:
-                vysledek = m_logic.decrypt_logic(vstup, up_d, low_d, c_sep)
+                result = morse_logic.decrypt_logic(user_input, upper_dict, lower_dict, custom_sep)
             
-            context['vysledek_morse'] = vysledek
-            context['vysledek_prepis'] = f"{vysledek}"
+            context['vysledek_morse'] = result
+            context['vysledek_prepis'] = f"{result}"
 
-        # 2. ČÍSELNÝ KÓD (Řádek 48)
-        elif projekt == "number_code":
-            typ = int(request.POST.get("typ_abecedy", 1))
-            posun = int(request.POST.get("posun") or 0)
-            obratit = request.POST.get("obratit") == "on"  # Načtení checkboxu
+        # 2. ČÍSELNÝ KÓD
+        elif project == "number_code":
+            alphabet_type = int(request.POST.get("typ_abecedy", 1))
+            shift = int(request.POST.get("posun") or 0)
+            reverse_order = request.POST.get("obratit") == "on"
 
-            context['posun'] = posun
-            context['obratit'] = obratit # Aby zůstalo zaškrtnuté
+            context['posun'] = shift
+            context['obratit'] = reverse_order
 
-            # Základní výběr abecedy
-            enc_dict = n_consts.alphabet_dict if typ == 1 else n_consts.czech_alphabet
+            # Výběr abecedy (Anglická/Česká)
+            encryption_dict = number_consts.alphabet_dict if alphabet_type == 1 else number_consts.czech_alphabet
             
-            # LOGIKA PRO OBRÁCENÍ
-            if obratit:
-                # Seřadíme klíče (písmena) a obrátíme hodnoty (čísla)
-                keys = sorted(enc_dict.keys())
-                values = [enc_dict[k] for k in keys]
+            # Logika pro obrácení abecedy (A=26, Z=1)
+            if reverse_order:
+                sorted_keys = sorted(encryption_dict.keys())
+                values = [encryption_dict[k] for k in sorted_keys]
                 reversed_values = values[::-1]
-                enc_dict = dict(zip(keys, reversed_values))
+                encryption_dict = dict(zip(sorted_keys, reversed_values))
 
-            # Poté aplikujeme posun, pokud nějaký je
-            if posun != 0:
-                enc_dict = n_logic.shift_alphabet(enc_dict, posun)
+            # Aplikace posunu
+            if shift != 0:
+                encryption_dict = number_logic.shift_alphabet(encryption_dict, shift)
 
-            # Vytvoření up/low slovníků pro dešifrování z upraveného enc_dict
-            up_dict = {k: v for k, v in enc_dict.items() if k.isupper()}
-            low_dict = {k: v for k, v in enc_dict.items() if k.islower()}
+            # Příprava slovníků pro dešifrování
+            upper_dict = {k: v for k, v in encryption_dict.items() if k.isupper()}
+            lower_dict = {k: v for k, v in encryption_dict.items() if k.islower()}
 
-            if akce == "sifrovat":
-                vysledek = n_logic.encrypt(vstup.upper(), enc_dict)
+            if action == "sifrovat":
+                result = number_logic.encrypt(user_input.upper(), encryption_dict)
             else:
-                vysledek = n_logic.decrypt(vstup, up_dict, low_dict)
+                result = number_logic.decrypt(user_input, upper_dict, lower_dict)
             
-            context['vysledek_number'] = vysledek
+            context['vysledek_number'] = result
 
-        # 3. SPIRÁLA
-        elif projekt == "spirala":
-            start_bod = request.POST.get("start_bod", "1")
-            # Pro tvou logiku: projekt "spirala" = typ "1"
-            matice, rozmer = mat_logic.vytvor_matice_sifry(vstup, "1", start_bod)
-            context['vysledek_matrix'] = matice
-            context['rozmer_matrix'] = rozmer
-            context['start_bod'] = start_bod
+        # 3. BINÁRNÍ ŠIFRA (Využívá tvůj soubor logic.py)
+        elif project == "binary":
+            separator = request.POST.get("binary_sep", ";")
+            shift = int(request.POST.get("binary_shift") or 0)
+            invert_bits = request.POST.get("binary_invert") == "on"
 
-        # 4. ŠNEK
-        elif projekt == "snek":
-            start_bod = request.POST.get("start_bod", "1")
-            # Pro tvou logiku: projekt "snek" = typ "2"
-            matice, rozmer = mat_logic.vytvor_matice_sifry(vstup, "2", start_bod)
-            context['vysledek_matrix'] = matice
-            context['rozmer_matrix'] = rozmer
-            context['start_bod'] = start_bod
+            context['binary_sep'] = separator
+            context['binary_shift'] = shift
+            context['binary_invert'] = invert_bits
 
-        # 5. HAD
-        elif projekt == "had":
-            smer_had = request.POST.get("smer_had", "shora")
+            if action == "sifrovat":
+                # Příprava textu s posunem před převodem na binár
+                shifted_text = ""
+                for char in user_input.lower():
+                    if 'a' <= char <= 'z':
+                        # Výpočet nové pozice v anglické abecedě (1-26)
+                        new_pos = (ord(char) - ord('a') + 1 + shift)
+                        new_pos = (new_pos - 1) % 26 + 1
+                        shifted_text += chr(new_pos + ord('a') - 1)
+                    else:
+                        shifted_text += char
+                
+                # Volání tvé funkce encrypt z logic.py
+                result = binary_logic.encrypt(shifted_text, separator)
+                
+                # Logika pro inverzi bitů (0 na 1 a naopak)
+                if invert_bits:
+                    parts = result.split(separator)
+                    inverted_parts = []
+                    for p in parts:
+                        if p != "": # Mezera je v tvém logicu prázdný řetězec
+                            # Pro inverzi doplňujeme na 5 bitů
+                            padded_bin = p.zfill(5)
+                            inverted_parts.append("".join('1' if b == '0' else '0' for b in padded_bin))
+                        else:
+                            inverted_parts.append("")
+                    result = separator.join(inverted_parts)
             
-            # PŘEKLAD PRO TVOU LOGIKU:
-            # Had je u tebe typ "3". 
-            # Pokud je směr "shora", tvoje logika chce start_bod "2" (range n-1..0)
-            # Pokud je směr "zleva", tvoje logika chce cokoli jiného (jede range 0..n)
-            parametr_pro_hada = "2" if smer_had == "shora" else "1"
+            else:
+                # DEŠIFROVÁNÍ
+                input_for_logic = user_input
+                if invert_bits:
+                    # Pokud bylo invertováno, vrátíme bity zpět před dešifrováním
+                    parts = user_input.split(separator)
+                    deinverted_parts = []
+                    for p in parts:
+                        if p != "":
+                            deinverted_parts.append("".join('1' if b == '0' else '0' for b in p))
+                        else:
+                            deinverted_parts.append("")
+                    input_for_logic = separator.join(deinverted_parts)
+
+                # Volání tvé funkce decrypt z logic.py
+                raw_result = binary_logic.decrypt(input_for_logic, separator)
+                
+                # Vrácení posunu zpět na původní písmena
+                final_text = ""
+                for char in raw_result:
+                    if 'a' <= char <= 'z':
+                        orig_pos = (ord(char) - ord('a') + 1 - shift)
+                        orig_pos = (orig_pos - 1) % 26 + 1
+                        final_text += chr(orig_pos + ord('a') - 1)
+                    else:
+                        final_text += char
+                result = final_text.upper()
             
-            matice, rozmer = mat_logic.vytvor_matice_sifry(vstup, "3", parametr_pro_hada)
+            context['vysledek_number'] = result
+            context['vysledek_prepis'] = f"|{result}|"
+
+        # 4. SPIRÁLA
+        elif project == "spirala":
+            start_point = request.POST.get("start_bod", "1")
+            matrix, dimension = matrix_logic.vytvor_matice_sifry(user_input, "1", start_point)
+            context['vysledek_matrix'] = matrix
+            context['rozmer_matrix'] = dimension
+            context['start_bod'] = start_point
+
+        # 5. ŠNEK
+        elif project == "snek":
+            start_point = request.POST.get("start_bod", "1")
+            matrix, dimension = matrix_logic.vytvor_matice_sifry(user_input, "2", start_point)
+            context['vysledek_matrix'] = matrix
+            context['rozmer_matrix'] = dimension
+            context['start_bod'] = start_point
+
+        # 6. HAD
+        elif project == "had":
+            snake_direction = request.POST.get("smer_had", "shora")
+            snake_param = "2" if snake_direction == "shora" else "1"
             
-            context['vysledek_matrix'] = matice
-            context['rozmer_matrix'] = rozmer
-            context['smer_had'] = smer_had
+            matrix, dimension = matrix_logic.vytvor_matice_sifry(user_input, "3", snake_param)
+            
+            context['vysledek_matrix'] = matrix
+            context['rozmer_matrix'] = dimension
+            context['smer_had'] = snake_direction
 
     return render(request, "main/index.html", context)
