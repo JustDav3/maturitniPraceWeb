@@ -27,13 +27,13 @@ document.addEventListener('DOMContentLoaded', function () {
         let activeDiv = null;
         if (val === 'morse') {
             activeDiv = document.getElementById('options-morse');
-        } 
+        }
         else if (val === 'number_code') {
             activeDiv = document.getElementById('options-number'); // Sedí na tvé ID v HTML
         }
         else if (val === 'spirala') {
             activeDiv = document.getElementById('options-spirala');
-        } 
+        }
         else if (val === 'snek') {
             activeDiv = document.getElementById('options-snek');
         }
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 3. EVENT LISTENERY
 
     if (cipherType) {
-        cipherType.addEventListener('change', function() {
+        cipherType.addEventListener('change', function () {
             handleCipherChange(this.value);
         });
     }
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 4. INICIALIZACE
-    
+
     if (cipherType) {
         handleCipherChange(cipherType.value);
     }
