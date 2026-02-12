@@ -46,12 +46,12 @@
                         <div class="form-group">
                             <label>Vyber šifru:</label>
                             <select name="projekt" id="cipher-type" class="form-select small-select">
-                                <option value="morse" {% if projekt == 'morse' %}selected{% endif %}>Morseovka</option>
-                                <option value="number_code" {% if projekt == 'number_code' %}selected{% endif %}>Číselný
+                                <option value="morse" {% if projekt=='morse' %}selected{% endif %}>Morseovka</option>
+                                <option value="number_code" {% if projekt=='number_code' %}selected{% endif %}>Číselný
                                     kód</option>
-                                <option value="spirala" {% if projekt == 'spirala' %}selected{% endif %}>Spirála</option>
-                                <option value="snek" {% if projekt == 'snek' %}selected{% endif %}>Šnek</option>
-                                <option value="had" {% if projekt == 'had' %}selected{% endif %}>Had</option>
+                                <option value="spirala" {% if projekt=='spirala' %}selected{% endif %}>Spirála</option>
+                                <option value="snek" {% if projekt=='snek' %}selected{% endif %}>Šnek</option>
+                                <option value="had" {% if projekt=='had' %}selected{% endif %}>Had</option>
                             </select>
                         </div>
 
@@ -80,7 +80,17 @@
                             </div>
                         </div>
 
-                        <div id="options-matrix-standard" class="cipher-options mt-3" style="display:none;">
+                        <div id="options-spirala" class="cipher-options mt-3" style="display:none;">
+                            <label>Startovní střed:</label>
+                            <select name="start_bod" class="form-select small-select">
+                                <option value="1">Střed (vlevo nahoře)</option>
+                                <option value="2">Střed (vpravo nahoře)</option>
+                                <option value="3">Střed (vlevo dole)</option>
+                                <option value="4">Střed (vpravo dole)</option>
+                            </select>
+                        </div>
+
+                        <div id="options-snek" class="cipher-options mt-3" style="display:none;">
                             <label>Startovní bod:</label>
                             <select name="start_bod" class="form-select small-select">
                                 <option value="1">Levý dolní</option>

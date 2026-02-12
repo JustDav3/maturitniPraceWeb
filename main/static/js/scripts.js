@@ -29,10 +29,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const optNumber = document.getElementById('options-number');
             if (optNumber) optNumber.style.display = 'block';
         }
-        else if (val === 'spirala' || val === 'snek') {
-            const optMatrix = document.getElementById('options-matrix-standard');
-            if (optMatrix) optMatrix.style.display = 'block';
+        else if (val === 'spirala') {
+        document.getElementById('options-spirala').style.display = 'block';
         } 
+        else if (val === 'snek') {
+        document.getElementById('options-snek').style.display = 'block';
+        }
         else if (val === 'had') {
             const optHad = document.getElementById('options-had');
             if (optHad) optHad.style.display = 'block';

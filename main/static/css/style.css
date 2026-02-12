@@ -46,6 +46,10 @@ body {
     resize: vertical;
 }
 
+textarea {
+    margin-top: 5px;
+}
+
 .small-select {
     display: block;
     width: 150px !important;
