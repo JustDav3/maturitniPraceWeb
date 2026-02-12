@@ -73,7 +73,7 @@ def home(request):
 
             # Aplikace posunu
             if shift != 0:
-                encryption_dict = number_logic.shift_alphabet(encryption_dict, shared_shift)
+                encryption_dict = number_logic.shift_alphabet(encryption_dict, shift)
 
             # Příprava slovníků pro dešifrování
             upper_dict = {k: v for k, v in encryption_dict.items() if k.isupper()}
