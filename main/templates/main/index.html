@@ -48,8 +48,8 @@
                             <label>Vyber šifru:</label>
                             <select name="projekt" id="cipher-type" class="form-select small-select">
                                 <option value="morse" {% if projekt == 'morse' %}selected{% endif %}>Morseovka</option>
-                                <option value="number_code" {% if projekt == 'number_code' %}selected{% endif %}>Číselný
-                                    kód</option>
+                                <option value="number_code" {% if projekt == 'number_code' %}selected{% endif %}>Číselná abeceda</option>
+                                <option value="binary" {% if projekt == 'binary' %}selected{% endif %}>Binarka</option>
                                 <option value="spirala" {% if projekt == 'spirala' %}selected{% endif %}>Spirála</option>
                                 <option value="snek" {% if projekt == 'snek' %}selected{% endif %}>Šnek</option>
                                 <option value="had" {% if projekt == 'had' %}selected{% endif %}>Had</option>
@@ -95,22 +95,17 @@
                                         <option value="2">Česká (42)</option>
                                     </select>
                                 </div>
-                                <div class="col">
-                                    <label>Posun (klíč):</label>
-                                    <input type="number" name="posun" class="form-control small-select"
-                                        value="{{ posun|default:0 }}">
+                                <div class="row mt-3">
+                                    <div class="col-md-4">
+                                        <label>Posun:</label>
+                                        <input type="number" name="shift" class="form-control small-select" value="{{ shift|default:0 }}">
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <option value="binary" {% if projekt == 'binary' %}selected{% endif %}>Binární šifra</option>
-
                         <div id="options-binary" class="cipher-options mt-3" style="display:none;">
                             <div class="row">
-                                <div class="col">
-                                    <label>Posun (bitový):</label>
-                                    <input type="number" name="binary_shift" class="form-control small-select" value="{{ binary_shift|default:0 }}">
-                                </div>
                                 <div class="col">
                                     <label>Oddělovač:</label>
                                     <input type="text" name="binary_sep" class="form-control small-select" value="{{ binary_sep|default:' ' }}">

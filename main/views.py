@@ -11,11 +11,13 @@ def home(request):
         project = request.POST.get("projekt")
         user_input = request.POST.get("vstup", "")
         action = request.POST.get("akce")
+        shift = int(request.POST.get("shift") or 0)
 
         # Uložení dat zpět do kontextu pro zachování ve formuláři
         context['projekt'] = project
         context['vstup'] = user_input
         context['akce'] = action
+        context['shift'] = shift
 
         # 1. MORSEOVKA
         if project == "morse":
@@ -71,7 +73,7 @@ def home(request):
 
             # Aplikace posunu
             if shift != 0:
-                encryption_dict = number_logic.shift_alphabet(encryption_dict, shift)
+                encryption_dict = number_logic.shift_alphabet(encryption_dict, shared_shift)
 
             # Příprava slovníků pro dešifrování
             upper_dict = {k: v for k, v in encryption_dict.items() if k.isupper()}
@@ -87,11 +89,11 @@ def home(request):
         # 3. BINÁRNÍ ŠIFRA (Využívá tvůj soubor logic.py)
         elif project == "binary":
             separator = request.POST.get("binary_sep", ";")
-            shift = int(request.POST.get("binary_shift") or 0)
+            shift = int(request.POST.get("shift") or 0)
             invert_bits = request.POST.get("binary_invert") == "on"
 
             context['binary_sep'] = separator
-            context['binary_shift'] = shift
+            context['shift'] = shift
             context['binary_invert'] = invert_bits
 
             if action == "sifrovat":
