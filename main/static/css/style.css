@@ -48,6 +48,7 @@ body {
 
 textarea {
     margin-top: 5px;
+    max-width: 100%;
 }
 
 .small-select {

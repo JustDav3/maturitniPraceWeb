@@ -160,7 +160,7 @@
                         <div class="matrix-display">
                             {% for radek in vysledek_matrix %}
                             <div class="matrix-row">
-                                {% for char in radek %}<span class="matrix-cell">[{{ char }}]</span>{% endfor %}
+                                {% for char in radek %}<span class="matrix-cell">{{ char }}</span>{% endfor %}
                             </div>
                             {% endfor %}
                         </div>
