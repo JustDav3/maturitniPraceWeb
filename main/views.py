@@ -56,28 +56,36 @@ def home(request):
         # 2. ČÍSELNÝ KÓD (Řádek 48)
         elif projekt == "number_code":
             typ = int(request.POST.get("typ_abecedy", 1))
-            # Načteme posun z formuláře, pokud tam není, dáme 0
             posun = int(request.POST.get("posun") or 0)
+            obratit = request.POST.get("obratit") == "on"  # Načtení checkboxu
 
-            context['posun'] = posun # Aby hodnota zůstala v políčku i po odeslání
-            
-            # Výběr abecedy (používáme tvé importy n_consts a n_logic)
+            context['posun'] = posun
+            context['obratit'] = obratit # Aby zůstalo zaškrtnuté
+
+            # Základní výběr abecedy
             enc_dict = n_consts.alphabet_dict if typ == 1 else n_consts.czech_alphabet
-            up_dict = n_consts.alphabet_uppercase if typ == 1 else {k:v for k,v in n_consts.czech_alphabet.items() if k.isupper()}
-            low_dict = n_consts.alphabet_lowercase if typ == 1 else {k:v for k,v in n_consts.czech_alphabet.items() if k.islower()}
+            
+            # LOGIKA PRO OBRÁCENÍ
+            if obratit:
+                # Seřadíme klíče (písmena) a obrátíme hodnoty (čísla)
+                keys = sorted(enc_dict.keys())
+                values = [enc_dict[k] for k in keys]
+                reversed_values = values[::-1]
+                enc_dict = dict(zip(keys, reversed_values))
 
-            # Aplikace posunu přes tvou existující funkci shift_alphabet
+            # Poté aplikujeme posun, pokud nějaký je
             if posun != 0:
                 enc_dict = n_logic.shift_alphabet(enc_dict, posun)
-                up_dict = n_logic.shift_alphabet(up_dict, posun)
-                low_dict = n_logic.shift_alphabet(low_dict, posun)
+
+            # Vytvoření up/low slovníků pro dešifrování z upraveného enc_dict
+            up_dict = {k: v for k, v in enc_dict.items() if k.isupper()}
+            low_dict = {k: v for k, v in enc_dict.items() if k.islower()}
 
             if akce == "sifrovat":
                 vysledek = n_logic.encrypt(vstup.upper(), enc_dict)
             else:
                 vysledek = n_logic.decrypt(vstup, up_dict, low_dict)
             
-            # OPRAVA: Musíme výsledek uložit do vysledek_number, aby ho HTML vidělo
             context['vysledek_number'] = vysledek
 
         # 3. SPIRÁLA
