@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const secUvod = document.getElementById('section-uvod');
     const secSifry = document.getElementById('section-sifry');
     const djangoData = document.getElementById('django-data');
+    
 
     // 2. FUNKCE PRO PŘEPÍNÁNÍ ŠIFER (S tvojí opravou pro startovní body)
     function handleCipherChange(val) {
