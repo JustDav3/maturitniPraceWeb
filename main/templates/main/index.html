@@ -63,6 +63,21 @@
                             </select>
                         </div>
 
+                        <div class="row mt-2">
+                            <div class="col">
+                                <label>Tečka:</label>
+                                <input type="text" name="custom_dot" class="form-control small-select" value="{{ custom_dot|default:'.' }}" maxlength="5">
+                            </div>
+                            <div class="col">
+                                <label>Čárka:</label>
+                                <input type="text" name="custom_dash" class="form-control small-select" value="{{ custom_dash|default:'-' }}" maxlength="5">
+                            </div>
+                            <div class="col">
+                                <label>Oddělovač:</label>
+                                <input type="text" name="custom_sep" class="form-control small-select" value="{{ custom_sep|default:'|' }}" maxlength="5">
+                            </div>
+                        </div>
+
                         <div id="options-number" class="cipher-options mt-3" style="display:none;">
                             <div class="row">
                                 <div class="col">

@@ -19,14 +19,24 @@ def home(request):
         # 1. MORSEOVKA (Řádek 20)
         if projekt == "morse":
             mode = request.POST.get("mode", "1")
+            
+            # NEJDŘÍVE načteme hodnoty z formuláře
             c_dot = request.POST.get("custom_dot", ".")
             c_dash = request.POST.get("custom_dash", "-")
             c_sep = request.POST.get("custom_sep", "|")
 
+            # POTOM je uložíme do kontextu, aby zůstaly v políčkách
+            context['custom_dot'] = c_dot
+            context['custom_dash'] = c_dash
+            context['custom_sep'] = c_sep
+            context['mode'] = mode
+
+            # Logika výběru slovníků
             d = m_consts.morse_dict if mode == "1" else m_consts.morse_reverse
             up_d = m_consts.morse_uppercase if mode == "1" else m_consts.morse_reverse_uppercase
             low_d = m_consts.morse_lowercase if mode == "1" else m_consts.morse_reverse_lowercase
 
+            # Transformace na vlastní znaky
             if c_dot != "." or c_dash != "-":
                 def transform_web(slovnik):
                     return {k: v.replace('-', c_dash).replace('.', c_dot) for k, v in slovnik.items()}
@@ -34,6 +44,7 @@ def home(request):
                 up_d = transform_web(up_d)
                 low_d = transform_web(low_d)
 
+            # Samotný výpočet
             if akce == "sifrovat":
                 vysledek = m_logic.encrypt(vstup.upper(), d, c_sep)
             else:
