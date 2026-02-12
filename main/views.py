@@ -51,7 +51,7 @@ def home(request):
                 vysledek = m_logic.decrypt_logic(vstup, up_d, low_d, c_sep)
             
             context['vysledek_morse'] = vysledek
-            context['vysledek_prepis'] = f"| {vysledek} |"
+            context['vysledek_prepis'] = f" {vysledek} "
 
         # 2. ČÍSELNÝ KÓD (Řádek 48)
         elif projekt == "number_code":

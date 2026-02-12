@@ -145,3 +145,8 @@ textarea {
     width: 35px;
     font-weight: bold;
 }
+
+small {
+    word-break: break-all;     /* Důležité: text se zalomí přesně podle šířky panelu */
+    white-space: pre-wrap;     /* Zachová mezery, ale zalomí dlouhé řádky */
+}
