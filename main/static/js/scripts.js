@@ -15,9 +15,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 2. FUNKCE PRO PŘEPÍNÁNÍ ŠIFER
     function handleCipherChange(val) {
-        // Skryje všechny skupiny pod-voleb
+        // Skryje všechny skupiny a VYPNEME jejich inputy (aby se netloukly startovní body)
         document.querySelectorAll('.cipher-options').forEach(el => {
             el.style.display = 'none';
+            el.querySelectorAll('select, input').forEach(input => {
+                input.disabled = true;
+            });
         });
 
         // Definice, co se má pro jakou volbu ukázat
