@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnOMne = document.getElementById('btn-o-mne');
     const secUvod = document.getElementById('section-uvod');
     const secSifry = document.getElementById('section-sifry');
+    const tecka = document.getElementById('tecka');
+    const carka = document.getElementById('carka');
+    const oddelovac = document.getElementById('oddelovac');
     const djangoData = document.getElementById('django-data');
 
     // 2. FUNKCE PRO PŘEPÍNÁNÍ ŠIFER
@@ -21,18 +24,33 @@ document.addEventListener('DOMContentLoaded', function () {
         let activeDiv = null;
         if (val === 'morse') {
             activeDiv = document.getElementById('options-morse');
+            tecka.style.display = 'block';
+            carka.style.display = 'block';
+            oddelovac.style.display = 'block';
         } 
         else if (val === 'number_code') {
             activeDiv = document.getElementById('options-number');
+            tecka.style.display = 'none';
+            carka.style.display = 'none';
+            oddelovac.style.display = 'none';
         }
         else if (val === 'spirala') {
             activeDiv = document.getElementById('options-spirala');
+            tecka.style.display = 'none';
+            carka.style.display = 'none';
+            oddelovac.style.display = 'none';
         } 
         else if (val === 'snek') {
             activeDiv = document.getElementById('options-snek');
+            tecka.style.display = 'none';
+            carka.style.display = 'none';
+            oddelovac.style.display = 'none';
         }
         else if (val === 'had') {
             activeDiv = document.getElementById('options-had');
+            tecka.style.display = 'none';
+            carka.style.display = 'none';
+            oddelovac.style.display = 'none';
         }
 
         if (activeDiv) {
