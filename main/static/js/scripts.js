@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const secSifry = document.getElementById('section-sifry');
     const djangoData = document.getElementById('django-data');
 
-    // 2. FUNKCE PRO PŘEPÍNÁNÍ ŠIFER
+    // 2. FUNKCE PRO PŘEPÍNÁNÍ ŠIFER (S tvojí opravou pro startovní body)
     function handleCipherChange(val) {
         // Skryje všechny skupiny a VYPNEME jejich inputy (aby se netloukly startovní body)
         document.querySelectorAll('.cipher-options').forEach(el => {
@@ -23,37 +23,42 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        // Definice, co se má pro jakou volbu ukázat
+        // Mapování tvých ID z HTML
+        let activeDiv = null;
         if (val === 'morse') {
-            const optMorse = document.getElementById('options-morse');
-            if (optMorse) optMorse.style.display = 'block';
+            activeDiv = document.getElementById('options-morse');
         } 
         else if (val === 'number_code') {
-            const optNumber = document.getElementById('options-number');
-            if (optNumber) optNumber.style.display = 'block';
+            activeDiv = document.getElementById('options-number'); // Sedí na tvé ID v HTML
         }
         else if (val === 'spirala') {
-        document.getElementById('options-spirala').style.display = 'block';
+            activeDiv = document.getElementById('options-spirala');
         } 
         else if (val === 'snek') {
-        document.getElementById('options-snek').style.display = 'block';
+            activeDiv = document.getElementById('options-snek');
         }
         else if (val === 'had') {
-            const optHad = document.getElementById('options-had');
-            if (optHad) optHad.style.display = 'block';
+            activeDiv = document.getElementById('options-had');
+        }
+
+        // Zobrazení a ZAPNUTÍ prvků
+        if (activeDiv) {
+            activeDiv.style.display = 'block';
+            activeDiv.querySelectorAll('select, input').forEach(input => {
+                input.disabled = false;
+            });
         }
     }
 
-    // 3. EVENT LISTENERY (Interakce)
+    // 3. EVENT LISTENERY
 
-    // Změna šifry v selectu
     if (cipherType) {
         cipherType.addEventListener('change', function() {
             handleCipherChange(this.value);
         });
     }
 
-    // Přepínání sekcí v menu
+    // Přepínání menu (O mně / Šifry)
     if (btnSifry) {
         btnSifry.addEventListener('click', () => {
             secUvod.style.display = 'none';
@@ -68,14 +73,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 4. INICIALIZACE (Po načtení nebo návratu z Django)
+    // 4. INICIALIZACE
     
-    // Nastavíme správné viditelné pod-volby podle aktuální hodnoty
     if (cipherType) {
         handleCipherChange(cipherType.value);
     }
 
-    // Pokud Django poslalo data, otevřeme rovnou sekci Šifry
     if (djangoData) {
         const shouldShow = djangoData.getAttribute('data-show-sifry') === 'true';
         if (shouldShow) {
