@@ -39,7 +39,7 @@
                 </div>
 
                 <div id="section-sifry" style="display: none;">
-                    <h2>Šifrování</h2>
+                    <h2>Šifry</h2>
                     <form method="POST">
                         {% csrf_token %}
                         
@@ -49,14 +49,14 @@
                                 <option value="morse" {% if projekt == 'morse' %}selected{% endif %}>Morseovka</option>
                                 <option value="number_code" {% if projekt == 'number_code' %}selected{% endif %}>Číselný kód</option>
                                 <option value="binary" {% if projekt == 'binary' %}selected{% endif %}>Binární kód</option>
-                                <option value="spirala" {% if projekt == 'spirala' %}selected{% endif %}>Matice - Spirála</option>
-                                <option value="snek" {% if projekt == 'snek' %}selected{% endif %}>Matice - Šnek</option>
-                                <option value="had" {% if projekt == 'had' %}selected{% endif %}>Matice - Had</option>
+                                <option value="spirala" {% if projekt == 'spirala' %}selected{% endif %}>Spirála</option>
+                                <option value="snek" {% if projekt == 'snek' %}selected{% endif %}>Šnek</option>
+                                <option value="had" {% if projekt == 'had' %}selected{% endif %}>Had</option>
                             </select>
                         </div>
 
                         <div id="shared-shift-container" class="mb-3" style="display:none;">
-                            <label>Posun (klíč):</label>
+                            <label>Posun:</label>
                             <input type="number" name="shift" class="form-control small-select" value="{{ shift|default:0 }}">
                         </div>
 
