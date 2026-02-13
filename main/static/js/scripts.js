@@ -1,117 +1,87 @@
 document.addEventListener('DOMContentLoaded', function () {
-
-    // 1. KONSTANTY
+    // Načtení všech prvků z DOMu
     const cipherType = document.getElementById('cipher-type');
-    const btnSifry = document.getElementById('btn-sifry');
-    const btnOMne = document.getElementById('btn-o-mne');
-    const secUvod = document.getElementById('section-uvod');
-    const secSifry = document.getElementById('section-sifry');
-    const tecka = document.getElementById('tecka');
-    const carka = document.getElementById('carka');
-    const oddelovac = document.getElementById('oddelovac');
-    const djangoData = document.getElementById('django-data');
+    const shiftBox = document.getElementById('shared-shift-container');
+    const dSelect = document.getElementById('container-select');
+    const dCheck = document.getElementById('container-checkbox');
+    const dInp1 = document.getElementById('container-input-1');
+    const dInp2 = document.getElementById('container-input-2');
+    const dInp3 = document.getElementById('container-input-3');
 
-    // 2. FUNKCE PRO PŘEPÍNÁNÍ ŠIFER
     function handleCipherChange(val) {
-        // Skryje všechny skupiny a VYPNEME jejich inputy
-        document.querySelectorAll('.cipher-options').forEach(el => {
-        el.style.display = 'none';
-        el.querySelectorAll('select, input').forEach(input => input.disabled = true);
+        // Reset: Nejdřív všechno schováme a vypneme, aby se neposílala zbytečná data
+        [shiftBox, dSelect, dCheck, dInp1, dInp2, dInp3].forEach(el => {
+            if (el) {
+                el.style.display = 'none';
+                el.querySelectorAll('select, input').forEach(i => i.disabled = true);
+            }
         });
 
-        const shiftContainer = document.getElementById('shift-container');
-        const shiftInput = shiftContainer.querySelector('input');
-
-        if (val === 'number_code' || val === 'binary') {
-            shiftContainer.style.display = 'block';
-            shiftInput.disabled = false;
-        } else {
-            shiftContainer.style.display = 'none';
-            shiftInput.disabled = true;
-        }
-
-        let activeDiv = null;
+        // --- Logika pro jednotlivé šifry ---
         if (val === 'morse') {
-            activeDiv = document.getElementById('options-morse');
-            tecka.style.display = 'block';
-            carka.style.display = 'block';
-            oddelovac.style.display = 'block';
+            dSelect.style.display = 'block';
+            document.getElementById('label-select').innerText = 'Režim šifrování:';
+            document.getElementById('dynamic-select').innerHTML = '<option value="1">Klasická (.-)</option><option value="2">Obrácená (-.)</option>';
+            
+            // Pro morseovku používáme všechna tři textová pole
+            dInp1.style.display = 'block'; document.getElementById('label-input-1').innerText = 'Tečka:';
+            dInp2.style.display = 'block'; document.getElementById('label-input-2').innerText = 'Čárka:';
+            dInp3.style.display = 'block'; document.getElementById('label-input-3').innerText = 'Oddělovač:';
         } 
         else if (val === 'number_code') {
-            activeDiv = document.getElementById('options-number');
-            tecka.style.display = 'none';
-            carka.style.display = 'none';
-            oddelovac.style.display = 'none';
-        }
-
-        else if (val === 'binary') {
-            activeDiv = document.getElementById('options-binary');
-            tecka.style.display = 'none';
-            carka.style.display = 'none';
-            oddelovac.style.display = 'none';
-}
-        else if (val === 'spirala') {
-            activeDiv = document.getElementById('options-spirala');
-            tecka.style.display = 'none';
-            carka.style.display = 'none';
-            oddelovac.style.display = 'none';
+            shiftBox.style.display = 'block';
+            dSelect.style.display = 'block';
+            document.getElementById('label-select').innerText = 'Typ abecedy:';
+            document.getElementById('dynamic-select').innerHTML = '<option value="1">Anglická (26)</option><option value="2">Česká (42)</option>';
+            
+            dCheck.style.display = 'block';
+            document.getElementById('label-checkbox').innerText = 'Obrátit pořadí (A=26, Z=1)';
         } 
+        else if (val === 'binary') {
+            shiftBox.style.display = 'block';
+            dInp3.style.display = 'block';
+            document.getElementById('label-input-3').innerText = 'Oddělovač bitů:';
+            
+            dCheck.style.display = 'block';
+            document.getElementById('label-checkbox').innerText = 'Inverzní bity (0↔1)';
+        }
+        else if (val === 'spirala') {
+            dSelect.style.display = 'block';
+            document.getElementById('label-select').innerText = 'Startovní bod (roh):';
+            document.getElementById('dynamic-select').innerHTML = `
+                <option value="1">Vlevo nahoře</option>
+                <option value="2">Vpravo nahoře</option>
+                <option value="3">Vlevo dole</option>
+                <option value="4">Vpravo dole</option>`;
+        }
         else if (val === 'snek') {
-            activeDiv = document.getElementById('options-snek');
-            tecka.style.display = 'none';
-            carka.style.display = 'none';
-            oddelovac.style.display = 'none';
+            dSelect.style.display = 'block';
+            document.getElementById('label-select').innerText = 'Startovní střed:';
+            document.getElementById('dynamic-select').innerHTML = `
+                <option value="1">Střed - vlevo dole</option>
+                <option value="2">Střed - vlevo nahoře</option>
+                <option value="3">Střed - vpravo nahoře</option>
+                <option value="4">Střed - vpravo dole</option>`;
         }
         else if (val === 'had') {
-            activeDiv = document.getElementById('options-had');
-            tecka.style.display = 'none';
-            carka.style.display = 'none';
-            oddelovac.style.display = 'none';
+            dSelect.style.display = 'block';
+            document.getElementById('label-select').innerText = 'Směr pohybu hada:';
+            document.getElementById('dynamic-select').innerHTML = `
+                <option value="shora">Shora dolů (sloupce)</option>
+                <option value="zleva">Zleva doprava (řádky)</option>`;
         }
 
-        if (activeDiv) {
-            activeDiv.style.display = 'block';
-            activeDiv.querySelectorAll('select, input').forEach(input => {
-                input.disabled = false;
-            });
-        }
+        // Aktivujeme jen ty prvky, které jsme právě ukázali
+        [shiftBox, dSelect, dCheck, dInp1, dInp2, dInp3].forEach(el => {
+            if (el && el.style.display !== 'none') {
+                el.querySelectorAll('select, input').forEach(i => i.disabled = false);
+            }
+        });
     }
 
-    // 3. EVENT LISTENERY (S kontrolou existence, aby se JS nesekl)
+    // Inicializace při načtení stránky
     if (cipherType) {
-        cipherType.addEventListener('change', function() {
-            handleCipherChange(this.value);
-        });
-    }
-
-    if (btnSifry && secSifry && secUvod) {
-        btnSifry.addEventListener('click', () => {
-            secUvod.style.display = 'none';
-            secSifry.style.display = 'block';
-        });
-    }
-
-    if (btnOMne && secSifry && secUvod) {
-        btnOMne.addEventListener('click', () => {
-            secSifry.style.display = 'none';
-            secUvod.style.display = 'block';
-        });
-    }
-
-    // 4. INICIALIZACE - POŘADÍ JE DŮLEŽITÉ
-    
-    // Nejdřív zjistíme, jestli máme ukázat šifry (návrat z Django)
-    let showingSifry = false;
-    if (djangoData) {
-        showingSifry = djangoData.getAttribute('data-show-sifry') === 'true';
-        if (showingSifry && secUvod && secSifry) {
-            secUvod.style.display = 'none';
-            secSifry.style.display = 'block';
-        }
-    }
-
-    // Až pak nastavíme správný select (aby disabled sedělo)
-    if (cipherType) {
+        cipherType.addEventListener('change', (e) => handleCipherChange(e.target.value));
         handleCipherChange(cipherType.value);
     }
 });

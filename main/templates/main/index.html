@@ -6,8 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webová Aplikace pro TK Rozrazil</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
+    <link rel="stylesheet" href="{% static 'css/style.css' % ocean.css %}"> </head>
 
 <body>
 
@@ -21,7 +20,7 @@
             <div class="panel-content">
                 <h2>Menu</h2>
                 <ul class="menu-list">
-                    <li id="btn-o-mne">O mě</li>
+                    <li id="btn-o-mne">O mně</li>
                     <li id="btn-sifry">Šifry</li>
                     <li>Uzly</li>
                     <li>Test</li>
@@ -33,135 +32,69 @@
 
         <main class="panel">
             <div class="panel-content">
+                
                 <div id="section-uvod">
                     <h2>Vítejte</h2>
-                    <p>Vítej v aplikaci TK Rozrazil. Vyber sekci z menu pro pokračování.
-                        Nevšímej si toho, že tady mnoho věcí nefunguje.
-                    </p>
+                    <p>Vítej v aplikaci TK Rozrazil. Vyber sekci z menu pro pokračování.</p>
                 </div>
+
                 <div id="section-sifry" style="display: none;">
-                    <h2>Šifry</h2>
+                    <h2>Šifrování</h2>
                     <form method="POST">
                         {% csrf_token %}
-
-                        <div class="form-group">
-                            <label>Vyber šifru:</label>
+                        
+                        <div class="form-group mb-3">
+                            <label for="cipher-type">Vyber šifru:</label>
                             <select name="projekt" id="cipher-type" class="form-select small-select">
                                 <option value="morse" {% if projekt == 'morse' %}selected{% endif %}>Morseovka</option>
-                                <option value="number_code" {% if projekt == 'number_code' %}selected{% endif %}>Číselná abeceda</option>
-                                <option value="binary" {% if projekt == 'binary' %}selected{% endif %}>Binarka</option>
-                                <option value="spirala" {% if projekt == 'spirala' %}selected{% endif %}>Spirála</option>
-                                <option value="snek" {% if projekt == 'snek' %}selected{% endif %}>Šnek</option>
-                                <option value="had" {% if projekt == 'had' %}selected{% endif %}>Had</option>
+                                <option value="number_code" {% if projekt == 'number_code' %}selected{% endif %}>Číselný kód</option>
+                                <option value="binary" {% if projekt == 'binary' %}selected{% endif %}>Binární kód</option>
+                                <option value="spirala" {% if projekt == 'spirala' %}selected{% endif %}>Matice - Spirála</option>
+                                <option value="snek" {% if projekt == 'snek' %}selected{% endif %}>Matice - Šnek</option>
+                                <option value="had" {% if projekt == 'had' %}selected{% endif %}>Matice - Had</option>
                             </select>
                         </div>
 
-                        <div id="options-morse" class="cipher-options mt-3">
-                            <label>Režim:</label>
-                            <select name="mode" class="form-select small-select">
-                                <option value="1">Klasická (.-)</option>
-                                <option value="2">Obrácená (-.)</option>
-                            </select>
+                        <div id="shared-shift-container" class="mb-3" style="display:none;">
+                            <label>Posun (klíč):</label>
+                            <input type="number" name="shift" class="form-control small-select" value="{{ shift|default:0 }}">
                         </div>
 
-                        <div class="form-check mt-2">
-                            <input class="form-check-input" type="checkbox" name="obratit" id="checkObratit" {% if obratit %}checked{% endif %}>
-                            <label class="form-check-label" for="checkObratit">
-                                Obrátit pořadí (A=26, Z=1)
-                            </label>
-                        </div>
+                        <div id="global-cipher-settings">
+                            <div id="container-select" class="mb-3" style="display:none;">
+                                <label id="label-select">Nastavení:</label>
+                                <select name="dynamic_select" id="dynamic-select" class="form-select small-select"></select>
+                            </div>
 
-                        <div class="row mt-2">
-                            <div class="col" id="tecka">
-                                <label>Tečka:</label>
-                                <input type="text" name="custom_dot" class="form-control small-select" value="{{ custom_dot|default:'.' }}" maxlength="5">
-                            </div>
-                            <div class="col" id="carka">
-                                <label>Čárka:</label>
-                                <input type="text" name="custom_dash" class="form-control small-select" value="{{ custom_dash|default:'-' }}" maxlength="5">
-                            </div>
-                            <div class="col" id="oddelovac">
-                                <label>Oddělovač:</label>
-                                <input type="text" name="custom_sep" class="form-control small-select" value="{{ custom_sep|default:'|' }}" maxlength="5">
-                            </div>
-                        </div>
-
-                        <div id="options-number" class="cipher-options mt-3" style="display:none;">
                             <div class="row">
-                                <div class="col">
-                                    <label>Typ abecedy:</label>
-                                    <select name="typ_abecedy" class="form-select small-select">
-                                        <option value="1">Anglická (26)</option>
-                                        <option value="2">Česká (42)</option>
-                                    </select>
+                                <div id="container-input-1" class="col" style="display:none;">
+                                    <label id="label-input-1">Vstup 1:</label>
+                                    <input type="text" name="input_1" id="dynamic-input-1" class="form-control small-select" value="{{ in1|default:'.' }}">
                                 </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-4" id="shift-container" style="display:none;">
-                                        <label>Posun:</label>
-                                        <input type="number" name="shift" class="form-control small-select" value="{{ shift|default:0 }}">
-                                    </div>
+                                <div id="container-input-2" class="col" style="display:none;">
+                                    <label id="label-input-2">Vstup 2:</label>
+                                    <input type="text" name="input_2" id="dynamic-input-2" class="form-control small-select" value="{{ in2|default:'-' }}">
                                 </div>
+                                <div id="container-input-3" class="col" style="display:none;">
+                                    <label id="label-input-3">Vstup 3:</label>
+                                    <input type="text" name="input_3" id="dynamic-input-3" class="form-control small-select" value="{{ in3|default:'|' }}">
+                                </div>
+                            </div>
+
+                            <div id="container-checkbox" class="form-check mt-3" style="display:none;">
+                                <input class="form-check-input" type="checkbox" name="dynamic_checkbox" id="dynamic-checkbox" {% if dyn_check %}checked{% endif %}>
+                                <label id="label-checkbox" class="form-check-label" for="dynamic-checkbox">Obrátit</label>
                             </div>
                         </div>
 
-                        <div id="options-binary" class="cipher-options mt-3" style="display:none;">
-                            <div class="row">
-                                <div class="col">
-                                    <label>Oddělovač:</label>
-                                    <input type="text" name="binary_sep" class="form-control small-select" value="{{ binary_sep|default:' ' }}">
-                                </div>
-                            </div>
-                            <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" name="binary_invert" id="checkInvert" {% if binary_invert %}checked{% endif %}>
-                                <label class="form-check-label" for="checkInvert">
-                                    Inverzní binárka (záměna 0 a 1)
-                                </label>
-                            </div>
-                        </div>
-
-                        <div id="options-spirala" class="cipher-options mt-3" style="display:none;">
-                            <label>Startovní střed:</label>
-                            <select name="start_bod" class="form-select small-select">
-                                <option value="1">Vlevo nahoře</option>
-                                <option value="2">Vpravo nahoře</option>
-                                <option value="3">Vlevo dole</option>
-                                <option value="4">Vpravo dole</option>
-                            </select>
-                        </div>
-
-                        <div id="options-snek" class="cipher-options mt-3" style="display:none;">
-                            <label>Startovní bod:</label>
-                            <select name="start_bod" class="form-select small-select">
-                                <option value="1">Levý dolní</option>
-                                <option value="2">Levý horní</option>
-                                <option value="3">Pravý horní</option>
-                                <option value="4">Pravý dolní</option>
-                            </select>
-                        </div>
-
-                        <div id="options-had" class="cipher-options mt-3" style="display:none;">
-                            <label>Začátek hada:</label>
-                            <select name="smer_had" class="form-select small-select">
-                                <option value="shora">Shora dolů</option>
-                                <option value="zleva">Zdola nahoru</option>
-                            </select>
-                        </div>
-
-                        <div class="mt-3">
+                        <div class="form-group mt-3">
                             <label>Vstupní text:</label>
-                            <textarea name="vstup" class="form-control" rows="3">{{ vstup|default:"" }}</textarea>
+                            <textarea name="vstup" class="form-control" rows="3" required>{{ vstup|default:"" }}</textarea>
                         </div>
 
-                        <div class="mt-3">
-                            <label>Operace:</label>
-                            <select name="akce" class="form-select small-select">
-                                <option value="sifrovat">Zašifrovat</option>
-                                <option value="desifrovat">Dešifrovat</option>
-                            </select>
-                        </div>
-
-                        <div class="btn-container">
-                            <button type="submit" class="btn-submit">Provést operaci</button>
+                        <div class="form-group mt-3">
+                            <button type="submit" name="akce" value="sifrovat" class="btn-primary">Šifrovat</button>
+                            <button type="submit" name="akce" value="desifrovat" class="btn-primary">Dešifrovat</button>
                         </div>
                     </form>
 
@@ -169,10 +102,11 @@
                     <div class="result-area mt-4">
                         <h3 style="color: #d4f0c7;">Výsledek:</h3>
                         <p class="result-text">{{ vysledek_morse }}{{ vysledek_number }}</p>
-
+                        {% if vysledek_prepis %}
                         <hr style="border-color: rgba(255,255,255,0.1)">
                         <small style="color: #d4f0c7;">Verze pro přepis:</small>
                         <p class="result-prepis-box">{{ vysledek_prepis }}</p>
+                        {% endif %}
                     </div>
                     {% endif %}
 
@@ -182,7 +116,7 @@
                         <div class="matrix-display">
                             {% for radek in vysledek_matrix %}
                             <div class="matrix-row">
-                                {% for char in radek %}<span class="matrix-cell">{{ char }}</span>{% endfor %}
+                                {% for char in radek %}<span class="matrix-cell">{{ char }}</span>{% endfor % Kent }
                             </div>
                             {% endfor %}
                         </div>
