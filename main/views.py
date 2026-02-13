@@ -23,6 +23,9 @@ def home(request):
         # Uložení dat zpět do kontextu pro zachování ve formuláři po odeslání
         context.update({'projekt': project, 'vstup': user_input, 'akce': action, 'shift': shift})
 
+        # Načtení hodnoty z dynamického selectu (default "1")
+        dynamic_val = request.POST.get("dynamic_select", "1")
+
         # --- 1. MORSEOVKA ---
         if project == "morse":
             mode = dyn_select or "1"
@@ -119,21 +122,33 @@ def home(request):
 
         # --- 4. SPIRÁLA ---
         elif project == "spirala":
-            start_point = dyn_select or "1"
-            matrix, dimension = matrix_logic.vytvor_matice_sifry(user_input, "1", start_point)
-            context.update({'vysledek_matrix': matrix, 'rozmer_matrix': dimension, 'start_bod': start_point})
+            matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "1", dynamic_val)
+            context['start_bod'] = dynamic_val # Pro JS vzpomínku
 
         # --- 5. ŠNEK ---
         elif project == "snek":
-            start_center = dyn_select or "1"
-            matrix, dimension = matrix_logic.vytvor_matice_sifry(user_input, "2", start_center)
-            context.update({'vysledek_matrix': matrix, 'rozmer_matrix': dimension, 'start_bod': start_center})
+            matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "2", dynamic_val)
+            context['start_bod'] = dynamic_val # Pro JS vzpomínku
 
         # --- 6. HAD ---
         elif project == "had":
-            direction = dyn_select or "shora"
-            param = "2" if direction == "shora" else "1"
-            matrix, dimension = matrix_logic.vytvor_matice_sifry(user_input, "3", param)
-            context.update({'vysledek_matrix': matrix, 'rozmer_matrix': dimension, 'smer_had': direction})
+            # Převod textu ze selectu na parametry pro tvou logiku
+            # "shora" -> parametr "2", "zleva" -> parametr "1"
+            param_had = "2" if dynamic_val == "shora" else "1"
+            matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "3", param_had)
+            context['smer_had'] = dynamic_val # Pro JS vzpomínku (shora/zleva)
+
+        if project in ["spirala", "snek", "had"]:
+            context['vysledek_matrix'] = matrix
+            context['rozmer_matrix'] = dim
+            
+            # Vytvoření té "krabičky" s čarami | |
+            radky_prepis = []
+            for radek in matrix:
+                # Každý řádek obalíme | a spojíme znaky mezerou
+                radky_prepis.append(f"| {' '.join(radek)} |")
+            
+            # Spojíme řádky do jednoho bloku textu s odřádkováním
+            context['vysledek_prepis_matrix'] = "\n".join(radky_prepis)
 
     return render(request, "main/index.html", context)
