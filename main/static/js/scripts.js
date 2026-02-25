@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnUzly = document.getElementById('btn-uzly');
     const secUvod = document.getElementById('section-uvod');
     const secSifry = document.getElementById('section-sifry');
+    const secUzly = document.getElementById('section-uzly');
     const djangoData = document.getElementById('django-data');
 
     // POMOCNÁ FUNKCE: Nastaví select, label a vybere správnou hodnotu
@@ -96,10 +97,45 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Globální funkce pro zobrazení detailu uzlu
+window.zobrazUzel = function(folderName, nazev, ytUrl, popis) {
+    const detail = document.getElementById('uzel-detail');
+    const iframe = document.getElementById('uzel-video');
+    const obrazkyContainer = document.getElementById('uzel-obrazky');
+
+    // 1. Nastavíme texty
+    document.getElementById('uzel-nazev').innerText = nazev;
+    document.getElementById('uzel-popis').innerText = popis;
+
+    // 2. Nastavíme YouTube video
+    iframe.src = ytUrl;
+
+    // 3. Vygenerujeme 5 obrázků ze složky
+    // Cesta: static/uzly/[folderName]/1.png ...
+    let imgHtml = '';
+    for (let i = 1; i <= 5; i++) {
+        imgHtml += `
+            <div class="col" style="flex: 1; min-width: 150px;">
+                <img src="/static/uzly/${folderName}/${i}.png" class="uzel-img-step" alt="Krok ${i}">
+                <small style="display:block; text-align:center; color:#d4f0c7;">Krok ${i}</small>
+            </div>`;
+    }
+    obrazkyContainer.innerHTML = imgHtml;
+
     // Event listenery pro menu
-    btnSifry.onclick = () => { secUvod.style.display = 'none'; secSifry.style.display = 'block'; };
-    btnOMne.onclick = () => { secSifry.style.display = 'none'; secUvod.style.display = 'block'; };
-    btnUzly.onclick = () => { secSifry.style.display = 'none'; secUvod.style.display = 'block'; };
+    btnSifry.onclick = () => { 
+        secUvod.style.display = 'none'; 
+        secSifry.style.display = 'block'; 
+        };
+    btnOMne.onclick = () => {
+         secSifry.style.display = 'none';
+         secUvod.style.display = 'block'; 
+        };
+    btnUzly.onclick = () => { 
+    secUvod.style.display = 'none'; 
+    secSifry.style.display = 'none'; 
+    secUzly.style.display = 'block'; 
+        };
 
     // Automatické otevření sekce šifry po odeslání z Django
     if (djangoData && djangoData.getAttribute('data-show-sifry') === 'true') {
@@ -109,5 +145,13 @@ document.addEventListener('DOMContentLoaded', function () {
     cipherType.onchange = (e) => handleCipherChange(e.target.value);
     
     // Prvotní spuštění při načtení
+    handleCipherChange(cipherType.value);
+    detail.style.display = 'block';
+};
+
+    // Event listeners for cipher type change
+    cipherType.onchange = (e) => handleCipherChange(e.target.value);
+    
+    // Initial run on page load
     handleCipherChange(cipherType.value);
 });
