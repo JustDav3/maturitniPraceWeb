@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     const btnSifry = document.getElementById('btn-sifry');
     const btnOMne = document.getElementById('btn-o-mne');
+    const btnuzly = document.getElementById('btn-uzly');
     const secUvod = document.getElementById('section-uvod');
     const secSifry = document.getElementById('section-sifry');
     const djangoData = document.getElementById('django-data');

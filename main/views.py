@@ -83,13 +83,6 @@ def home(request):
             if action == "sifrovat":
                 # Posun textu před převodem do bináru
                 shifted_text = ""
-                for char in user_input.lower():
-                    if 'a' <= char <= 'z':
-                        new_pos = (ord(char) - ord('a') + 1 + shift - 1) % 26 + 1
-                        shifted_text += chr(new_pos + ord('a') - 1)
-                    else:
-                        shifted_text += char
-                
                 result = binary_logic.encrypt(shifted_text, separator)
                 
                 # Pokud je zapnutá inverze (záměna 0 za 1)
@@ -105,16 +98,8 @@ def home(request):
                     deinverted = [ "".join('1' if b=='0' else '0' for b in p) if p else "" for p in parts ]
                     input_data = separator.join(deinverted)
 
-                raw_result = binary_logic.decrypt(input_data, separator)
-                
+                final_text = binary_logic.decrypt(input_data, separator)
                 # Vrácení posunu zpět
-                final_text = ""
-                for char in raw_result:
-                    if 'a' <= char <= 'z':
-                        orig_pos = (ord(char) - ord('a') + 1 - shift - 1) % 26 + 1
-                        final_text += chr(orig_pos + ord('a') - 1)
-                    else:
-                        final_text += char
                 result = final_text.upper()
             
             context['vysledek_number'] = result
