@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
             dInp3.style.display = 'block';
             document.getElementById('label-input-3').innerText = 'Oddělovač bitů:';
             dCheck.style.display = 'block';
-            document.getElementById('label-checkbox').innerText = 'Inverzní bity (0↔1)';
+            document.getElementById('label-checkbox').innerText = 'Invertování bitů (0↔1)';
         }
         else if (val === 'spirala') {
             setupSelect('Startovní bod (roh):', [
