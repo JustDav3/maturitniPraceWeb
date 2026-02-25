@@ -106,11 +106,13 @@ def home(request):
         # --- 4. SPIRÁLA ---
         elif project == "spirala":
             matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "1", dynamic_val)
+            user_input = user_input.upper()
             context['start_bod'] = dynamic_val # Pro JS vzpomínku
 
         # --- 5. ŠNEK ---
         elif project == "snek":
             matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "2", dynamic_val)
+            user_input = user_input.upper()
             context['start_bod'] = dynamic_val # Pro JS vzpomínku
 
         # --- 6. HAD ---
