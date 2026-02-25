@@ -82,8 +82,7 @@ def home(request):
             separator = in3 or " "
             if action == "sifrovat":
                 # Posun textu před převodem do bináru
-                shifted_text = ""
-                result = binary_logic.encrypt(shifted_text, separator)
+                result = binary_logic.encrypt(user_input, separator)
                 
                 # Pokud je zapnutá inverze (záměna 0 za 1)
                 if dyn_check:
@@ -92,15 +91,14 @@ def home(request):
                     result = separator.join(inverted)
             else:
                 # Dešifrování (včetně případné zpětné inverze)
-                input_data = user_input
                 if dyn_check:
                     parts = user_input.split(separator)
                     deinverted = [ "".join('1' if b=='0' else '0' for b in p) if p else "" for p in parts ]
-                    input_data = separator.join(deinverted)
+                    user_input = separator.join(deinverted)
 
-                final_text = binary_logic.decrypt(input_data, separator)
+                user_input = binary_logic.decrypt(user_input, separator)
                 # Vrácení posunu zpět
-                result = final_text.upper()
+                result = user_input.upper()
             
             context['vysledek_number'] = result
             context['vysledek_prepis'] = f"|{result}|"
