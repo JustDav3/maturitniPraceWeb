@@ -15,7 +15,25 @@ document.addEventListener('DOMContentLoaded', function () {
     const secUvod = document.getElementById('section-uvod');
     const secSifry = document.getElementById('section-sifry');
     const secUzly = document.getElementById('section-uzly');
-    const djangoData = document.getElementById('django-data');
+    const djangoData = document.getElementById('django-data');¨
+
+    const DATA_UZLU = {
+    'ambulak': [
+        "Příprava konců lan a jejich překřížení.", // Krok 1
+        "První provlečení konce pod lanem.",       // Krok 2
+        "Vytvoření druhé smyčky v opačném směru.", // Krok 3
+        "Dotažení uzlu rovnoměrným tahem.",        // Krok 4
+        "Kontrola správnosti – uzel musí být plochý." // Krok 5
+    ],
+    'skotak': [
+        "Vytvoření smyčky na silnějším laně.",
+        "Provlečení slabšího lana smyčkou spodem.",
+        "Obtočení slabšího lana kolem celé smyčky.",
+        "Provlečení pod sebou samým.",
+        "Pořádné dotažení obou lan."
+    ],
+
+    };
 
     // POMOCNÁ FUNKCE: Nastaví select, label a vybere správnou hodnotu
     function setupSelect(labelText, optionsArray, savedValue) {
@@ -105,44 +123,48 @@ document.addEventListener('DOMContentLoaded', function () {
 // --- GLOBÁLNÍ FUNKCE PRO UZLY (Mimo DOMContentLoaded) ---
 window.zobrazUzel = function(folderName, nazev, ytUrl, popis) {
     const detail = document.getElementById('uzel-detail');
-    const iframe = document.getElementById('uzel-video-frame'); // Opraveno na ID z tvého HTML
+    const iframe = document.getElementById('uzel-video-frame');
     const obrazkyContainer = document.getElementById('uzel-obrazky');
 
-    // 1. Nastavíme texty (Název a Popis)
+    // 1. Základní texty
     document.getElementById('uzel-nazev').innerText = nazev;
     document.getElementById('uzel-popis').innerText = popis;
 
-    // 2. Nastavíme YouTube video
+    // 2. Video
     if (iframe) {
         iframe.src = ytUrl;
     }
 
-    // 3. Vygenerujeme kroky pod sebe (Label + Obrázek)
+    // 3. Načtení popisků z globální proměnné (pokud neexistují, dáme prázdný text)
+    const popisky = DATA_UZLU[folderName] || ["", "", "", "", ""];
+
+    // 4. Generování velkých obrázků pod sebe
     let imgHtml = '';
-    const pocetObrazku = 5; // Počet obrázků v každé složce (1.png až 5.png)
+    const pocetObrazku = 5; 
 
     for (let i = 1; i <= pocetObrazku; i++) {
         imgHtml += `
-            <div class="uzel-step-container" style="margin-bottom: 30px;">
-                <label style="display: block; color: #d4f0c7; font-weight: bold; margin-bottom: 10px; font-size: 1.1rem;">
+            <div class="uzel-step-block" style="margin-bottom: 60px; text-align: left; width: 100%;">
+                <label style="display: block; color: #d4f0c7; font-weight: bold; font-size: 1.3rem; margin-bottom: 15px;">
                     Krok ${i}:
                 </label>
+                
                 <img src="/static/uzly/${folderName}/${i}.png" 
-                     class="uzel-img-step" 
                      alt="Krok ${i}" 
-                     style="width: 100%; max-width: 700px; border-radius: 8px; border: 1px solid rgba(212,240,199,0.2); display: block;">
+                     style="width: 100%; height: auto; border-radius: 8px; border: 2px solid rgba(212,240,199,0.3); display: block; margin-bottom: 20px;">
+                
+                <p style="color: white; font-size: 1.2rem; line-height: 1.6; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 6px; border-left: 4px solid #77a868;">
+                    ${popisky[i-1] ? popisky[i-1] : "Popis pro tento krok zatím nebyl přidán."}
+                </p>
             </div>`;
     }
 
-    // 4. Přidáme tmavě zelenou oddělovací čáru na konec
-    imgHtml += `<hr style="border: 0; height: 4px; background-color: #1a2a16; margin-top: 40px; border-radius: 2px;">`;
+    // 5. Tmavě zelená oddělovací čára
+    imgHtml += `<hr style="border: 0; height: 6px; background-color: #1a2a16; margin: 50px 0; border-radius: 10px;">`;
 
-    // Vložíme vygenerovaný obsah do kontejneru
     obrazkyContainer.innerHTML = imgHtml;
 
-    // 5. Zviditelníme celý detail uzlu
+    // 6. Zobrazení
     detail.style.display = 'block';
-    
-    // Automaticky odskrolujeme na začátek detailu, aby uživatel viděl název
     detail.scrollIntoView({ behavior: 'smooth' });
 };
