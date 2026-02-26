@@ -105,10 +105,10 @@ document.addEventListener('DOMContentLoaded', function () {
 // --- GLOBÁLNÍ FUNKCE PRO UZLY (Mimo DOMContentLoaded) ---
 window.zobrazUzel = function(folderName, nazev, ytUrl, popis) {
     const detail = document.getElementById('uzel-detail');
-    const iframe = document.getElementsByClassName('uzel-video');
+    const iframe = document.getElementsByClassName('uzel-video-frame');
     const obrazkyContainer = document.getElementById('uzel-obrazky');
 
-    // 1. Nastavíme texty
+    // 1. Nastavíme texty;
     document.getElementById('uzel-nazev').innerText = nazev;
     document.getElementById('uzel-popis').innerText = popis;
 
