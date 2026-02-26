@@ -105,27 +105,44 @@ document.addEventListener('DOMContentLoaded', function () {
 // --- GLOBÁLNÍ FUNKCE PRO UZLY (Mimo DOMContentLoaded) ---
 window.zobrazUzel = function(folderName, nazev, ytUrl, popis) {
     const detail = document.getElementById('uzel-detail');
-    const iframe = document.getElementsByClassName('uzel-video-frame');
+    const iframe = document.getElementById('uzel-video-frame'); // Opraveno na ID z tvého HTML
     const obrazkyContainer = document.getElementById('uzel-obrazky');
 
-    // 1. Nastavíme texty;
+    // 1. Nastavíme texty (Název a Popis)
     document.getElementById('uzel-nazev').innerText = nazev;
     document.getElementById('uzel-popis').innerText = popis;
 
     // 2. Nastavíme YouTube video
-    iframe.src = ytUrl;
+    if (iframe) {
+        iframe.src = ytUrl;
+    }
 
-    // 3. Vygenerujeme 5 obrázků
+    // 3. Vygenerujeme kroky pod sebe (Label + Obrázek)
     let imgHtml = '';
-    for (let i = 1; i <= 5; i++) {
+    const pocetObrazku = 5; // Počet obrázků v každé složce (1.png až 5.png)
+
+    for (let i = 1; i <= pocetObrazku; i++) {
         imgHtml += `
-            <div class="col" style="flex: 1; min-width: 150px;">
-                <img src="/static/uzly/${folderName}/${i}.png" class="uzel-img-step" alt="Krok ${i}" style="width:100%; border-radius:4px;">
-                <small style="display:block; text-align:center; color:#d4f0c7;">Krok ${i}</small>
+            <div class="uzel-step-container" style="margin-bottom: 30px;">
+                <label style="display: block; color: #d4f0c7; font-weight: bold; margin-bottom: 10px; font-size: 1.1rem;">
+                    Krok ${i}:
+                </label>
+                <img src="/static/uzly/${folderName}/${i}.png" 
+                     class="uzel-img-step" 
+                     alt="Krok ${i}" 
+                     style="width: 100%; max-width: 700px; border-radius: 8px; border: 1px solid rgba(212,240,199,0.2); display: block;">
             </div>`;
     }
+
+    // 4. Přidáme tmavě zelenou oddělovací čáru na konec
+    imgHtml += `<hr style="border: 0; height: 4px; background-color: #1a2a16; margin-top: 40px; border-radius: 2px;">`;
+
+    // Vložíme vygenerovaný obsah do kontejneru
     obrazkyContainer.innerHTML = imgHtml;
 
-    // 4. Zviditelníme detail
+    // 5. Zviditelníme celý detail uzlu
     detail.style.display = 'block';
+    
+    // Automaticky odskrolujeme na začátek detailu, aby uživatel viděl název
+    detail.scrollIntoView({ behavior: 'smooth' });
 };
