@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const secUvod = document.getElementById('section-uvod');
     const secSifry = document.getElementById('section-sifry');
     const secUzly = document.getElementById('section-uzly');
-    const djangoData = document.getElementById('django-data');¨
+    const djangoData = document.getElementById('django-data');
 
     const DATA_UZLU = {
     'ambulak': [
