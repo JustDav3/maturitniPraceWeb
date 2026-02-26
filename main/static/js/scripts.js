@@ -1,3 +1,21 @@
+const DATA_UZLU = {
+    'ambulak': [
+        "Příprava konců lan a jejich překřížení.", // Krok 1
+        "První provlečení konce pod lanem.",       // Krok 2
+        "Vytvoření druhé smyčky v opačném směru.", // Krok 3
+        "Dotažení uzlu rovnoměrným tahem.",        // Krok 4
+        "Kontrola správnosti – uzel musí být plochý." // Krok 5
+    ],
+    'skotak': [
+        "Vytvoření smyčky na silnějším laně.",
+        "Provlečení slabšího lana smyčkou spodem.",
+        "Obtočení slabšího lana kolem celé smyčky.",
+        "Provlečení pod sebou samým.",
+        "Pořádné dotažení obou lan."
+    ],
+
+};
+
 document.addEventListener('DOMContentLoaded', function () {
     const cipherType = document.getElementById('cipher-type');
     const shiftBox = document.getElementById('shared-shift-container');
@@ -15,25 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const secUvod = document.getElementById('section-uvod');
     const secSifry = document.getElementById('section-sifry');
     const secUzly = document.getElementById('section-uzly');
-    const djangoData = document.getElementById('django-data');
-
-    const DATA_UZLU = {
-    'ambulak': [
-        "Příprava konců lan a jejich překřížení.", // Krok 1
-        "První provlečení konce pod lanem.",       // Krok 2
-        "Vytvoření druhé smyčky v opačném směru.", // Krok 3
-        "Dotažení uzlu rovnoměrným tahem.",        // Krok 4
-        "Kontrola správnosti – uzel musí být plochý." // Krok 5
-    ],
-    'skotak': [
-        "Vytvoření smyčky na silnějším laně.",
-        "Provlečení slabšího lana smyčkou spodem.",
-        "Obtočení slabšího lana kolem celé smyčky.",
-        "Provlečení pod sebou samým.",
-        "Pořádné dotažení obou lan."
-    ],
-
-    };
+    const djangoData = document.getElementById('django-data');    
 
     // POMOCNÁ FUNKCE: Nastaví select, label a vybere správnou hodnotu
     function setupSelect(labelText, optionsArray, savedValue) {
