@@ -153,7 +153,7 @@ window.zobrazUzel = function(folderName, nazev, ytUrl, popis) {
                      alt="Krok ${i}" 
                      style="width: 100%; height: auto; border-radius: 8px; border: 2px solid rgba(212,240,199,0.3); display: block; margin-bottom: 20px;">
                 
-                <p style="color: white; font-size: 1.2rem; line-height: 1.6; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 6px; border-left: 4px solid #77a868;">
+                <p style="color: white; font-size: 1.2rem; line-height: 1.6;">
                     ${popisky[i-1] ? popisky[i-1] : "Popis pro tento krok zatím nebyl přidán."}
                 </p>
             </div>`;
