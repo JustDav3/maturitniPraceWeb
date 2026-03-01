@@ -105,27 +105,40 @@ document.addEventListener('DOMContentLoaded', function () {
 // --- GLOBÁLNÍ FUNKCE PRO UZLY (Mimo DOMContentLoaded) ---
 window.zobrazUzel = function(folderName, nazev, ytUrl, popis) {
     const detail = document.getElementById('uzel-detail');
-    const iframe = document.getElementById('uzel-video');
+    const iframe = document.getElementById('uzel-video-frame');
     const obrazkyContainer = document.getElementById('uzel-obrazky');
 
-    // 1. Nastavíme texty
+    // Nastavení základních informací
     document.getElementById('uzel-nazev').innerText = nazev;
     document.getElementById('uzel-popis').innerText = popis;
+    if (iframe) { iframe.src = ytUrl; }
 
-    // 2. Nastavíme YouTube video
-    iframe.src = ytUrl;
+    // Načtení popisků z globálního objektu
+    const popisky = DATA_UZLU[folderName] || [];
 
-    // 3. Vygenerujeme 5 obrázků
+    // Generování kroků pod sebe
     let imgHtml = '';
     for (let i = 1; i <= 5; i++) {
         imgHtml += `
-            <div class="col" style="flex: 1; min-width: 150px;">
-                <img src="/static/uzly/${folderName}/${i}.png" class="uzel-img-step" alt="Krok ${i}" style="width:100%; border-radius:4px;">
-                <small style="display:block; text-align:center; color:#d4f0c7;">Krok ${i}</small>
+            <div class="uzel-step-block" style="margin-bottom: 60px; text-align: left;">
+                <label style="display: block; color: #d4f0c7; font-weight: bold; font-size: 1.3rem; margin-bottom: 10px;">
+                    Krok ${i}:
+                </label>
+                
+                <img src="/static/uzly/${folderName}/${i}.png" 
+                     alt="Krok ${i}" 
+                     style="width: 100%; height: auto; border-radius: 8px; border: 1px solid rgba(212,240,199,0.3); display: block;">
+                
+                <p style="color: white; font-size: 1.2rem; line-height: 1.6; margin-top: 15px; padding: 0 5px;">
+                    ${popisky[i-1] || ""}
+                </p>
             </div>`;
     }
-    obrazkyContainer.innerHTML = imgHtml;
 
-    // 4. Zviditelníme detail
+    // Tmavě zelená oddělovací čára na konci
+    imgHtml += `<hr style="border: 0; height: 5px; background-color: #1a2a16; margin: 40px 0; border-radius: 10px;">`;
+
+    obrazkyContainer.innerHTML = imgHtml;
     detail.style.display = 'block';
+    detail.scrollIntoView({ behavior: 'smooth' });
 };
