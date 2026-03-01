@@ -181,12 +181,12 @@ small {
     white-space: pre-wrap;     /* Zachová mezery, ale zalomí dlouhé řádky */
 }
 /* Uzly videa a obrázky */
-.video-wrapper {
+.uzly-video {
     position: relative;
     padding-bottom: 56.25%; /* Poměr 16:9 */
     height: 0;
 }
-.video-wrapper iframe {
+.uzly-video iframe {
     position: absolute;
     top: 0;
     left: 0;

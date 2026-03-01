@@ -1,3 +1,21 @@
+const DATA_UZLU = {
+    'ambulak': [
+        "Příprava konců lan a jejich překřížení.", // Krok 1
+        "První provlečení konce pod lanem.",       // Krok 2
+        "Vytvoření druhé smyčky v opačném směru.", // Krok 3
+        "Dotažení uzlu rovnoměrným tahem.",        // Krok 4
+        "Kontrola správnosti – uzel musí být plochý." // Krok 5
+    ],
+    'skotak': [
+        "Vytvoření smyčky na silnějším laně.",
+        "Provlečení slabšího lana smyčkou spodem.",
+        "Obtočení slabšího lana kolem celé smyčky.",
+        "Provlečení pod sebou samým.",
+        "Pořádné dotažení obou lan."
+    ],
+
+};
+
 document.addEventListener('DOMContentLoaded', function () {
     const cipherType = document.getElementById('cipher-type');
     const shiftBox = document.getElementById('shared-shift-container');
@@ -15,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const secUvod = document.getElementById('section-uvod');
     const secSifry = document.getElementById('section-sifry');
     const secUzly = document.getElementById('section-uzly');
-    const djangoData = document.getElementById('django-data');
+    const djangoData = document.getElementById('django-data');    
 
     // POMOCNÁ FUNKCE: Nastaví select, label a vybere správnou hodnotu
     function setupSelect(labelText, optionsArray, savedValue) {
@@ -108,37 +126,28 @@ window.zobrazUzel = function(folderName, nazev, ytUrl, popis) {
     const iframe = document.getElementById('uzel-video-frame');
     const obrazkyContainer = document.getElementById('uzel-obrazky');
 
-    // Nastavení základních informací
+    // 1. Nastavíme texty
     document.getElementById('uzel-nazev').innerText = nazev;
     document.getElementById('uzel-popis').innerText = popis;
     if (iframe) { iframe.src = ytUrl; }
 
-    // Načtení popisků z globálního objektu
-    const popisky = DATA_UZLU[folderName] || [];
+    // 2. Nastavíme YouTube video
+    iframe.src = ytUrl;
 
-    // Generování kroků pod sebe
+    // 3. Vygenerujeme 5 obrázků
     let imgHtml = '';
-    for (let i = 1; i <= 5; i++) {
+    const pocetObrazku = 5; 
+
+    for (let i = 1; i <= pocetObrazku; i++) {
         imgHtml += `
-            <div class="uzel-step-block" style="margin-bottom: 60px; text-align: left;">
-                <label style="display: block; color: #d4f0c7; font-weight: bold; font-size: 1.3rem; margin-bottom: 10px;">
-                    Krok ${i}:
-                </label>
-                
-                <img src="/static/uzly/${folderName}/${i}.png" 
-                     alt="Krok ${i}" 
-                     style="width: 100%; height: auto; border-radius: 8px; border: 1px solid rgba(212,240,199,0.3); display: block;">
-                
-                <p style="color: white; font-size: 1.2rem; line-height: 1.6; margin-top: 15px; padding: 0 5px;">
-                    ${popisky[i-1] || ""}
-                </p>
+            <div class="col" style="flex: 1; min-width: 150px;">
+                <img src="/static/uzly/${folderName}/${i}.png" class="uzel-img-step" alt="Krok ${i}" style="width:100%; border-radius:4px;">
+                <small style="display:block; text-align:center; color:#d4f0c7;">Krok ${i}</small>
             </div>`;
     }
-
-    // Tmavě zelená oddělovací čára na konci
-    imgHtml += `<hr style="border: 0; height: 5px; background-color: #1a2a16; margin: 40px 0; border-radius: 10px;">`;
-
     obrazkyContainer.innerHTML = imgHtml;
+
+    // 4. Zviditelníme detail
     detail.style.display = 'block';
     detail.scrollIntoView({ behavior: 'smooth' });
 };
