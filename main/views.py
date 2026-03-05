@@ -106,13 +106,13 @@ def home(request):
         # --- 4. SPIRÁLA ---
         elif project == "spirala":
             matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "1", dynamic_val)
-            matrix = [matrix.upper() for prvky in matrix]
+            matrix = [prvky.upper() for prvky in matrix]
             context['start_bod'] = dynamic_val # Pro JS vzpomínku
 
         # --- 5. ŠNEK ---
         elif project == "snek":
             matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "2", dynamic_val)
-            matrix = [matrix.upper() for prvky in matrix]
+            matrix = [prvky.upper() for prvky in matrix]
             context['start_bod'] = dynamic_val # Pro JS vzpomínku
 
         # --- 6. HAD ---
@@ -121,7 +121,7 @@ def home(request):
             # "shora" -> parametr "2", "zleva" -> parametr "1"
             param_had = "2" if dynamic_val == "shora" else "1"
             matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "3", param_had)
-            matrix = [matrix.upper() for prvky in matrix]
+            matrix = [prvky.upper() for prvky in matrix]
             context['smer_had'] = dynamic_val # Pro JS vzpomínku (shora/zleva)
 
         if project in ["spirala", "snek", "had"]:
