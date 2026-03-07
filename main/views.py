@@ -82,7 +82,9 @@ def home(request):
             separator = in3 or " "
             if action == "sifrovat":
                 # Posun textu před převodem do bináru
-                result = binary_logic.encrypt(user_input, separator)
+
+                clean_input = "".join([c for c in user_input if c.isalpha()])
+                result = binary_logic.encrypt(clean_input, separator)
                 
                 # Pokud je zapnutá inverze (záměna 0 za 1)
                 if dyn_check:
