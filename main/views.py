@@ -1,9 +1,27 @@
 from django.shortcuts import render
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect
 from .morse import logic as morse_logic, constants as morse_consts
 from .number_code import logic as number_logic, constants as number_consts
 from .matrix import logic as matrix_logic
 from .binary import logic as binary_logic
+
+
+
+def login_view(request):
+    if request.method == "POST":
+        user_name = request.POST.get("username")
+        pass_word = request.POST.get("password")
+        
+        user = authenticate(request, username=user_name, password=pass_word)
+        if user is not None:
+            login(request, user)
+            return redirect('home') # nebo kamkoli jinam
+        else:
+            # Zde by bylo dobré přidat zprávu o chybě pomocí messages
+            return redirect('home')
+    return redirect('home')
 
 def home(request):
     context = {}

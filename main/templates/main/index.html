@@ -177,11 +177,20 @@
         <aside class="panel">
             <div class="panel-content">
                 <h2>Přihlášení</h2>
-                <div class="login-form">
-                    <input type="text" placeholder="Jméno">
-                    <input type="password" placeholder="Heslo">
-                    <button class="btn-login">Vstoupit</button>
-                </div>
+                
+                {% if user.is_authenticated %}
+                    <p>Jsi přihlášen jako: <strong>{{ user.username }}</strong></p>
+                    <a href="{% url 'logout' %}" class="btn-submit">Odhlásit se</a>
+                {% else %}
+                    <form method="POST" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="login-form">
+                            <input type="text" name="username" placeholder="Jméno" required>
+                            <input type="password" name="password" placeholder="Heslo" required>
+                            <button type="submit" class="btn-login">Vstoupit</button>
+                        </div>
+                    </form>
+                {% endif %}
             </div>
         </aside>
     </div>

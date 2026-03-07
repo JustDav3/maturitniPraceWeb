@@ -17,9 +17,10 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from main.views import home  # Importuj tvůj pohled
+from main.views import home, login_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home), # Tato jedna cesta obslouží celou stránku
+    path('', home),
+    path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
 ]
