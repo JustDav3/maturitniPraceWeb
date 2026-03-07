@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from .morse import logic as morse_logic, constants as morse_consts
 from .number_code import logic as number_logic, constants as number_consts
@@ -21,6 +21,10 @@ def login_view(request):
         else:
             # Zde by bylo dobré přidat zprávu o chybě pomocí messages
             return redirect('home')
+    return redirect('home')
+
+def logout_view(request):
+    logout(request)
     return redirect('home')
 
 def home(request):
