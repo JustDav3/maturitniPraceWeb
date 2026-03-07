@@ -81,8 +81,6 @@ def home(request):
         # --- 3. BINÁRNÍ ŠIFRA ---
         elif project == "binary":
             separator = in3 or " "
-            if any(char.isdigit() for char in user_input):
-                messages.warning(request, "V binární šifře nelze šifrovat čísla! Byla automaticky vynechána.")
             if action == "sifrovat":
                 # Posun textu před převodem do bináru
 
