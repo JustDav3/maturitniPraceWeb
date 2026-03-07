@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 from .morse import logic as morse_logic, constants as morse_consts
 from .number_code import logic as number_logic, constants as number_consts
 from .matrix import logic as matrix_logic
@@ -80,11 +81,17 @@ def home(request):
         # --- 3. BINÁRNÍ ŠIFRA ---
         elif project == "binary":
             separator = in3 or " "
+            if any(char.isdigit() for char in user_input):
+                messages.warning(request, "V binární šifře nelze šifrovat čísla! Byla automaticky vynechána.")
             if action == "sifrovat":
                 # Posun textu před převodem do bináru
 
                 clean_input = "".join([c for c in user_input if c.isalpha()])
-                result = binary_logic.encrypt(clean_input, separator)
+                if not clean_input: # Pokud po smazání čísel nic nezbylo
+                    messages.error(request, "Chyba: Zadal jsi pouze čísla, není co šifrovat!")
+                    result = ""
+                else:
+                    result = binary_logic.encrypt(clean_input.upper(), separator)
                 
                 # Pokud je zapnutá inverze (záměna 0 za 1)
                 if dyn_check:
