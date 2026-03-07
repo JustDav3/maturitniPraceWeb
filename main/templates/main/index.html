@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webová Aplikace pro TK Rozrazil</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' % ocean.css %}"> </head>
+    <link rel="stylesheet" href="{% static 'css/style.css'%}"> </head>
 
 <body>
 
@@ -39,6 +39,16 @@
                 </div>
 
                 <div id="section-sifry" style="display: none;">
+                    {% if messages %}
+                        <div class="messages-container">
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    <strong>⚠️</strong> {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
                     <h2>Šifry</h2>
                     <form method="POST">
                         {% csrf_token %}

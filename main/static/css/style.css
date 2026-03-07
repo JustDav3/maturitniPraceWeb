@@ -203,3 +203,24 @@ small {
     border: 1px solid rgba(255,255,255,0.1);
     margin-bottom: 10px;
 }
+
+/* Styly pro systémové zprávy */
+.alert {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+}
+
+.alert-warning {
+    background-color: rgba(255, 243, 205, 0.2);
+    color: #ffeeba;
+    border-color: #ffeeba;
+}
+
+.alert-error {
+    background-color: rgba(248, 215, 218, 0.2);
+    color: #f5c6cb;
+    border-color: #f5c6cb;
+}

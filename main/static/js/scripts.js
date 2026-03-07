@@ -35,6 +35,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const secUzly = document.getElementById('section-uzly');
     const djangoData = document.getElementById('django-data');    
 
+    const showSifry = djangoData.getAttribute('data-show-sifry') === 'true';
+    const hasMessages = document.querySelector('.alert') !== null;
+
+    if (showSifry || hasMessages) {
+        secUvod.style.display = 'none';
+        secUzly.style.display = 'none';
+        secSifry.style.display = 'block';
+    }
+
     // POMOCNÁ FUNKCE: Nastaví select, label a vybere správnou hodnotu
     function setupSelect(labelText, optionsArray, savedValue) {
         dContainer.style.display = 'block'; 
