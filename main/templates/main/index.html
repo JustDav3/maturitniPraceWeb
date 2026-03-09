@@ -121,7 +121,7 @@
                         <p class="result-text">{{ vysledek_morse }}{{ vysledek_number }}</p>
                         {% if vysledek_prepis %}
                         <hr style="border-color: rgba(255,255,255,0.1)">
-                        <small style="color: #d4f0c7;">Verze pro přepis:</small>
+                        <small style="color: #d4f0c7; font-family: 'Comic Sans MS'">Verze pro přepis:</small>
                         <p class="result-prepis-box">{{ vysledek_prepis }}</p>
                         {% endif %}
                     </div>
@@ -129,7 +129,7 @@
 
                     {% if vysledek_matrix %}
                     <div class="result-area mt-4">
-                        <h3 style="color: #d4f0c7;">Maticový výsledek ({{ rozmer_matrix }}x{{ rozmer_matrix }}):</h3>
+                        <h3 style="color: #d4f0c7; font-family: 'Comic Sans MS'">Maticový výsledek ({{ rozmer_matrix }}x{{ rozmer_matrix }}):</h3>
                         <div class="matrix-display">
                             {% for radek in vysledek_matrix %}
                             <div class="matrix-row">
@@ -139,7 +139,7 @@
                         </div>
                         {% if vysledek_prepis_matrix %}
                         <div class="mt-3">
-                            <small style="color: #d4f0c7;">Textový přepis (pro kopírování):</small>
+                            <small style="color: #d4f0c7; font-family: 'Comic Sans MS'">Textový přepis (pro kopírování):</small>
                             <pre class="result-prepis-box" style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; color: white; font-family: monospace; white-space: pre;">{{ vysledek_prepis_matrix }}</pre>
                         </div>
                         {% endif %}
