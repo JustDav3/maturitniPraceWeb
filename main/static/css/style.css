@@ -147,6 +147,7 @@ textarea {
     word-break: break-all;      /* Rozbije slovo na konci řádku kdekoli */
     white-space: normal;       /* Povolí přirozené zalamování */
     line-height: 1.6;          /* Zlepší čitelnost */
+    font-family: 'Comic Sans MS';
 }
 
 .result-area {
@@ -164,6 +165,7 @@ textarea {
     background: rgba(255, 255, 255, 0.1);
     font-family: monospace;
     word-break: break-all;
+    font-family: 'Comic Sans MS';
 }
 
 .result-prepis-box {
@@ -173,6 +175,7 @@ textarea {
     word-break: break-all;     /* Důležité: text se zalomí přesně podle šířky panelu */
     white-space: pre-wrap;     /* Zachová mezery, ale zalomí dlouhé řádky */
     border-radius: 4px;
+    font-family: 'Comic Sans MS';
 }
 
 .matrix-display {
@@ -185,6 +188,7 @@ textarea {
     display: inline-block;
     width: 35px;
     font-weight: bold;
+    font-family: 'Comic Sans MS';
 }
 
 small {
