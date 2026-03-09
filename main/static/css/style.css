@@ -44,6 +44,7 @@ body {
     border: none;
     border-radius: 2px;
     resize: vertical;
+    font-family: 'Comic Sans MS';
 }
 
 .form-check {
@@ -58,6 +59,7 @@ body {
     width: 18px;
     height: 18px;
     cursor: pointer;
+    font-family: 'Comic Sans MS';
 }
 
 textarea {
@@ -84,7 +86,7 @@ textarea {
     margin: 5px auto;
     
     color: white;
-    font-weight: bold;
+    font-family: 'Comic Sans MS', bold;
     text-decoration: none;
     
     background-color: #1a2a16;
@@ -106,7 +108,7 @@ textarea {
     padding: 8px 16px;
     border-radius: 8px;
     cursor: pointer;
-    font-family: sans-serif;
+    font-family: 'Comic Sans MS';
     transition: all 0.3s ease;
     box-shadow: 0 0 5px #b5e48c, 
                 0 0 15px rgba(181, 228, 140, 0.4);
