@@ -15,6 +15,7 @@ const DATA_UZLU = {
     ],
 };
 
+
 document.addEventListener('DOMContentLoaded', function () {
     const cipherType = document.getElementById('cipher-type');
     const shiftBox = document.getElementById('shared-shift-container');
