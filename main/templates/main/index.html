@@ -6,18 +6,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webová Aplikace pro TK Rozrazil</title>
-    <link rel="stylesheet" href="{% static 'css/style.css'%}"><link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Relief&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-    
 
 <body>
 
     <div id="django-data"
-        data-show-sifry="{% if vysledek_morse or vysledek_number or vysledek_matrix %}true{% else %}false{% endif %}"
-        style="display: none;">
+        class="hidden-data"
+        data-show-sifry="{% if vysledek_morse or vysledek_number or vysledek_matrix %}true{% else %}false{% endif %}">
     </div>
 
     <div class="container">
+        
         <nav class="panel">
             <div class="panel-content">
                 <h2>Menu</h2>
@@ -40,7 +41,7 @@
                     <p>Vítej v aplikaci TK Rozrazil. Vyber sekci z menu pro pokračování.</p>
                 </div>
 
-                <div id="section-sifry" style="display: none;">
+                <div id="section-sifry" class="hidden-data">
                     {% if messages %}
                         <div class="messages-container">
                             {% for message in messages %}
@@ -67,33 +68,33 @@
                             </select>
                         </div>
 
-                        <div id="shared-shift-container" class="mb-3" style="display:none;">
+                        <div id="global-shift" class="mb-3 hidden-data">
                             <label>Posun:</label>
                             <input type="number" name="shift" class="form-control small-select" value="{{ shift|default:0 }}">
                         </div>
 
                         <div id="global-cipher-settings">
-                            <div id="container-select" class="mb-3" style="display:none;">
+                            <div id="container-select" class="mb-3 hidden-data">
                                 <label id="label-select">Nastavení:</label>
-                                <select name="dynamic_select" id="dynamic-select" class="form-select small-select" data-start-bod="{{ start_bod }}" data-smer-had="{{ smer_had }}" data-mode="{{ mode }}">"></select>
+                                <select name="dynamic_select" id="dynamic-select" class="form-select small-select" data-start-bod="{{ start_bod }}" data-smer-had="{{ smer_had }}" data-mode="{{ mode }}"></select>
                             </div>
 
                             <div class="row">
-                                <div id="container-input-1" class="col" style="display:none;">
+                                <div id="container-input-1" class="col hidden-data">
                                     <label id="label-input-1">Vstup 1:</label>
                                     <input type="text" name="input_1" id="dynamic-input-1" class="form-control small-select" value="{{ in1|default:'.' }}">
                                 </div>
-                                <div id="container-input-2" class="col" style="display:none;">
+                                <div id="container-input-2" class="col hidden-data">
                                     <label id="label-input-2">Vstup 2:</label>
                                     <input type="text" name="input_2" id="dynamic-input-2" class="form-control small-select" value="{{ in2|default:'-' }}">
                                 </div>
-                                <div id="container-input-3" class="col" style="display:none;">
+                                <div id="container-input-3" class="col hidden-data">
                                     <label id="label-input-3">Vstup 3:</label>
                                     <input type="text" name="input_3" id="dynamic-input-3" class="form-control small-select" value="{{ in3|default:'|' }}">
                                 </div>
                             </div>
 
-                            <div id="container-checkbox" class="form-check mt-3" style="display:none;">
+                            <div id="container-checkbox" class="form-check mt-3 hidden-data">
                                 <input class="form-check-input" type="checkbox" name="dynamic_checkbox" id="dynamic-checkbox" {% if dyn_check %}checked{% endif %}>
                                 <label id="label-checkbox" class="form-check-label" for="dynamic-checkbox">Obrátit</label>
                             </div>
@@ -119,11 +120,11 @@
 
                     {% if vysledek_morse or vysledek_number %}
                     <div class="result-area mt-4">
-                        <h3 style="color: #d4f0c7;">Výsledek:</h3>
+                        <h3 class="text-highlight">Výsledek:</h3>
                         <p class="result-text">{{ vysledek_morse }}{{ vysledek_number }}</p>
                         {% if vysledek_prepis %}
-                        <hr style="border-color: rgba(255,255,255,0.1)">
-                        <small style="color: #d4f0c7; font-family: 'Comic Sans MS'">Verze pro přepis:</small>
+                        <hr class="result-separator">
+                        <small class="text-highlight">Verze pro přepis:</small>
                         <p class="result-prepis-box">{{ vysledek_prepis }}</p>
                         {% endif %}
                     </div>
@@ -131,7 +132,7 @@
 
                     {% if vysledek_matrix %}
                     <div class="result-area mt-4">
-                        <h3 style="color: #d4f0c7; font-family: 'Comic Sans MS'">Maticový výsledek ({{ rozmer_matrix }}x{{ rozmer_matrix }}):</h3>
+                        <h3 class="text-highlight">Maticový výsledek ({{ rozmer_matrix }}x{{ rozmer_matrix }}):</h3>
                         <div class="matrix-display">
                             {% for radek in vysledek_matrix %}
                             <div class="matrix-row">
@@ -141,54 +142,30 @@
                         </div>
                         {% if vysledek_prepis_matrix %}
                         <div class="mt-3">
-                            <small style="color: #d4f0c7; font-family: 'Comic Sans MS'">Textový přepis (pro kopírování):</small>
-                            <pre class="result-prepis-box" style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; color: white; font-family: monospace; white-space: pre;">{{ vysledek_prepis_matrix }}</pre>
+                            <small class="text-highlight">Textový přepis (pro kopírování):</small>
+                            <pre class="pre-box">{{ vysledek_prepis_matrix }}</pre>
                         </div>
                         {% endif %}
                     </div>
                     {% endif %}
                 </div>
 
-                <div id="section-uzly" style="display: none;">
+                <div id="section-uzly" class="hidden-data">
                     <h2>Knihovna uzlů</h2>
-                    
-                    <div class="uzly-menu mb-4">
-                        <span class="btn-uzel-text" onclick="zobrazUzel('ambulak', 'Ambulák', 'https://www.youtube-nocookie.com/embed/zUTuDpYQsvI?si=uqmgTjvEYk2LxKXQ', 'Tento uzel slouží ke spojování stejně silných lan.')">Ambulák</span>
-                        <span class="btn-uzel-text" onclick="zobrazUzel('auticka', 'Autíčka', 'https://www.youtube-nocookie.com/embed/ltyfdXzHZi8?si=eEZWN-x3J0y0aH15', 'Nic')">Autíčka</span>
-                        <span class="btn-uzel-text" onclick="zobrazUzel('dobracek', 'Dobráček', 'https://www.youtube-nocookie.com/embed/eT47TEOTS8A?si=E0PAW-wyInp9ZoQ0', 'Nic')">Dobráček</span>
-                        <span class="btn-uzel-text" onclick="zobrazUzel('dracak', 'Dračák', 'https://www.youtube-nocookie.com/embed/_E0KBUc2GFg?si=3tMzHN43ZrAk2n-P', 'Nic')">Dračák</span>
-                        <span class="btn-uzel-text" onclick="zobrazUzel('drevarak', 'Dřevařák', 'https://www.youtube-nocookie.com/embed/kXSCqdBSdQM?si=9CIS8uw7_SCjKxc_', 'Nic')">Dřevařák</span>
-                        <span class="btn-uzel-text" onclick="zobrazUzel('liscak', 'Liščák', 'https://www.youtube-nocookie.com/embed/bdw2_9jnkwc?si=BNHaErGVwTCl7Axx', 'Nic')">Liščák</span>
-                        <span class="btn-uzel-text" onclick="zobrazUzel('lodak', 'Lodák', 'https://www.youtube-nocookie.com/embed/HEW92nDCrmg?si=2ni5u4x4Pm6PI_p9', 'Nic')">Lodák</span>
-                        <span class="btn-uzel-text" onclick="zobrazUzel('pouta', 'Pouta', 'https://www.youtube-nocookie.com/embed/GHfZHNNelAM?si=0-J2vfKmVVysH0e3', 'Nic')">Pouta</span>
-                        <span class="btn-uzel-text" onclick="zobrazUzel('sevcak', 'Ševčák', 'https://www.youtube-nocookie.com/embed/gleZlA655WI?si=QF4T7-58C9jV2FFs', 'Nic')">Ševčák</span>
-                        <span class="btn-uzel-text" onclick="zobrazUzel('skotak', 'Škoťák', 'https://www.youtube-nocookie.com/embed/n5P6xnNa5nI?si=PHw2un8CPVoN9Tth', 'Škoťák je ideální pro spojení dvou lan různé tloušťky.')">Škoťák</span>
-                        <span class="btn-uzel-text" onclick="zobrazUzel('zkracovacka', 'Zkracovačka', 'https://www.youtube-nocookie.com/embed/gdoa6zCbR5A?si=PXjHmhRURF7E4sWu', 'Nic')">Zkracovačka</span>
-                    </div>
-
-                    <div id="uzel-detail" style="display: none;">
-                        <h3 id="uzel-nazev" style="color: #d4f0c7; border-bottom: 1px solid rgba(212,240,199,0.3); padding-bottom: 10px;"></h3>
-                        
-                        <div class="uzel-video-div mt-3">
-                            <iframe id="uzel-video-frame" width="560" height="315" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" lowfullscreen>></iframe>
+                    <div id="uzel-detail" class="hidden-data">
+                        <h3 id="uzel-nazev" class="uzel-title-border"></h3>
+                        <div class="uzly-video-div mt-3">
+                            <iframe id="uzel-video-frame" allowfullscreen></iframe>
                         </div>
-
-                        <p id="uzel-popis" class="mt-3" style="font-style: italic;"></p>
-
-                        <div class="uzly-galerie mt-4">
-                            <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Postup krok za krokem:</h4>
-                            <div id="uzel-obrazky">
-                                </div>
-                        </div>
+                        <p id="uzel-popis" class="mt-3 italic-text"></p>
                     </div>
                 </div>
             </div>
         </main>
 
-        <aside class="panel">
+        <aside class="panel-prihlaseni">
             <div class="panel-content">
                 <h2>Přihlášení</h2>
-                
                 {% if user.is_authenticated %}
                     <p>Jsi přihlášen jako: <strong>{{ user.username }}</strong></p>
                     <a href="{% url 'logout' %}" class="btn-submit">Odhlásit se</a>
@@ -198,7 +175,7 @@
                         <div class="login-form">
                             <input type="text" name="username" placeholder="Jméno" required>
                             <input type="password" name="password" placeholder="Heslo" required>
-                            <button type="submit" class="btn-login">Vstoupit</button>
+                            <button type="submit" class="btn-submit">Vstoupit</button>
                         </div>
                     </form>
                 {% endif %}
@@ -206,7 +183,7 @@
         </aside>
     </div>
 
+    
     <script type="module" src="{% static 'js/scripts.js' %}"></script>
 </body>
-
 </html>
