@@ -38,6 +38,9 @@ body {
     flex: 1;
 }
 
+.hidden-element { display: none; }
+.hidden-section { display: none; }
+
 /* --- 3. KOMPONENTY FORMULÁŘE --- */
 .form-control,
 .form-select {
@@ -170,6 +173,10 @@ textarea {
     font-family: 'Comic Relief';
 }
 
+.result-header { color: #d4f0c7; font-family: 'Comic Relief'; }
+.result-divider { border-color: rgba(255,255,255,0.1); }
+.result-small { color: #d4f0c7; font-family: 'Comic Relief'; }
+
 .matrix-display {
     margin-top: 10px;
     text-align: center;
@@ -212,6 +219,12 @@ small {
     border: 1px solid rgba(255, 255, 255, 0.1);
     margin-bottom: 10px;
 }
+
+.uzel-title { color: #d4f0c7; border-bottom: 1px solid rgba(212,240,199,0.3); padding-bottom: 10px; }
+.uzel-description { font-style: italic; }
+.uzl-video-container { position: relative; padding-bottom: 56.25%; height: 0; }
+.uzl-video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 4px; }
+.step-label { display: block; text-align: center; color: #d4f0c7; font-family: 'Comic Relief'; }
 
 /* Styly pro systémové zprávy */
 .alert {
