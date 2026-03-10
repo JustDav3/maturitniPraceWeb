@@ -1,4 +1,4 @@
-/* --- 1. GLOBÁLNÍ NASTAVENÍ (Základní kameny) --- */
+/* --- 1. GLOBÁLNÍ NASTAVENÍ --- */
 body {
     display: flex;
     justify-content: center;
@@ -6,10 +6,11 @@ body {
     padding: 40px 20px;
     background-color: #080d07;
     color: white;
-    font-family: 'Comic Sans MS', cursive;
+    /* Univerzální font pro všechna zařízení */
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive;
 }
 
-/* --- 2. LAYOUT STRÁNKY (Mřížka a panely) --- */
+/* --- 2. LAYOUT STRÁNKY --- */
 .container {
     display: grid;
     grid-template-columns: 250px 1fr 240px;
@@ -28,7 +29,6 @@ body {
     overflow: hidden;
 }
 
-/* Pomocné třídy pro rozvržení */
 .row { display: flex; gap: 10px; }
 .col { flex: 1; }
 
@@ -44,7 +44,7 @@ body {
     border: none;
     border-radius: 2px;
     resize: vertical;
-    font-family: 'Comic Sans MS';
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive;
 }
 
 .form-check {
@@ -59,7 +59,6 @@ body {
     width: 18px;
     height: 18px;
     cursor: pointer;
-    font-family: 'Comic Sans MS';
 }
 
 textarea {
@@ -73,7 +72,7 @@ textarea {
     margin: 5px;
 }
 
-/* 4. TLAČÍTKA A CENTROVÁNÍ */
+/* --- 4. TLAČÍTKA A GLOW EFEKTY --- */
 .btn-container {
     margin-top: 25px;
     text-align: center;
@@ -81,14 +80,14 @@ textarea {
     justify-content: center;
 }
 
+/* Klasické odesílací tlačítko */
 .btn-submit {
     padding: 12px 40px;
     margin: 5px auto;
-    
     color: white;
-    font-family: 'Comic Sans MS', bold;
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive;
+    font-weight: bold;
     text-decoration: none;
-    
     background-color: #1a2a16;
     border: 1px solid #4a6d3f;
     cursor: pointer;
@@ -99,6 +98,7 @@ textarea {
     background-color: #2d4526;
 }
 
+/* Speciální zářící tlačítko pro uzly */
 .btn-uzel-text {
     display: inline-block;
     margin: 5px;
@@ -108,8 +108,10 @@ textarea {
     padding: 8px 16px;
     border-radius: 8px;
     cursor: pointer;
-    font-family: 'Comic Sans MS';
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive;
     transition: all 0.3s ease;
+    box-shadow: 0 0 5px #b5e48c, 
+                0 0 15px rgba(181, 228, 140, 0.4);
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
@@ -120,6 +122,18 @@ textarea {
     box-shadow: 0 0 10px #b5e48c, 
                 0 0 25px rgba(181, 228, 140, 0.6);
     transform: scale(1.05);
+}
+
+/* Tlačítko pro přihlášení v pravém panelu */
+.btn-login {
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #1a2a16;
+    color: white;
+    border: 1px solid #4a6d3f;
+    cursor: pointer;
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive;
 }
 
 /* --- 5. MENU A NAVIGACE --- */
@@ -134,18 +148,19 @@ textarea {
     border-radius: 4px;
     cursor: pointer;
     transition: background 0.3s ease;
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive;
 }
 
 .menu-list li:hover {
     background: rgba(255, 255, 255, 0.15);
 }
 
-/* --- 6. VÝSLEDKY A MATICE --- */
+/* --- 6. VÝSLEDKY ŠIFROVÁNÍ --- */
 .result-text {
-    word-break: break-all;      /* Rozbije slovo na konci řádku kdekoli */
-    white-space: normal;       /* Povolí přirozené zalamování */
-    line-height: 1.6;          /* Zlepší čitelnost */
-    font-family: 'Comic Sans MS';
+    word-break: break-all;
+    white-space: normal;
+    line-height: 1.6;
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive;
 }
 
 .result-area {
@@ -156,49 +171,40 @@ textarea {
     border-radius: 4px;
 }
 
-.result-text-copy {
-    display: block;
-    margin-top: 5px;
-    padding: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    font-family: monospace;
-    word-break: break-all;
-    font-family: 'Comic Sans MS';
-}
-
 .result-prepis-box {
-    font-family: monospace;
     background: rgba(255, 255, 255, 0.05);
     padding: 10px;
-    word-break: break-all;     /* Důležité: text se zalomí přesně podle šířky panelu */
-    white-space: pre-wrap;     /* Zachová mezery, ale zalomí dlouhé řádky */
+    word-break: break-all;
+    white-space: pre-wrap;
     border-radius: 4px;
-    font-family: 'Comic Sans MS';
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive;
 }
 
 .matrix-display {
     margin-top: 10px;
     text-align: center;
-    font-family: monospace;
 }
 
 .matrix-cell {
     display: inline-block;
     width: 35px;
     font-weight: bold;
-    font-family: 'Comic Sans MS';
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive;
 }
 
 small {
-    word-break: break-all;     /* Důležité: text se zalomí přesně podle šířky panelu */
-    white-space: pre-wrap;     /* Zachová mezery, ale zalomí dlouhé řádky */
+    word-break: break-all;
+    white-space: pre-wrap;
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive;
 }
-/* Uzly videa a obrázky */
+
+/* --- 7. MULTIMÉDIA (VIDEA A OBRÁZKY) --- */
 .uzly-video-div {
     position: relative;
     padding-bottom: 56.25%; /* Poměr 16:9 */
     height: 0;
 }
+
 .uzly-video-div iframe {
     position: absolute;
     top: 0;
@@ -208,7 +214,6 @@ small {
     border-radius: 4px;
 }
 
-/* Obrázky v galerii */
 .uzel-img-step {
     width: 100%;
     height: auto;
@@ -217,7 +222,7 @@ small {
     margin-bottom: 10px;
 }
 
-/* Styly pro systémové zprávy */
+/* --- 8. SYSTÉMOVÉ ZPRÁVY (ALERTY) --- */
 .alert {
     padding: 12px;
     border-radius: 8px;
@@ -236,4 +241,16 @@ small {
     background-color: rgba(248, 215, 218, 0.2);
     color: #f5c6cb;
     border-color: #f5c6cb;
+}
+
+/* Login form úprava */
+.login-form input {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    background: white;
+    border: none;
+    border-radius: 2px;
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive;
 }
