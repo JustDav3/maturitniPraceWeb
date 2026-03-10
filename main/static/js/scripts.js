@@ -39,10 +39,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const hasMessages = document.querySelector('.alert') !== null;
 
     // Funkce pro přepínání sekcí
-    const showSection = (target) => {
-        [secUvod, secSifry, secUzly].forEach(s => s.classList.add('hidden-section'));
-        target.classList.remove('hidden-section');
-    };
+    // Tato funkce musí nahradit veškeré sec.style.display = '...'
+    function showSection(targetId) {
+        const sections = [document.getElementById('section-uvod'), 
+                        document.getElementById('section-sifry'), 
+                        document.getElementById('section-uzly')];
+        
+        sections.forEach(sec => {
+            if (sec) sec.classList.add('hidden-section');
+        });
+        
+        const activeSec = document.getElementById(targetId);
+        if (activeSec) activeSec.classList.remove('hidden-section');
+    }
 
     if (showSifry || hasMessages) showSection(secSifry);
 
@@ -103,9 +112,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    btnSifry.onclick = () => showSection(secSifry);
-    btnOMne.onclick = () => showSection(secUvod);
-    btnUzly.onclick = () => showSection(secUzly);
+    btnSifry.onclick = () => showSection('section-sifry');
+    btnOMne.onclick = () => showSection('section-uvod');
+    btnUzly.onclick = () => showSection('section-uzly');
 
     cipherType.onchange = (e) => handleCipherChange(e.target.value);
     handleCipherChange(cipherType.value);
@@ -127,6 +136,6 @@ window.zobrazUzel = function (folderName, nazev, ytUrl, popis) {
     }
     document.getElementById('uzel-obrazky').innerHTML = imgHtml;
 
-    detail.classList.remove('hidden-element');
+    detail.classList.remove('hidden-element'); 
     detail.scrollIntoView({ behavior: 'smooth' });
 };

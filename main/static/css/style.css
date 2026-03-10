@@ -38,8 +38,8 @@ body {
     flex: 1;
 }
 
-.hidden-element { display: none; }
-.hidden-section { display: none; }
+.hidden-element { display: none !important; }
+.hidden-section { display: none !important; }
 
 /* --- 3. KOMPONENTY FORMULÁŘE --- */
 .form-control,
