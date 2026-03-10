@@ -110,9 +110,6 @@ textarea {
     cursor: pointer;
     font-family: 'Comic Neue', 'Comic Sans MS', cursive;
     transition: all 0.3s ease;
-    box-shadow: 0 0 5px #b5e48c, 
-                0 0 15px rgba(181, 228, 140, 0.4);
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 .btn-uzel-text:hover {
