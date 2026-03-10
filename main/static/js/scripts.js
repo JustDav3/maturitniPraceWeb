@@ -40,17 +40,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Funkce pro přepínání sekcí
     // Tato funkce musí nahradit veškeré sec.style.display = '...'
-    function showSection(targetId) {
-        const sections = [document.getElementById('section-uvod'), 
-                        document.getElementById('section-sifry'), 
-                        document.getElementById('section-uzly')];
-        
-        sections.forEach(sec => {
-            if (sec) sec.classList.add('hidden-section');
-        });
-        
-        const activeSec = document.getElementById(targetId);
-        if (activeSec) activeSec.classList.remove('hidden-section');
+    function showSection(sectionToShow) {
+    const sections = [secUvod, secSifry, secUzly];
+    sections.forEach(s => {
+        s.style.display = 'none'; // Reset
+        s.classList.remove('visible-section');
+    });
+    sectionToShow.style.display = 'block';
+    sectionToShow.classList.add('visible-section');
     }
 
     if (showSifry || hasMessages) showSection(secSifry);
