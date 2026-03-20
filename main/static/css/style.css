@@ -1,4 +1,4 @@
-/* --- 1. GLOBÁLNÍ NASTAVENÍ (Základní kameny) --- */
+/* 1. GLOBÁLNÍ NASTAVENÍ */
 body {
     display: flex;
     margin: 0;
@@ -10,7 +10,7 @@ body {
     font-family: 'Comic Sans MS', cursive;
 }
 
-/* --- 2. LAYOUT STRÁNKY (Mřížka a hlavní prvky) --- */
+/*2. LAYOUT STRÁNKY */
 .main-header {
     width: 100%;
     height: 80px;
@@ -71,7 +71,7 @@ body {
 .row { display: flex; gap: 10px; }
 .col { flex: 1; }
 
-/* --- 3. BOČNÍ PANELY (Menu a Přihlášení) --- */
+/* 3. BOČNÍ PANELY */
 .menu-bar {
     position: fixed;
     top: 95px;
@@ -112,7 +112,7 @@ body {
     text-transform: uppercase;
 }
 
-.sidebar-title {
+.menu-title {
     text-align: center;
     font-size: 1.1rem;
     color: #ffffff;
@@ -150,7 +150,7 @@ body {
     background: rgba(0, 0, 0, 0.3);
 }
 
-/* --- 4. KOMPONENTY FORMULÁŘE --- */
+/* 4. KOMPONENTY FORMULÁŘE */
 .form-control, 
 .form-select {
     width: 100%;
@@ -264,7 +264,7 @@ body {
     font-weight: bold;
 }
 
-/* --- 7. MULTIMÉDIA A SYSTÉM --- */
+/* 5. MULTIMÉDIA A SYSTÉM */
 .uzly-video-div {
     position: relative;
     padding-bottom: 56.25%;
