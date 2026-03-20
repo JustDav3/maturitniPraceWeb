@@ -176,6 +176,7 @@ textarea {
 }
 
 /* --- 5. MENU A NAVIGACE --- */
+/*
 .menu-list {
     padding: 0;
     list-style: none;
@@ -192,6 +193,83 @@ textarea {
 .menu-list li:hover {
     background: rgba(255, 255, 255, 0.15);
 }
+*/
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #1a1a2e; /* Temná barva */
+    color: white;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Plynulý dojezd */
+    z-index: 1000;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+}
+
+.sidebar.hidden {
+    transform: translateX(-250px);
+}
+
+/* Styl pro vnitřní obsah */
+.sidebar-content {
+    padding: 20px;
+}
+
+.sidebar-title {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #30304a;
+    padding-bottom: 10px;
+}
+
+.menu-items {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-items li {
+    margin: 15px 0;
+}
+
+.menu-items a {
+    color: #a0a0c0;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: 0.2s;
+}
+
+.menu-items a:hover {
+    color: white;
+}
+
+/* Samotná šipka na okraji */
+.toggle-btn {
+    position: absolute;
+    right: -35px; /* Vyčnívá ven */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35px;
+    height: 50px;
+    background: #1a1a2e;
+    border: none;
+    color: #1abc9c; /* Barva šipky */
+    cursor: pointer;
+    border-radius: 0 8px 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 4px 0 8px rgba(0,0,0,0.2);
+}
+
+/* Otočení šipky při schování */
+.sidebar.hidden #arrow {
+    transform: rotate(180deg);
+}
+
 
 /* --- 6. VÝSLEDKY A MATICE --- */
 .result-text {
