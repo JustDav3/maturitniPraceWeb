@@ -20,9 +20,6 @@ const DATA_UZLU = {
 
 document.addEventListener('DOMContentLoaded', function () {
     // --- 1. LOGIKA PRO VYSOUVACÍ MENU (NOVÉ) ---
-    const sidebar = document.getElementById('sidebar');
-    const toggleBtn = document.getElementById('toggle-btn');
-
     const cipherType = document.getElementById('cipher-type');
     const shiftBox = document.getElementById('shared-shift-container');
     const dSelect = document.getElementById('dynamic-select');
@@ -45,12 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const showSifry = djangoData.getAttribute('data-show-sifry') === 'true';
     const hasMessages = document.querySelector('.alert') !== null;
 
-    if (sidebar && toggleBtn) {
-        toggleBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('hidden');
-        });
-    }
-    
     if (showSifry || hasMessages) {
         secUvod.style.display = 'none';
         secUzly.style.display = 'none';
