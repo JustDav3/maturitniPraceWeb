@@ -84,6 +84,17 @@ nav.panel {
     overflow: hidden;
 }
 
+.container {
+    margin-left: 270px; /* Šířka menu (240px) + rezerva (30px) */
+    display: grid;
+    grid-template-columns: 1fr 300px; /* Hlavní obsah | Přihlášení */
+    gap: 20px;
+    width: calc(100% - 270px);
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: start;
+}
+
 /* Pomocné třídy pro rozvržení */
 .row { display: flex; gap: 10px; }
 .col { flex: 1; }
@@ -183,52 +194,61 @@ textarea {
     height: 50px;
 }
 
+/* --- OPRAVA MENU (Levý panel) --- */
 .menu-bar {
-    background-color: #77a868; /* Tvoje zelená */
-    margin: 0 auto 15px auto; /* 15px mezera pod menu (nad panelem) */
-    padding: 10px;
-    width: 95%; /* Trochu užší než panel nebo stejné */
-    max-width: 1000px;
+    position: fixed;   
+    top: 95px;          /* Mezera pod fixním headerem */
+    left: 15px;         /* Odsazení od levého kraje */
+    width: 240px;       /* Pevná šířka menu */
+    height: calc(100vh - 110px); /* Výška přes celou obrazovku minus mezery */
+    
+    /* Tvůj gradient pro sjednocení vzhledu */
+    background: linear-gradient(180deg, #5b8a4d 0%, #2d4526 100%);
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.5), 5px 5px 15px rgba(0,0,0,0.3);
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    padding: 20px 10px;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.sidebar-title {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #b5e48c;
+    margin: 0 0 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(181, 228, 140, 0.2);
+    text-transform: uppercase;
 }
 
 .menu-items {
     display: flex;
-    justify-content: space-around; /* Rozprostře tlačítka vedle sebe */
-    gap: 10px;
+    flex-direction: column;
+    gap: 12px;
 }
 
 /* Tlačítka s efektem zmáčknutí */
 .menu-items button {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(181, 228, 140, 0.3);
     color: white;
-    padding: 10px;
-    font-family: 'Comic Sans MS', cursive;
-    cursor: pointer;
+    padding: 12px 15px;
     border-radius: 6px;
-    transition: all 0.1s ease;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Comic Sans MS', cursive;
+    transition: all 0.2s ease;
 }
 
 .menu-items button:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(181, 228, 140, 0.2);
+    border-color: #b5e48c;
 }
 
-/* Vizuální zpětná vazba: ZMÁČKNUTÍ */
 .menu-items button:active {
-    transform: translateY(2px); /* Tlačítko se fyzicky posune dolů */
-    background: rgba(0, 0, 0, 0.2);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
-}
-.menu-items {
-    list-style: none;
-    padding: 0;
-}
-
-.menu-items li {
-    margin: 15px 0;
+    transform: scale(0.96);
+    background: rgba(0, 0, 0, 0.3);
 }
 
 /* --- 6. VÝSLEDKY A MATICE --- */
