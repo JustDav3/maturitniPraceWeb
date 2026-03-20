@@ -231,7 +231,7 @@ textarea {
 .menu-items button {
     width: 100%;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(181, 228, 140, 0.3);
+    border: none;
     color: white;
     padding: 12px 15px;
     border-radius: 6px;
@@ -243,7 +243,6 @@ textarea {
 
 .menu-items button:hover {
     background: rgba(181, 228, 140, 0.2);
-    border-color: #b5e48c;
 }
 
 .menu-items button:active {
