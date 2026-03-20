@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
     padding-top: 80px;
-    background-color: #080d07;
+    background-color: #121212;
     color: white;
     font-family: 'Comic Sans MS', cursive;
 }
@@ -73,6 +73,9 @@ nav.panel {
 
 .panel {
     position: relative;
+    width: 95%;
+    max-width: 1000px;
+    margin: 0 auto;
     min-height: 450px;
     padding: 25px 20px;
     background: linear-gradient(180deg, #5b8a4d 0%, #2d4526 100%);
@@ -176,57 +179,49 @@ textarea {
 }
 
 /* --- 5. MENU A NAVIGACE --- */
-/*
-.menu-list {
-    padding: 0;
-    list-style: none;
+.spacer-top {
+    height: 50px;
 }
 
-.menu-list li {
-    padding: 12px 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s ease;
+.menu-bar {
+    background-color: #77a868; /* Tvoje zelená */
+    margin: 0 auto 15px auto; /* 15px mezera pod menu (nad panelem) */
+    padding: 10px;
+    width: 95%; /* Trochu užší než panel nebo stejné */
+    max-width: 1000px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-.menu-list li:hover {
-    background: rgba(255, 255, 255, 0.15);
+.menu-items {
+    display: flex;
+    justify-content: space-around; /* Rozprostře tlačítka vedle sebe */
+    gap: 10px;
 }
-*/
-.sidebar {
-    width: 250px;
-    /* Odsazení: 15px nahoře, 15px dole */
-    height: calc(100vh - 30px); 
-    top: 15px;
-    left: 0; /* Pokud chceš, aby se dotýkalo levé hrany, nech 0 */
-    background: #1a1a2e;
+
+/* Tlačítka s efektem zmáčknutí */
+.menu-items button {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
-    position: fixed;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1000;
-    /* Zaoblení pravých rohů */
-    border-radius: 0 15px 15px 0; 
-    box-shadow: 5px 0 15px rgba(0,0,0,0.3);
-    padding-top: 20px; /* Vnitřní odsazení od horní hrany */
+    padding: 10px;
+    font-family: 'Comic Sans MS', cursive;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.1s ease;
 }
 
-.sidebar.hidden {
-    transform: translateX(-250px);
+.menu-items button:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
-/* Styl pro vnitřní obsah */
-.sidebar-content {
-    padding: 20px;
+/* Vizuální zpětná vazba: ZMÁČKNUTÍ */
+.menu-items button:active {
+    transform: translateY(2px); /* Tlačítko se fyzicky posune dolů */
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
 }
-
-.sidebar-title {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-    border-bottom: 1px solid #30304a;
-    padding-bottom: 10px;
-}
-
 .menu-items {
     list-style: none;
     padding: 0;
@@ -235,42 +230,6 @@ textarea {
 .menu-items li {
     margin: 15px 0;
 }
-
-.menu-items button, .menu-link {
-    width: 90%; /* Aby nebyly úplně ke kraji menu */
-    margin: 5px auto;
-    display: block;
-    background: transparent;
-    border: none;
-    color: white;
-    padding: 12px 20px;
-    text-align: left;
-    font-size: 18px;
-    font-family: 'Comic Sans MS', cursive; /* Podle tvého obrázku */
-    cursor: pointer;
-    border-radius: 10px;
-    transition: all 0.2s ease;
-}
-
-.menu-items a {
-    color: #a0a0c0;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    transition: 0.2s;
-}
-
-.menu-items button:hover {
-    background: rgba(255, 255, 255, 0.1);
-    padding-left: 25px; /* Mírné posunutí textu doprava */
-}
-
-.menu-items button:active {
-    background: rgba(26, 188, 156, 0.3); /* Změna barvy na tyrkysovou (podle šipky) */
-    transform: scale(0.95); /* Mírné vizuální "stlačení" tlačítka */
-}
-
 
 /* --- 6. VÝSLEDKY A MATICE --- */
 .result-text {
