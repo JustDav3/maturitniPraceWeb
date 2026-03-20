@@ -79,14 +79,11 @@ nav.panel {
 }
 
 .container {
-    margin-left: 270px;
     display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 20px;
-    width: calc(100% - 270px);
-    padding: 20px;
+    grid-template-columns: 1fr; 
+    width: 100%;
+    padding: 10px 270px 10px 270px; 
     box-sizing: border-box;
-    align-items: start;
 }
 
 /* Pomocné třídy pro rozvržení */
@@ -243,6 +240,7 @@ textarea {
     transform: scale(0.96);
     background: rgba(0, 0, 0, 0.3);
 }
+
 
 /* --- 6. VÝSLEDKY A MATICE --- */
 .result-text {
