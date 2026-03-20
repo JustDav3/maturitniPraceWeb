@@ -10,6 +10,13 @@
 
 <body>
 
+    <header class="main-header">
+        <div class="header-content">
+            <img src="{% static 'images/logo.png' %}" alt="Logo TK Rozrazil" class="web-logo">
+            <h1 class="web-title">Webová Aplikace Uzly pro TK Rozrazil</h1>
+        </div>
+    </header>
+
     <div id="django-data"
         data-show-sifry="{% if vysledek_morse or vysledek_number or vysledek_matrix %}true{% else %}false{% endif %}"
         style="display: none;">
