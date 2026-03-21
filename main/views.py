@@ -50,7 +50,7 @@ def home(request):
         dynamic_val = request.POST.get("dynamic_select", "1")
 
         if project in ["spirala", "snek", "had"]:
-            dynamic_val = "1"
+            action = "sifrovat"
 
         # --- 1. MORSEOVKA ---
         if project == "morse":
