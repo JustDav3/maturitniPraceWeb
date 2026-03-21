@@ -50,7 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Funkce, která upraví ovládací prvky podle vybrané šifry
     function updateCipherUI(cipherName) {
-        const modeContainer = document.querySelector('.cipher-mode-container'); // Kontejner, kde máš select
+        updateCipherModeUI(val);
+        const modeContainer = document.querySelector('.cipher-mode-container');
         if (!modeContainer) return;
 
         // Seznam šifer, které umí jen zašifrování
