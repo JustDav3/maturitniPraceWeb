@@ -36,25 +36,23 @@ def home(request):
         action = request.POST.get("akce")
         shift = int(request.POST.get("shift") or 0) # Globální posun pro všechny šifry
         
-        # Načtení dat z dynamických polí formuláře
-        dyn_select = request.POST.get("dynamic_select")
-        dyn_check = request.POST.get("dynamic_checkbox") == "on"
+        # --- TADY JE TA OPRAVA: Definuj to hned na začátku ---
+        dynamic_selectbox = request.POST.get("dynamic_select")
+        dynamic_checkbox_bool = request.POST.get("dynamic_checkbox") == "on"
+        dynamic_value = request.POST.get("dynamic_select", "1")
         in1 = request.POST.get("input_1", ".")
         in2 = request.POST.get("input_2", "-")
         in3 = request.POST.get("input_3", "|")
 
         # Uložení dat zpět do kontextu pro zachování ve formuláři po odeslání
-        context.update({'projekt': project, 'vstup': user_input, 'akce': action, 'shift': shift, 'dyn_check': dyn_check})
-
-        # Načtení hodnoty z dynamického selectu (default "1")
-        dynamic_val = request.POST.get("dynamic_select", "1")
+        context.update({'projekt': project, 'vstup': user_input, 'akce': action, 'shift': shift, 'dynamic_checkbox': dynamic_checkbox_bool})
 
         if project in ["spirala", "snek", "had"]:
             action = "sifrovat"
 
         #  1. MORSEOVKA 
         if project == "morse":
-            mode = dyn_select or "1"
+            mode = dynamic_selectbox or "1"
             # Výběr správného slovníku podle módu (Klasická/Obrácená)
             main_dict = morse_consts.morse_dict if mode == "1" else morse_consts.morse_reverse
             up_dict = morse_consts.morse_uppercase if mode == "1" else morse_consts.morse_reverse_uppercase
@@ -80,10 +78,10 @@ def home(request):
         #  2. ČÍSELNÝ KÓD 
         elif project == "number_code":
             # Výběr abecedy (Anglická/Česká)
-            encryption_dict = number_consts.alphabet_dict if dyn_select == "1" else number_consts.czech_alphabet
+            encryption_dict = number_consts.alphabet_dict if dynamic_selectbox == "1" else number_consts.czech_alphabet
             
             # Logika pro obrácení abecedy (A=26, Z=1)
-            if dyn_check:
+            if dynamic_checkbox_bool:
                 sorted_keys = sorted(encryption_dict.keys())
                 values = [encryption_dict[k] for k in sorted_keys]
                 encryption_dict = dict(zip(sorted_keys, values[::-1]))
@@ -117,7 +115,7 @@ def home(request):
                     result = binary_logic.encrypt(clean_input.upper(), separator)
                 
                 # Pokud je zapnutá inverze (záměna 0 za 1)
-                if dyn_check:
+                if dynamic_checkbox_bool:
                     # Projdeme každý znak výsledku (0, 1 a oddělovač)
                     inverted_chars = []
                     for char in result:
@@ -132,7 +130,7 @@ def home(request):
             else:
                 # DEŠIFROVÁNÍ
                 # 1. Pokud uživatel vložil invertovaný binár, musíme ho nejdřív vrátit zpět
-                if dyn_check:
+                if dynamic_checkbox_bool:
                     deinverted = []
                     for char in user_input:
                         if char == '0':
@@ -150,16 +148,17 @@ def home(request):
 
 # 4. SPIRÁLA, ŠNEK, HAD #
         elif project in ["spirala", "snek", "had"]:
+            volba = dynamic_value
             if project == "spirala":
-                matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "1", dynamic_val)
-                context['start_bod'] = dynamic_val
+                matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "1", volba)
+                context['start_bod'] = volba
             elif project == "snek":
-                matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "2", dynamic_val)
-                context['start_bod'] = dynamic_val
+                matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "2", volba)
+                context['start_bod'] = volba
             elif project == "had":
-                param_had = "1" if dynamic_val == "shora" else "2"
+                param_had = "1" if dynamic_value == "shora" else "2"
                 matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "3", param_had)
-                context['smer_had'] = dynamic_val
+                context['smer_had'] = volba
 
             # Vyčištění matice pro zobrazení (převede vše na velká písmena/čísla a zachová je)
             matrix_clean = [[str(znak).upper() for znak in radek] for radek in matrix]
