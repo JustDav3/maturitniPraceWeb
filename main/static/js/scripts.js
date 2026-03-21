@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (encryptionOnlyCiphers.includes(cipherName.toLowerCase())) {
         // Použijeme tvé třídy, aby to vypadalo jako select
         modeContainer.innerHTML = `
-            <div class="form-select small-select label-as-select" style="text-align: center; color: #b5e48c;">Pouze zašifrování</div>
+            <div class="form-select small-select label-as-select" style="text-align: center; color: #000000;">Pouze zašifrování</div>
             <input type="hidden" name="akce" value="sifrovat"> 
         `;
     } else {

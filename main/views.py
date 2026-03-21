@@ -168,14 +168,14 @@ def home(request):
         if project in ["spirala", "snek", "had"]:
             context['vysledek_matrix'] = matrix
             context['rozmer_matrix'] = dim
-            
-            # Vytvoření té "krabičky" s čarami | |
+
+            matrix_clean = [[str(znak).upper() for znak in radek] for radek in matrix]
+            context['vysledek_matrix'] = matrix_clean
+
             radky_prepis = []
-            for radek in matrix:
-                # Každý řádek obalíme | a spojíme znaky mezerou
+            for radek in matrix_clean:
                 radky_prepis.append(f"| {' '.join(radek)} |")
             
-            # Spojíme řádky do jednoho bloku textu s odřádkováním
             context['vysledek_prepis_matrix'] = "\n".join(radky_prepis)
 
     return render(request, "main/index.html", context)
