@@ -30,6 +30,7 @@ body {
 .header-content {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 15px;
     max-width: 1200px;
     margin: 0 auto;
