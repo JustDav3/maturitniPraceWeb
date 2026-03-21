@@ -48,32 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
         secSifry.style.display = 'block';
     }
 
-    // Funkce, která upraví ovládací prvky podle vybrané šifry
-    function updateCipherUI(cipherName) {
-        updateCipherModeUI(val);
-        const modeContainer = document.querySelector('.cipher-mode-container');
-        if (!modeContainer) return;
-
-        // Seznam šifer, které umí jen zašifrování
-        const encryptionOnlyCiphers = ['had', 'snek', 'spirala'];
-
-        if (encryptionOnlyCiphers.includes(cipherName.toLowerCase())) {
-            // Nahradíme select labelem
-            modeContainer.innerHTML = `
-                <div class="form-label-info">Pouze zašifrování</div>
-                <input type="hidden" name="mode" value="encrypt"> 
-            `;
-        } else {
-            // Tady vrátíš původní select pro ostatní šifry (polygraf, morseovka atd.)
-            modeContainer.innerHTML = `
-                <select name="mode" class="form-select">
-                    <option value="encrypt">Zašifrovat</option>
-                    <option value="decrypt">Dešifrovat</option>
-                </select>
-            `;
-        }
-    }
-
     // Příklad: Volání funkce při změně výběru šifry v menu
     // Předpokládám, že tvá tlačítka v menu mají nějaký identifikátor
     const menuButtons = document.querySelectorAll('.menu-items button');
@@ -104,6 +78,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 el.querySelectorAll('select, input').forEach(i => i.disabled = true);
             }
         });
+        
+        
 
         const savedStartBod = dSelect.getAttribute('data-start-bod');
         const savedSmerHad = dSelect.getAttribute('data-smer-had');
@@ -143,6 +119,30 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    // Funkce, která upraví ovládací prvky podle vybrané šifry
+    function updateCipherUI(cipherName) {
+        const modeContainer = document.querySelector('.cipher-mode-container');
+    if (!modeContainer) return;
+
+    const encryptionOnlyCiphers = ['had', 'snek', 'spirala'];
+
+    if (encryptionOnlyCiphers.includes(cipherName.toLowerCase())) {
+        // Použijeme tvé třídy, aby to vypadalo jako select
+        modeContainer.innerHTML = `
+            <div class="form-select small-select label-as-select" style="text-align: center; color: #b5e48c;">Pouze zašifrování</div>
+            <input type="hidden" name="akce" value="sifrovat"> 
+        `;
+    } else {
+        modeContainer.innerHTML = `
+            <select name="akce" class="form-select small-select">
+                <option value="sifrovat">Zašifrovat</option>
+                <option value="desifrovat">Dešifrovat</option>
+            </select>
+        `;
+    }
+    }
+
 
     // --- EVENT LISTENERY PRO MENU (Nyní správně mimo funkci zobrazUzel) ---
     btnSifry.onclick = () => { 
