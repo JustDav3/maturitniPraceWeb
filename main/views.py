@@ -7,8 +7,6 @@ from .number_code import logic as number_logic, constants as number_consts
 from .matrix import logic as matrix_logic
 from .binary import logic as binary_logic
 
-
-
 def login_view(request):
     if request.method == "POST":
         user_name = request.POST.get("username")
@@ -17,9 +15,9 @@ def login_view(request):
         user = authenticate(request, username=user_name, password=pass_word)
         if user is not None:
             login(request, user)
-            return redirect('home') # nebo kamkoli jinam
+            return redirect('home')
         else:
-            # Zde by bylo dobré přidat zprávu o chybě pomocí messages
+            messages.error(request, "Nesprávné jméno nebo heslo.")
             return redirect('home')
     return redirect('home')
 
@@ -31,34 +29,44 @@ def home(request):
     context = {}
     
     if request.method == "POST":
+        # 1. ZÁKLADNÍ NAČTENÍ DAT
         project = request.POST.get("projekt")
         user_input = request.POST.get("vstup", "")
         action = request.POST.get("akce")
-        shift = int(request.POST.get("shift") or 0) # Globální posun pro všechny šifry
+        shift = int(request.POST.get("shift") or 0)
         
-        # --- TADY JE TA OPRAVA: Definuj to hned na začátku ---
-        dynamic_selectbox = request.POST.get("dynamic_select")
-        dynamic_checkbox_bool = request.POST.get("dynamic_checkbox") == "on"
-        dynamic_value = request.POST.get("dynamic_select", "1")
+        # 2. DYNAMICKÁ DATA (Sjednocené názvy)
+        # _val = textová hodnota ze selectu, _bool = pravdivostní hodnota z checkboxu
+        dynamic_select_val = request.POST.get("dynamic_select", "1")
+        dynamic_check_bool = request.POST.get("dynamic_checkbox") == "on"
+        
         in1 = request.POST.get("input_1", ".")
         in2 = request.POST.get("input_2", "-")
         in3 = request.POST.get("input_3", "|")
 
-        # Uložení dat zpět do kontextu pro zachování ve formuláři po odeslání
-        context.update({'projekt': project, 'vstup': user_input, 'akce': action, 'shift': shift, 'dynamic_checkbox': dynamic_checkbox_bool})
+        # Uložení do kontextu (aby formulář po odeslání nezmizel)
+        context.update({
+            'projekt': project, 
+            'vstup': user_input, 
+            'akce': action, 
+            'shift': shift, 
+            'dynamic_check_bool': dynamic_check_bool,
+            'dynamic_select_val': dynamic_select_val
+        })
 
+        # Vynucení šifrování pro maticové šifry
         if project in ["spirala", "snek", "had"]:
             action = "sifrovat"
 
-        #  1. MORSEOVKA 
+        # --- LOGIKA JEDNOTLIVÝCH ŠIFER ---
+
+        # 1. MORSEOVKA 
         if project == "morse":
-            mode = dynamic_selectbox or "1"
-            # Výběr správného slovníku podle módu (Klasická/Obrácená)
+            mode = dynamic_select_val
             main_dict = morse_consts.morse_dict if mode == "1" else morse_consts.morse_reverse
             up_dict = morse_consts.morse_uppercase if mode == "1" else morse_consts.morse_reverse_uppercase
             low_dict = morse_consts.morse_lowercase if mode == "1" else morse_consts.morse_reverse_lowercase
 
-            # Pokud uživatel zadal vlastní znaky pro tečku a čárku, nahradíme je
             if in1 != "." or in2 != "-":
                 def transform_chars(dictionary):
                     return {k: v.replace('-', in2).replace('.', in1) for k, v in dictionary.items()}
@@ -66,7 +74,6 @@ def home(request):
                 up_dict = transform_chars(up_dict)
                 low_dict = transform_chars(low_dict)
 
-            # Volání šifrování nebo dešifrování
             if action == "sifrovat":
                 result = morse_logic.encrypt(user_input.upper(), main_dict, in3)
             else:
@@ -75,22 +82,18 @@ def home(request):
             context['vysledek_morse'] = result
             context['vysledek_prepis'] = result
 
-        #  2. ČÍSELNÝ KÓD 
+        # 2. ČÍSELNÝ KÓD 
         elif project == "number_code":
-            # Výběr abecedy (Anglická/Česká)
-            encryption_dict = number_consts.alphabet_dict if dynamic_selectbox == "1" else number_consts.czech_alphabet
+            encryption_dict = number_consts.alphabet_dict if dynamic_select_val == "1" else number_consts.czech_alphabet
             
-            # Logika pro obrácení abecedy (A=26, Z=1)
-            if dynamic_checkbox_bool:
+            if dynamic_check_bool:
                 sorted_keys = sorted(encryption_dict.keys())
                 values = [encryption_dict[k] for k in sorted_keys]
                 encryption_dict = dict(zip(sorted_keys, values[::-1]))
 
-            # Aplikace posunu
             if shift != 0:
                 encryption_dict = number_logic.shift_alphabet(encryption_dict, shift)
 
-            # Příprava slovníků pro dešifrování (zachování malých/velkých písmen)
             upper_dict = {k: v for k, v in encryption_dict.items() if k.isupper()}
             lower_dict = {k: v for k, v in encryption_dict.items() if k.islower()}
 
@@ -104,69 +107,43 @@ def home(request):
         # 3. BINÁRNÍ ŠIFRA
         elif project == "binary":
             separator = in3 or " "
-            if action == "sifrovat":
-                # Posun textu před převodem do bináru
-
-                clean_input = "".join([c for c in user_input if c.isalpha()])
-                if not clean_input: # Pokud po smazání čísel nic nezbylo
-                    messages.error(request, "Chyba: Zadal jsi pouze čísla, není co šifrovat!")
-                    result = ""
-                else:
-                    result = binary_logic.encrypt(clean_input.upper(), separator)
-                
-                # Pokud je zapnutá inverze (záměna 0 za 1)
-                if dynamic_checkbox_bool:
-                    # Projdeme každý znak výsledku (0, 1 a oddělovač)
-                    inverted_chars = []
-                    for char in result:
-                        if char == '0':
-                            inverted_chars.append('1')
-                        elif char == '1':
-                            inverted_chars.append('0')
-                        else:
-                            inverted_chars.append(char) # Ponecháme oddělovač (mezeru/čárku)
-                    result = "".join(inverted_chars)
-
+            # Doporučuji isalnum(), aby to neignorovalo čísla
+            clean_input = "".join([c for c in user_input if c.isalnum()])
+            
+            if not clean_input and action == "sifrovat":
+                messages.error(request, "Chyba: Prázdný vstup pro binární šifru!")
+                result = ""
             else:
-                # DEŠIFROVÁNÍ
-                # 1. Pokud uživatel vložil invertovaný binár, musíme ho nejdřív vrátit zpět
-                if dynamic_checkbox_bool:
-                    deinverted = []
-                    for char in user_input:
-                        if char == '0':
-                            deinverted.append('1')
-                        elif char == '1':
-                            deinverted.append('0')
-                        else:
-                            deinverted.append(char)
-                    user_input = "".join(deinverted)
-                # 2. Klasické dešifrování z bináru na text
-                result = binary_logic.decrypt(user_input, separator)
+                if action == "sifrovat":
+                    result = binary_logic.encrypt(clean_input.upper(), separator)
+                    if dynamic_check_bool:
+                        result = "".join(['1' if c == '0' else '0' if c == '1' else c for c in result])
+                else:
+                    processed_input = user_input
+                    if dynamic_check_bool:
+                        processed_input = "".join(['1' if c == '0' else '0' if c == '1' else c for c in user_input])
+                    result = binary_logic.decrypt(processed_input, separator)
             
             context['vysledek_number'] = result
             context['vysledek_prepis'] = f"|{result}|"
 
-# 4. SPIRÁLA, ŠNEK, HAD #
+        # 4. MATICOVÉ ŠIFRY (SPIRÁLA, ŠNEK, HAD)
         elif project in ["spirala", "snek", "had"]:
-            volba = dynamic_value
             if project == "spirala":
-                matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "1", volba)
-                context['start_bod'] = volba
+                matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "1", dynamic_select_val)
+                context['start_bod'] = dynamic_select_val
             elif project == "snek":
-                matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "2", volba)
-                context['start_bod'] = volba
+                matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "2", dynamic_select_val)
+                context['start_bod'] = dynamic_select_val
             elif project == "had":
-                param_had = "1" if dynamic_value == "shora" else "2"
+                param_had = "1" if dynamic_select_val == "shora" else "2"
                 matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "3", param_had)
-                context['smer_had'] = volba
+                context['smer_had'] = dynamic_select_val
 
-            # Vyčištění matice pro zobrazení (převede vše na velká písmena/čísla a zachová je)
             matrix_clean = [[str(znak).upper() for znak in radek] for radek in matrix]
-            
             context['vysledek_matrix'] = matrix_clean
             context['rozmer_matrix'] = dim
 
-            # Vytvoření textového přepisu
             radky_prepis = [f"| {' '.join(radek)} |" for radek in matrix_clean]
             context['vysledek_prepis_matrix'] = "\n".join(radky_prepis)
 
