@@ -310,11 +310,9 @@ body {
 
 /* 5. MULTIMÉDIA A SYSTÉM */
 .uzly-video-div {
-    display: flex;
-    flex-direction: column;
+    display: flex !important;
     align-items: center;    /* Toto vycentruje video vodorovně */
     justify-content: center;
-    text-align: center;
     margin: 20px auto;      /* "auto" na stranách pomůže s centrováním */
     width: 100%;
 }
