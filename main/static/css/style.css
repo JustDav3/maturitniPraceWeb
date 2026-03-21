@@ -104,10 +104,7 @@ body {
 }
 
 .right-container form {
-    display: flex;
-    flex-direction: column;   /* Prvky pod sebou */
-    align-items: center;      /* Vycentruje vše vodorovně na střed */
-    gap: 12px;                /* Rovnoměrné mezery mezi poli a tlačítkem */
+    gap: 12px;
     width: 100%;
 }
 
@@ -121,8 +118,14 @@ body {
     text-transform: uppercase;
 }
 
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .login-form input {
-    width: 96%; /* Vyplní šířku panelu minus padding */
+    width: 96%;
     padding: 10px;
     margin: 5px;
     background: rgba(255, 255, 255, 0.9);
@@ -134,8 +137,8 @@ body {
 }
 
 .btn-login {
-    width: auto; /* Tlačítko se přizpůsobí textu, nebo dej 100% pro plnou šířku */
-    min-width: 120px; /* Aby nebylo úplně pidi */
+    width: auto;
+    min-width: 120px;
     padding: 10px 20px;
     margin-top: 8px;
     background-color: #1a2a16;
