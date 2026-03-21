@@ -52,7 +52,7 @@ def home(request):
         if project in ["spirala", "snek", "had"]:
             action = "sifrovat"
 
-        # --- 1. MORSEOVKA ---
+        #  1. MORSEOVKA 
         if project == "morse":
             mode = dyn_select or "1"
             # Výběr správného slovníku podle módu (Klasická/Obrácená)
@@ -77,7 +77,7 @@ def home(request):
             context['vysledek_morse'] = result
             context['vysledek_prepis'] = result
 
-        # --- 2. ČÍSELNÝ KÓD ---
+        #  2. ČÍSELNÝ KÓD 
         elif project == "number_code":
             # Výběr abecedy (Anglická/Česká)
             encryption_dict = number_consts.alphabet_dict if dyn_select == "1" else number_consts.czech_alphabet
@@ -103,7 +103,7 @@ def home(request):
             
             context['vysledek_number'] = result
 
-        # --- 3. BINÁRNÍ ŠIFRA ---
+        # 3. BINÁRNÍ ŠIFRA
         elif project == "binary":
             separator = in3 or " "
             if action == "sifrovat":
@@ -118,64 +118,57 @@ def home(request):
                 
                 # Pokud je zapnutá inverze (záměna 0 za 1)
                 if dyn_check:
-                    parts = result.split(separator)
-                    inverted = [ "".join('1' if b=='0' else '0' for b in p.zfill(5)) if p else "" for p in parts ]
-                    result = separator.join(inverted)
-            else:
-                # Dešifrování (včetně případné zpětné inverze)
-                if dyn_check:
-                    parts = user_input.split(separator)
-                    deinverted = [ "".join('1' if b=='0' else '0' for b in p) if p else "" for p in parts ]
-                    user_input = separator.join(deinverted)
+                    # Projdeme každý znak výsledku (0, 1 a oddělovač)
+                    inverted_chars = []
+                    for char in result:
+                        if char == '0':
+                            inverted_chars.append('1')
+                        elif char == '1':
+                            inverted_chars.append('0')
+                        else:
+                            inverted_chars.append(char) # Ponecháme oddělovač (mezeru/čárku)
+                    result = "".join(inverted_chars)
 
-                user_input = binary_logic.decrypt(user_input, separator)
-                # Vrácení posunu zpět
-                result = user_input.upper()
+            else:
+                # DEŠIFROVÁNÍ
+                # 1. Pokud uživatel vložil invertovaný binár, musíme ho nejdřív vrátit zpět
+                if dyn_check:
+                    deinverted = []
+                    for char in user_input:
+                        if char == '0':
+                            deinverted.append('1')
+                        elif char == '1':
+                            deinverted.append('0')
+                        else:
+                            deinverted.append(char)
+                    user_input = "".join(deinverted)
+                # 2. Klasické dešifrování z bináru na text
+                result = binary_logic.decrypt(user_input, separator)
             
             context['vysledek_number'] = result
             context['vysledek_prepis'] = f"|{result}|"
 
-        # --- 4. SPIRÁLA ---
-        elif project == "spirala":
-            matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "1", dynamic_val)
-            matrix = [
-            [znak.upper() for znak in radek if znak.isalpha()] 
-            for radek in matrix
-            ]
-            context['start_bod'] = dynamic_val # Pro JS vzpomínku
+# 4. SPIRÁLA, ŠNEK, HAD #
+        elif project in ["spirala", "snek", "had"]:
+            if project == "spirala":
+                matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "1", dynamic_val)
+                context['start_bod'] = dynamic_val
+            elif project == "snek":
+                matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "2", dynamic_val)
+                context['start_bod'] = dynamic_val
+            elif project == "had":
+                param_had = "1" if dynamic_val == "shora" else "2"
+                matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "3", param_had)
+                context['smer_had'] = dynamic_val
 
-        # --- 5. ŠNEK ---
-        elif project == "snek":
-            matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "2", dynamic_val)
-            matrix = [
-            [znak.upper() for znak in radek if znak.isalpha()] 
-            for radek in matrix
-            ]
-            context['start_bod'] = dynamic_val # Pro JS vzpomínku
-
-        # --- 6. HAD ---
-        elif project == "had":
-            # Převod textu ze selectu na parametry pro tvou logiku
-            # "shora" -> parametr "2", "zleva" -> parametr "1"
-            param_had = "1" if dynamic_val == "shora" else "2"
-            matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "3", param_had)
-            matrix = [
-            [znak.upper() for znak in radek if znak.isalpha()] 
-            for radek in matrix
-            ]
-            context['smer_had'] = dynamic_val # Pro JS vzpomínku (shora/zdola)
-
-        if project in ["spirala", "snek", "had"]:
-            context['vysledek_matrix'] = matrix
+            # Vyčištění matice pro zobrazení (převede vše na velká písmena/čísla a zachová je)
+            matrix_clean = [[str(znak).upper() for znak in radek] for radek in matrix]
+            
+            context['vysledek_matrix'] = matrix_clean
             context['rozmer_matrix'] = dim
 
-            matrix_clean = [[str(znak).upper() for znak in radek] for radek in matrix]
-            context['vysledek_matrix'] = matrix_clean
-
-            radky_prepis = []
-            for radek in matrix_clean:
-                radky_prepis.append(f"| {' '.join(radek)} |")
-            
+            # Vytvoření textového přepisu
+            radky_prepis = [f"| {' '.join(radek)} |" for radek in matrix_clean]
             context['vysledek_prepis_matrix'] = "\n".join(radky_prepis)
 
     return render(request, "main/index.html", context)
