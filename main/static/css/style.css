@@ -310,6 +310,12 @@ body {
 
 /* 5. MULTIMÉDIA A SYSTÉM */
 .uzly-video-div {
+    display: flex;          /* Zapne flexbox */
+    flex-direction: column; /* Seřadí video a text pod sebe */
+    align-items: center;    /* Vycentruje obsah vodorovně */
+    justify-content: center;/* Vycentruje obsah svisle (pokud má kontejner výšku) */
+    text-align: center;     /* Vycentruje i text pod videem */
+    margin: 20px 0;         /* Trocha místa okolo */
     position: relative;
     padding-bottom: 56.25%;
     height: 0;
