@@ -311,13 +311,17 @@ body {
 /* 5. MULTIMÉDIA A SYSTÉM */
 .uzly-video-div {
     display: flex !important;
-    align-items: center;    /* Toto vycentruje video vodorovně */
-    justify-content: center;
-    margin: 20px auto;      /* "auto" na stranách pomůže s centrováním */
-    width: 100%;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 20px 0 !important;
+    /* Zrušíme ty staré paddingy a výšky, co tam byly předtím */
+    padding-bottom: 0 !important;
+    height: auto !important;
 }
 
 .uzly-video-div iframe {
+    display: block;
     position: absolute;
     top: 0;
     left: 0;
