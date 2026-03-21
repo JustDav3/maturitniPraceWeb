@@ -93,17 +93,22 @@ body {
     right: 15px;
     width: 240px;
     height: calc(100vh - 110px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     gap: 15px;
     background: linear-gradient(180deg, #5b8a4d 0%, #2d4526 100%);
     box-shadow: inset 0 0 30px rgba(0,0,0,0.5), 5px 5px 15px rgba(0,0,0,0.3);
     border-radius: 8px;
-    padding: 20px 10px;
+    padding: 25px 20px;
     z-index: 1000;
     box-sizing: border-box;
     overflow-y: auto;
+}
+
+.right-container form {
+    display: flex;
+    flex-direction: column;   /* Prvky pod sebou */
+    align-items: center;      /* Vycentruje vše vodorovně na střed */
+    gap: 12px;                /* Rovnoměrné mezery mezi poli a tlačítkem */
+    width: 100%;
 }
 
 .right-container-title {
@@ -117,8 +122,9 @@ body {
 }
 
 .login-form input {
-    width: 100%; /* Vyplní šířku panelu minus padding */
+    width: 96%; /* Vyplní šířku panelu minus padding */
     padding: 10px;
+    margin: 5px;
     background: rgba(255, 255, 255, 0.9);
     border: none;
     border-radius: 4px;
