@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function handleCipherChange(val) {
+        updateCipherUI(val);
         // 1. Reset: Vše schováme a vypneme
         [shiftBox, dContainer, dCheck, dInp1, dInp2, dInp3].forEach(el => {
             if (el) {
