@@ -310,15 +310,13 @@ body {
 
 /* 5. MULTIMÉDIA A SYSTÉM */
 .uzly-video-div {
-    display: flex;          /* Zapne flexbox */
-    flex-direction: column; /* Seřadí video a text pod sebe */
-    align-items: center;    /* Vycentruje obsah vodorovně */
-    justify-content: center;/* Vycentruje obsah svisle (pokud má kontejner výšku) */
-    text-align: center;     /* Vycentruje i text pod videem */
-    margin: 20px 0;         /* Trocha místa okolo */
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* Toto vycentruje video vodorovně */
+    justify-content: center;
+    text-align: center;
+    margin: 20px auto;      /* "auto" na stranách pomůže s centrováním */
+    width: 100%;
 }
 
 .uzly-video-div iframe {
