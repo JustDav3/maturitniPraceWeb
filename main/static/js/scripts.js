@@ -48,6 +48,41 @@ document.addEventListener('DOMContentLoaded', function () {
         secSifry.style.display = 'block';
     }
 
+    // Funkce, která upraví ovládací prvky podle vybrané šifry
+    function updateCipherUI(cipherName) {
+        const modeContainer = document.querySelector('.cipher-mode-container'); // Kontejner, kde máš select
+        if (!modeContainer) return;
+
+        // Seznam šifer, které umí jen zašifrování
+        const encryptionOnlyCiphers = ['had', 'snek', 'spirala'];
+
+        if (encryptionOnlyCiphers.includes(cipherName.toLowerCase())) {
+            // Nahradíme select labelem
+            modeContainer.innerHTML = `
+                <div class="form-label-info">Pouze zašifrování</div>
+                <input type="hidden" name="mode" value="encrypt"> 
+            `;
+        } else {
+            // Tady vrátíš původní select pro ostatní šifry (polygraf, morseovka atd.)
+            modeContainer.innerHTML = `
+                <select name="mode" class="form-select">
+                    <option value="encrypt">Zašifrovat</option>
+                    <option value="decrypt">Dešifrovat</option>
+                </select>
+            `;
+        }
+    }
+
+    // Příklad: Volání funkce při změně výběru šifry v menu
+    // Předpokládám, že tvá tlačítka v menu mají nějaký identifikátor
+    const menuButtons = document.querySelectorAll('.menu-items button');
+    menuButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const cipher = this.innerText.trim().toLowerCase();
+            updateCipherUI(cipher);
+        });
+    });
+
     // POMOCNÁ FUNKCE: Nastaví select, label a vybere správnou hodnotu
     function setupSelect(labelText, optionsArray, savedValue) {
         dContainer.style.display = 'block'; 
