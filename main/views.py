@@ -49,6 +49,9 @@ def home(request):
         # Načtení hodnoty z dynamického selectu (default "1")
         dynamic_val = request.POST.get("dynamic_select", "1")
 
+        if project in ["spirala", "snek", "had"]:
+            dynamic_val = "1"
+
         # --- 1. MORSEOVKA ---
         if project == "morse":
             mode = dyn_select or "1"
