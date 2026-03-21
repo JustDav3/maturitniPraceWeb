@@ -154,13 +154,13 @@ def home(request):
         elif project == "had":
             # Převod textu ze selectu na parametry pro tvou logiku
             # "shora" -> parametr "2", "zleva" -> parametr "1"
-            param_had = "2" if dynamic_val == "shora" else "1"
+            param_had = "1" if dynamic_val == "shora" else "2"
             matrix, dim = matrix_logic.vytvor_matice_sifry(user_input, "3", param_had)
             matrix = [
             [znak.upper() for znak in radek if znak.isalpha()] 
             for radek in matrix
             ]
-            context['smer_had'] = dynamic_val # Pro JS vzpomínku (shora/zleva)
+            context['smer_had'] = dynamic_val # Pro JS vzpomínku (shora/zdola)
 
         if project in ["spirala", "snek", "had"]:
             context['vysledek_matrix'] = matrix

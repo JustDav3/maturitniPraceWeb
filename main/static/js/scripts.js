@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
         else if (val === 'spirala' || val === 'snek' || val === 'had') {
             if (val === 'spirala') setupSelect('Startovní bod (roh):', [{val: '1', text: 'Vlevo nahoře'}, {val: '2', text: 'Vpravo nahoře'}, {val: '3', text: 'Vlevo dole'}, {val: '4', text: 'Vpravo dole'}], savedStartBod);
             if (val === 'snek') setupSelect('Startovní střed:', [{val: '1', text: 'Vlevo dole'}, {val: '2', text: 'Vlevo nahoře'}, {val: '3', text: 'Vpravo nahoře'}, {val: '4', text: 'Vpravo dole'}], savedStartBod);
-            if (val === 'had') setupSelect('Směr pohybu hada:', [{val: 'shora', text: 'Shora dolů'}, {val: 'zleva', text: 'Zleva doprava'}], savedSmerHad);
+            if (val === 'had') setupSelect('Směr pohybu hada:', [{val: 'shora', text: 'Shora dolů'}, {val: 'zdola', text: 'Zdola nahoru'}], savedSmerHad);
         }
 
         // 4. Aktivace zobrazených inputů
