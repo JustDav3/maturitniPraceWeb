@@ -99,7 +99,7 @@
                             </div>
 
                             <div id="container-checkbox" class="form-check mt-3" style="display:none;">
-                                <input class="form-check-input" type="checkbox" name="dynamic_checkbox" id="dynamic-checkbox" {% if dyn_check %}checked{% endif %}>
+                                <input type="checkbox" name="dynamic_checkbox" id="dynamic-checkbox" class="form-check-input" {% if dyn_check %}checked{% endif %}>
                                 <label id="label-checkbox" class="form-check-label" for="dynamic-checkbox">Obrátit</label>
                             </div>
                         </div>
@@ -112,8 +112,8 @@
                         <div class="mt-3">
                             <label>Operace:</label>
                                 <div class="cipher-mode-container"><select name="akce" class="form-select small-select"></select>
-                                        <option value="sifrovat">Zašifrovat</option>
-                                        <option value="desifrovat">Dešifrovat</option>
+                                        <option value="sifrovat" {% if akce == "sifrovat" %}selected{% endif %}>Zašifrovat</option>
+                                        <option value="desifrovat {% if akce == "desifrovat" %}selected{% endif %}">Dešifrovat</option>
                                 </div>
                             </select>
                         </div>

@@ -44,7 +44,7 @@ def home(request):
         in3 = request.POST.get("input_3", "|")
 
         # Uložení dat zpět do kontextu pro zachování ve formuláři po odeslání
-        context.update({'projekt': project, 'vstup': user_input, 'akce': action, 'shift': shift})
+        context.update({'projekt': project, 'vstup': user_input, 'akce': action, 'shift': shift, 'dyn_check': dyn_check})
 
         # Načtení hodnoty z dynamického selectu (default "1")
         dynamic_val = request.POST.get("dynamic_select", "1")
