@@ -137,6 +137,7 @@ body {
     width: auto; /* Tlačítko se přizpůsobí textu, nebo dej 100% pro plnou šířku */
     min-width: 120px; /* Aby nebylo úplně pidi */
     padding: 10px 20px;
+    margin-top: 8px;
     background-color: #1a2a16;
     color: white;
     border: 1px solid #4a6d3f;
