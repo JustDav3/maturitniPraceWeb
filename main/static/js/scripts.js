@@ -171,42 +171,33 @@ document.addEventListener('DOMContentLoaded', function () {
 }); // <-- Tady končí DOMContentLoaded
 
 // --- GLOBÁLNÍ FUNKCE PRO UZLY (Mimo DOMContentLoaded) ---
-// --- GLOBÁLNÍ FUNKCE PRO UZLY ---
-window.zobrazUzel = function(folderName, nazev, ytUrl, popis, barva = '#26de81') {
+window.zobrazUzel = function(folderName, nazev, ytUrl, popis) {
     const detail = document.getElementById('uzel-detail');
     const iframe = document.getElementById('uzel-video-frame');
     const obrazkyContainer = document.getElementById('uzel-obrazky');
 
-    // 1. Nastavení textů a videa
+    // 1. Nastavíme texty
     document.getElementById('uzel-nazev').innerText = nazev;
     document.getElementById('uzel-popis').innerText = popis;
     if (iframe) { iframe.src = ytUrl; }
 
-    // 2. LOGIKA PRO ROZZÁŘENÍ (BARVY)
-    // Odebereme třídu, aby se animace mohla restartovat
-    detail.classList.remove('uzel-glow-active');
-    
-    // Nastavíme CSS proměnnou pro barvu (modrá, oranžová, atd.)
-    detail.style.setProperty('--glow-color', barva);
+    // 2. Nastavíme YouTube video
+    iframe.src = ytUrl;
 
-    // 3. Vygenerování obrázků
+    // 3. Vygenerujeme 5 obrázků
     let imgHtml = '';
     const pocetObrazku = 5; 
+
     for (let i = 1; i <= pocetObrazku; i++) {
         imgHtml += `
             <div class="col" style="flex: 1; min-width: 150px;">
-                <img src="/static/uzly/${folderName}/${i}.png" class="uzel-img-div" alt="Krok ${i}" style="width:100%; border-radius:4px; border: 1px solid ${barva}44;">
-                <small style="display:block; text-align:center; color:#d4f0c7; font-family: 'Comic Sans MS'">Krok ${i}</small>
+                <img src="/static/uzly/${folderName}/${i}.png" class="uzel-img-div" alt="Krok ${i}" style="width:100%; border-radius:4px;">
+                <small style="display:block; text-align:center; color:#d4f0c7; font-family: 'Comic Sans MS'>Krok ${i}</small>
             </div>`;
     }
     obrazkyContainer.innerHTML = imgHtml;
 
-    // 4. Zviditelnění a spuštění efektu
+    // 4. Zviditelníme detail
     detail.style.display = 'block';
-    
-    // Force restart animace a přidání třídy
-    void detail.offsetWidth; 
-    detail.classList.add('uzel-glow-active');
-
     detail.scrollIntoView({ behavior: 'smooth' });
 };
