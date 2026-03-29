@@ -361,20 +361,42 @@ body {
     background: rgba(212, 240, 199, 0.2);
 }
 
-/* Kontejner pro uzly pod kategorií */
-.pod-menu {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 10px 0 10px 30px; /* Odsazení zleva o 30px */
-    border-left: 2px solid rgba(212, 240, 199, 0.2);
-    margin-left: 10px;
+/* Kontejner celého podmenu vlevo */
+.submenu-container {
+    background: rgba(0, 0, 0, 0.2);
+    margin: 5px 10px;
+    border-radius: 5px;
+    border-left: 2px solid #b5e48c;
 }
 
-/* Úprava tvé stávající třídy, aby v podmenu seděla */
-.sub-item {
-    font-size: 0.9rem;
-    padding: 5px 12px;
+/* Styl pro názvy kategorií (SPOJOVACÍ, NAHAZOVANÉ...) */
+.submenu-category {
+    padding: 10px 15px;
+    color: #d4f0c7;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(212, 240, 199, 0.1);
+}
+
+.submenu-category:hover {
+    background: rgba(212, 240, 199, 0.1);
+}
+
+/* Jednotlivé uzly pod kategorií */
+.submenu-item-link {
+    padding: 8px 25px;
+    font-size: 0.85rem;
+    color: #ffffff;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.submenu-item-link:hover {
+    color: #b5e48c;
+    background: rgba(255, 255, 255, 0.05);
+    padding-left: 30px; /* Efekt mírného posunutí při najetí */
 }
 
 .uzly-video-div {
