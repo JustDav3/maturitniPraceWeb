@@ -70,8 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
         secSifry.style.display = 'block';
     }
 
-    // Příklad: Volání funkce při změně výběru šifry v menu
-    // Předpokládám, že tvá tlačítka v menu mají nějaký identifikátor
     const menuButtons = document.querySelectorAll('.menu-items button');
     menuButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -80,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // POMOCNÁ FUNKCE: Nastaví select, label a vybere správnou hodnotu
     function setupSelect(labelText, optionsArray, savedValue) {
         dContainer.style.display = 'block'; 
         dLabel.innerText = labelText;
@@ -94,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function handleCipherChange(val) {
         updateCipherUI(val);
-        // 1. Reset: Vše schováme a vypneme
         [shiftBox, dContainer, dCheck, dInp1, dInp2, dInp3].forEach(el => {
             if (el) {
                 el.style.display = 'none';
@@ -167,8 +163,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     function generujMenuUzlu() {
-    const menuContainer = document.getElementById('uzly-menu-container'); // Musíš mít v HTML tento DIV
-    menuContainer.innerHTML = ''; // Vyčistit staré menu
+    const menuContainer = document.getElementById('uzly-menu-container');
+    menuContainer.innerHTML = '';
 
     for (const [katNazev, uzly] of Object.entries(KATEGORIE_UZLU)) {
         // Vytvořit tlačítko kategorie
@@ -179,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Kontejner pro pod-tlačítka (uzly)
         const podMenu = document.createElement('div');
         podMenu.className = 'pod-menu';
-        podMenu.style.display = 'none'; // Schované na začátku
+        podMenu.style.display = 'none';
 
         // Přidat uzly do pod-menu
         uzly.forEach(uzel => {
@@ -234,10 +230,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 window.generujMenuUzlu = function() {
     const submenu = document.getElementById('uzly-submenu');
-    
-    // Pokud už je menu vygenerované, tak ho jen skryjeme/zobrazíme
+    if (!submenu) return;
+
+    // Pokud už je menu vygenerované, jen ho přepneme (zobrazit/skrýt)
     if (submenu.innerHTML !== "") {
-        submenu.style.display = submenu.style.display === "none" ? "block" : "none";
+        submenu.style.display = (submenu.style.display === "none") ? "block" : "none";
         return;
     }
 
@@ -245,33 +242,44 @@ window.generujMenuUzlu = function() {
     submenu.style.display = "block";
 
     for (const [nazevKat, uzly] of Object.entries(KATEGORIE_UZLU)) {
-        // Tlačítko kategorie v levém menu
         const katDiv = document.createElement('div');
         katDiv.className = 'submenu-category';
         katDiv.innerText = nazevKat;
         
-        const podMenu = document.createElement('div');
-        podMenu.className = 'submenu-items-list';
-        podMenu.style.display = 'none';
+        const podMenuUzly = document.createElement('div');
+        podMenuUzly.className = 'submenu-items-list';
+        podMenuUzly.style.display = 'none';
 
         uzly.forEach(uzel => {
-            const span = document.createElement('div');
-            span.className = 'submenu-item-link';
-            span.innerText = uzel.nazev;
-            // Tato funkce zůstává stejná, zobrazí video v hlavním okně
-            span.onclick = () => window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis, uzel.barva);
-            podMenu.appendChild(span);
+            const uzelLink = document.createElement('div');
+            uzelLink.className = 'submenu-item-link';
+            uzelLink.innerText = uzel.nazev;
+            
+            uzelLink.onclick = (e) => {
+                e.stopPropagation();
+                window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis, uzel.barva);
+            };
+            podMenuUzly.appendChild(uzelLink);
         });
 
         katDiv.onclick = (e) => {
-            e.stopPropagation(); // Zabrání zavření celého menu
-            const isVisible = podMenu.style.display === 'block';
-            podMenu.style.display = isVisible ? 'none' : 'block';
+            e.stopPropagation();
+            const isVisible = podMenuUzly.style.display === 'block';
+            // Zavřít ostatní otevřené kategorie (volitelné)
+            document.querySelectorAll('.submenu-items-list').forEach(el => el.style.display = 'none');
+            podMenuUzly.style.display = isVisible ? 'none' : 'block';
         };
 
         submenu.appendChild(katDiv);
-        submenu.appendChild(podMenu);
+        submenu.appendChild(podMenuUzly);
     }
+};
+
+document.getElementById('btn-uzly').onclick = () => { 
+    document.getElementById('section-uvod').style.display = 'none'; 
+    document.getElementById('section-sifry').style.display = 'none'; 
+    document.getElementById('section-uzly').style.display = 'block'; 
+    window.generujMenuUzlu(); 
 };
 
 // --- GLOBÁLNÍ FUNKCE PRO UZLY (Mimo DOMContentLoaded) ---
