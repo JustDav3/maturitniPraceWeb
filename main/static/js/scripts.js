@@ -165,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
     }
     }
+    
     function generujMenuUzlu() {
     const menuContainer = document.getElementById('uzly-menu-container'); // Musíš mít v HTML tento DIV
     menuContainer.innerHTML = ''; // Vyčistit staré menu
@@ -230,6 +231,48 @@ document.addEventListener('DOMContentLoaded', function () {
     // Prvotní spuštění při načtení
     handleCipherChange(cipherType.value);
 }); // <-- Tady končí DOMContentLoaded
+
+window.generujMenuUzlu = function() {
+    const submenu = document.getElementById('uzly-submenu');
+    
+    // Pokud už je menu vygenerované, tak ho jen skryjeme/zobrazíme
+    if (submenu.innerHTML !== "") {
+        submenu.style.display = submenu.style.display === "none" ? "block" : "none";
+        return;
+    }
+
+    submenu.innerHTML = '';
+    submenu.style.display = "block";
+
+    for (const [nazevKat, uzly] of Object.entries(KATEGORIE_UZLU)) {
+        // Tlačítko kategorie v levém menu
+        const katDiv = document.createElement('div');
+        katDiv.className = 'submenu-category';
+        katDiv.innerText = nazevKat;
+        
+        const podMenu = document.createElement('div');
+        podMenu.className = 'submenu-items-list';
+        podMenu.style.display = 'none';
+
+        uzly.forEach(uzel => {
+            const span = document.createElement('div');
+            span.className = 'submenu-item-link';
+            span.innerText = uzel.nazev;
+            // Tato funkce zůstává stejná, zobrazí video v hlavním okně
+            span.onclick = () => window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis, uzel.barva);
+            podMenu.appendChild(span);
+        });
+
+        katDiv.onclick = (e) => {
+            e.stopPropagation(); // Zabrání zavření celého menu
+            const isVisible = podMenu.style.display === 'block';
+            podMenu.style.display = isVisible ? 'none' : 'block';
+        };
+
+        submenu.appendChild(katDiv);
+        submenu.appendChild(podMenu);
+    }
+};
 
 // --- GLOBÁLNÍ FUNKCE PRO UZLY (Mimo DOMContentLoaded) ---
 window.zobrazUzel = function(folderName, nazev, ytUrl, popis) {
