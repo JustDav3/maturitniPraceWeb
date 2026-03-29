@@ -232,46 +232,51 @@ window.generujMenuUzlu = function() {
     const submenu = document.getElementById('uzly-submenu');
     if (!submenu) return;
 
-    // Pokud už je menu vygenerované, jen ho přepneme (zobrazit/skrýt)
-    if (submenu.innerHTML !== "") {
-        submenu.style.display = (submenu.style.display === "none") ? "block" : "none";
-        return;
+    // Pokud je menu prázdné, vygenerujeme 4 hlavní kategorie
+    if (submenu.innerHTML === "") {
+        const kategorie = ['Spojovací', 'Nahazované', 'Kolem pasu', 'Kolem ruky'];
+        
+        kategorie.forEach(katNazev => {
+            const katBtn = document.createElement('div');
+            katBtn.className = 'submenu-category';
+            katBtn.innerText = katNazev;
+            
+            // Kontejner pro konkrétní uzly (schovaný pod kategorií)
+            const podMenuUzly = document.createElement('div');
+            podMenuUzly.className = 'submenu-items-list';
+            podMenuUzly.style.display = 'none';
+
+            // Naplnění uzly z tvých dat KATEGORIE_UZLU
+            if (KATEGORIE_UZLU[katNazev]) {
+                KATEGORIE_UZLU[katNazev].forEach(uzel => {
+                    const uzelLink = document.createElement('div');
+                    uzelLink.className = 'submenu-item-link';
+                    uzelLink.innerText = uzel.nazev;
+                    uzelLink.onclick = (e) => {
+                        e.stopPropagation();
+                        window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis, uzel.barva);
+                    };
+                    podMenuUzly.appendChild(uzelLink);
+                });
+            }
+
+            // Kliknutí na kategorii rozbalí/zabalí její uzly
+            katBtn.onclick = (e) => {
+                e.stopPropagation();
+                const isVisible = podMenuUzly.style.display === 'block';
+                podMenuUzly.style.display = isVisible ? 'none' : 'block';
+            };
+
+            submenu.appendChild(katBtn);
+            submenu.appendChild(podMenuUzly);
+        });
     }
 
-    submenu.innerHTML = '';
-    submenu.style.display = "block";
-
-    for (const [nazevKat, uzly] of Object.entries(KATEGORIE_UZLU)) {
-        const katDiv = document.createElement('div');
-        katDiv.className = 'submenu-category';
-        katDiv.innerText = nazevKat;
-        
-        const podMenuUzly = document.createElement('div');
-        podMenuUzly.className = 'submenu-items-list';
-        podMenuUzly.style.display = 'none';
-
-        uzly.forEach(uzel => {
-            const uzelLink = document.createElement('div');
-            uzelLink.className = 'submenu-item-link';
-            uzelLink.innerText = uzel.nazev;
-            
-            uzelLink.onclick = (e) => {
-                e.stopPropagation();
-                window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis, uzel.barva);
-            };
-            podMenuUzly.appendChild(uzelLink);
-        });
-
-        katDiv.onclick = (e) => {
-            e.stopPropagation();
-            const isVisible = podMenuUzly.style.display === 'block';
-            // Zavřít ostatní otevřené kategorie (volitelné)
-            document.querySelectorAll('.submenu-items-list').forEach(el => el.style.display = 'none');
-            podMenuUzly.style.display = isVisible ? 'none' : 'block';
-        };
-
-        submenu.appendChild(katDiv);
-        submenu.appendChild(podMenuUzly);
+    // Přepínání viditelnosti celého bloku pod tlačítkem "Uzly"
+    if (submenu.style.display === "none") {
+        submenu.style.display = "block";
+    } else {
+        submenu.style.display = "none";
     }
 };
 

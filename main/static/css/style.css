@@ -370,33 +370,30 @@ body {
 }
 
 /* Styl pro názvy kategorií (SPOJOVACÍ, NAHAZOVANÉ...) */
+.submenu-container {
+    overflow: hidden; /* Zajistí, že nic nevyčnívá */
+    transition: all 0.3s ease;
+}
+
 .submenu-category {
     padding: 10px 15px;
-    color: #d4f0c7;
-    font-size: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: #b5e48c;
     font-weight: bold;
-    text-transform: uppercase;
+    font-size: 0.8rem;
     cursor: pointer;
-    border-bottom: 1px solid rgba(212, 240, 199, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.submenu-category:hover {
-    background: rgba(212, 240, 199, 0.1);
-}
-
-/* Jednotlivé uzly pod kategorií */
 .submenu-item-link {
     padding: 8px 25px;
     font-size: 0.85rem;
-    color: #ffffff;
+    color: white;
     cursor: pointer;
-    transition: 0.2s;
 }
 
 .submenu-item-link:hover {
-    color: #b5e48c;
-    background: rgba(255, 255, 255, 0.05);
-    padding-left: 30px; /* Efekt mírného posunutí při najetí */
+    background: rgba(181, 228, 140, 0.2);
 }
 
 .uzly-video-div {
