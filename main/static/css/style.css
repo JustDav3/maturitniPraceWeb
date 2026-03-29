@@ -309,6 +309,42 @@ body {
 }
 
 /* 5. MULTIMÉDIA A SYSTÉM */
+/* Tlačítko hlavní kategorie */
+.btn-kategorie {
+    display: block;
+    width: 100%;
+    background: rgba(212, 240, 199, 0.1);
+    color: #d4f0c7;
+    padding: 10px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 1px solid rgba(212, 240, 199, 0.3);
+    transition: 0.3s;
+}
+
+.btn-kategorie:hover {
+    background: rgba(212, 240, 199, 0.2);
+}
+
+/* Kontejner pro uzly pod kategorií */
+.pod-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 0 10px 30px; /* Odsazení zleva o 30px */
+    border-left: 2px solid rgba(212, 240, 199, 0.2);
+    margin-left: 10px;
+}
+
+/* Úprava tvé stávající třídy, aby v podmenu seděla */
+.sub-item {
+    font-size: 0.9rem;
+    padding: 5px 12px;
+}
+
 .uzly-video-div {
     display: flex !important;
     justify-content: center !important;
@@ -331,7 +367,6 @@ body {
 }
 
 .uzel-img-div {
-    
     width: 100%;
     height: auto;
     border-radius: 4px;

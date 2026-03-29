@@ -1,3 +1,25 @@
+const KATEGORIE_UZLU = {
+    'Spojovací': [
+        { id: 'ambulak', nazev: 'Ambulák', url: 'https://www.youtube-nocookie.com/embed/zUTuDpYQsvI', popis: 'Pro spojení stejně silných lan.', barva: '#26de81' },
+        { id: 'skotak', nazev: 'Škoťák', url: 'https://www.youtube-nocookie.com/embed/n5P6xnNa5nI', popis: 'Pro spojení lan různé tloušťky.', barva: '#26de81' },
+        { id: 'sevcak', nazev: 'Ševčák', url: 'https://www.youtube-nocookie.com/embed/gleZlA655WI', popis: 'Pevný spojovací uzel.', barva: '#26de81' }
+    ],
+    'Nahazované': [
+        { id: 'lodak', nazev: 'Lodák', url: 'https://www.youtube-nocookie.com/embed/HEW92nDCrmg', popis: 'Rychlé připevnění ke kůlu.', barva: '#00d2ff' },
+        { id: 'drevarak', nazev: 'Dřevařák', url: 'https://www.youtube-nocookie.com/embed/kXSCqdBSdQM', popis: 'Vlečení kmenů.', barva: '#00d2ff' },
+        { id: 'zkracovacka', nazev: 'Zkracovačka', url: 'https://www.youtube-nocookie.com/embed/gdoa6zCbR5A', popis: 'Zkrácení lana bez řezání.', barva: '#00d2ff' }
+    ],
+    'Kolem pasu': [
+        { id: 'dracak', nazev: 'Dračák', url: 'https://www.youtube-nocookie.com/embed/_E0KBUc2GFg', popis: 'Pevná smyčka, která se nestahuje.', barva: '#ff9f43' },
+        { id: 'dobracek', nazev: 'Dobráček', url: 'https://www.youtube-nocookie.com/embed/eT47TEOTS8A', popis: 'Dekorativní nebo upevňovací uzel.', barva: '#ff9f43' }
+    ],
+    'Kolem ruky': [
+        { id: 'liscak', nazev: 'Liščák', url: 'https://www.youtube-nocookie.com/embed/bdw2_9jnkwc', popis: 'Jednoduchá upevňovací smyčka.', barva: '#a55eea' },
+        { id: 'auticka', nazev: 'Autíčka', url: 'https://www.youtube-nocookie.com/embed/ltyfdXzHZi8', popis: 'Smyčka na hračky nebo drobnosti.', barva: '#a55eea' },
+        { id: 'pouta', nazev: 'Pouta', url: 'https://www.youtube-nocookie.com/embed/GHfZHNNelAM', popis: 'Dvojitá stahovací smyčka.', barva: '#a55eea' }
+    ]
+};
+
 const DATA_UZLU = {
     'ambulak': [
         "Příprava konců lan a jejich překřížení.", // Krok 1
@@ -143,6 +165,44 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
     }
     }
+    function generujMenuUzlu() {
+    const menuContainer = document.getElementById('uzly-menu-container'); // Musíš mít v HTML tento DIV
+    menuContainer.innerHTML = ''; // Vyčistit staré menu
+
+    for (const [katNazev, uzly] of Object.entries(KATEGORIE_UZLU)) {
+        // Vytvořit tlačítko kategorie
+        const katBtn = document.createElement('div');
+        katBtn.className = 'btn-kategorie';
+        katBtn.innerText = katNazev;
+        
+        // Kontejner pro pod-tlačítka (uzly)
+        const podMenu = document.createElement('div');
+        podMenu.className = 'pod-menu';
+        podMenu.style.display = 'none'; // Schované na začátku
+
+        // Přidat uzly do pod-menu
+        uzly.forEach(uzel => {
+            const uzelBtn = document.createElement('span');
+            uzelBtn.className = 'btn-uzel-text sub-item';
+            uzelBtn.innerText = uzel.nazev;
+            uzelBtn.onclick = () => window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis, uzel.barva);
+            podMenu.appendChild(uzelBtn);
+        });
+
+        // Kliknutí na kategorii rozbalí/zabalí uzly
+        katBtn.onclick = () => {
+            const jeVidět = podMenu.style.display === 'flex';
+            // Schovat všechna ostatní otevřená pod-menu (volitelné)
+            document.querySelectorAll('.pod-menu').forEach(m => m.style.display = 'none');
+            podMenu.style.display = jeVidět ? 'none' : 'flex';
+        };
+
+        menuContainer.appendChild(katBtn);
+        menuContainer.appendChild(podMenu);
+    }
+    }
+
+    
 
 
     // --- EVENT LISTENERY PRO MENU (Nyní správně mimo funkci zobrazUzel) ---
@@ -155,9 +215,10 @@ document.addEventListener('DOMContentLoaded', function () {
         secUvod.style.display = 'block'; 
     };
     btnUzly.onclick = () => { 
-        secUvod.style.display = 'none'; secSifry.style.display = 'none'; 
-        secUzly.style.display = 'block'; 
-    };
+    secUvod.style.display = 'none'; secSifry.style.display = 'none'; 
+    secUzly.style.display = 'block'; 
+    generujMenuUzlu();
+};
 
     // Automatické otevření sekce šifry po odeslání z Django
     if (djangoData && djangoData.getAttribute('data-show-sifry') === 'true') {
