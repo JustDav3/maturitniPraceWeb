@@ -191,8 +191,8 @@ window.zobrazUzel = function(folderName, nazev, ytUrl, popis) {
     for (let i = 1; i <= pocetObrazku; i++) {
         imgHtml += `
             <div class="col" style="flex: 1; min-width: 150px;">
-                <img src="/static/uzly/${folderName}/${i}.png" class="uzel-img-step" alt="Krok ${i}" style="width:100%; border-radius:4px;">
-                <small style="display:block; text-align:center; color:#d4f0c7; font-family: 'Comic Sans MS">Krok ${i}</small>
+                <img src="/static/uzly/${folderName}/${i}.png" class="uzel-img-div" alt="Krok ${i}" style="width:100%; border-radius:4px;">
+                <small style="display:block; text-align:center; color:#d4f0c7; font-family: 'Comic Sans MS'>Krok ${i}</small>
             </div>`;
     }
     obrazkyContainer.innerHTML = imgHtml;
