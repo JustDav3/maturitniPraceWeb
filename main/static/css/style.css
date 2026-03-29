@@ -371,18 +371,20 @@ body {
 
 /* Styl pro názvy kategorií (SPOJOVACÍ, NAHAZOVANÉ...) */
 .submenu-container {
-    overflow: hidden; /* Zajistí, že nic nevyčnívá */
-    transition: all 0.3s ease;
+    display: none; /* Skryje mezeru v menu, dokud neklikneš */
+    margin: 0;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.1);
+    border-left: 3px solid #b5e48c;
 }
 
 .submenu-category {
     padding: 10px 15px;
-    background: rgba(255, 255, 255, 0.05);
-    color: #b5e48c;
-    font-weight: bold;
+    color: #d4f0c7;
     font-size: 0.8rem;
+    font-weight: bold;
     cursor: pointer;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .submenu-item-link {
@@ -390,6 +392,7 @@ body {
     font-size: 0.85rem;
     color: white;
     cursor: pointer;
+    transition: background 0.2s;
 }
 
 .submenu-item-link:hover {

@@ -232,35 +232,34 @@ window.generujMenuUzlu = function() {
     const submenu = document.getElementById('uzly-submenu');
     if (!submenu) return;
 
-    // Pokud je menu prázdné, vygenerujeme 4 hlavní kategorie
+    // Pokud je menu prázdné, vytvoříme kategorie (Nahazované, Spojovací atd.)
     if (submenu.innerHTML === "") {
-        const kategorie = ['Spojovací', 'Nahazované', 'Kolem pasu', 'Kolem ruky'];
+        submenu.style.display = "none"; // Výchozí stav
         
-        kategorie.forEach(katNazev => {
+        for (const [nazevKat, uzly] of Object.entries(KATEGORIE_UZLU)) {
+            // Tlačítko hlavní kategorie
             const katBtn = document.createElement('div');
             katBtn.className = 'submenu-category';
-            katBtn.innerText = katNazev;
+            katBtn.innerText = nazevKat;
             
             // Kontejner pro konkrétní uzly (schovaný pod kategorií)
             const podMenuUzly = document.createElement('div');
             podMenuUzly.className = 'submenu-items-list';
             podMenuUzly.style.display = 'none';
 
-            // Naplnění uzly z tvých dat KATEGORIE_UZLU
-            if (KATEGORIE_UZLU[katNazev]) {
-                KATEGORIE_UZLU[katNazev].forEach(uzel => {
-                    const uzelLink = document.createElement('div');
-                    uzelLink.className = 'submenu-item-link';
-                    uzelLink.innerText = uzel.nazev;
-                    uzelLink.onclick = (e) => {
-                        e.stopPropagation();
-                        window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis, uzel.barva);
-                    };
-                    podMenuUzly.appendChild(uzelLink);
-                });
-            }
+            uzly.forEach(uzel => {
+                const uzelLink = document.createElement('div');
+                uzelLink.className = 'submenu-item-link';
+                uzelLink.innerText = uzel.nazev;
+                uzelLink.onclick = (e) => {
+                    e.stopPropagation();
+                    // Volání funkce pro zobrazení videa a rozzáření
+                    window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis, uzel.barva);
+                };
+                podMenuUzly.appendChild(uzelLink);
+            });
 
-            // Kliknutí na kategorii rozbalí/zabalí její uzly
+            // Kliknutí na kategorii (např. Spojovací) rozbalí uzly pod ní
             katBtn.onclick = (e) => {
                 e.stopPropagation();
                 const isVisible = podMenuUzly.style.display === 'block';
@@ -269,15 +268,11 @@ window.generujMenuUzlu = function() {
 
             submenu.appendChild(katBtn);
             submenu.appendChild(podMenuUzly);
-        });
+        }
     }
 
-    // Přepínání viditelnosti celého bloku pod tlačítkem "Uzly"
-    if (submenu.style.display === "none") {
-        submenu.style.display = "block";
-    } else {
-        submenu.style.display = "none";
-    }
+    // Přepnutí viditelnosti celého bloku pod tlačítkem "Uzly"
+    submenu.style.display = (submenu.style.display === "none") ? "block" : "none";
 };
 
 document.getElementById('btn-uzly').onclick = () => { 
