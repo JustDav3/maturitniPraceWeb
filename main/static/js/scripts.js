@@ -38,7 +38,7 @@ const DATA_UZLU = {
 
 };
 
-    
+
 
 document.addEventListener('DOMContentLoaded', function () {
     // --- 1. LOGIKA PRO VYSOUVACÍ MENU (NOVÉ) ---
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const dInp1 = document.getElementById('container-input-1');
     const dInp2 = document.getElementById('container-input-2');
     const dInp3 = document.getElementById('container-input-3');
-    
+
     const btnSifry = document.getElementById('btn-sifry');
     const btnOMne = document.getElementById('btn-o-mne');
     const btnUzly = document.getElementById('btn-uzly');
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const secUvod = document.getElementById('section-uvod');
     const secSifry = document.getElementById('section-sifry');
     const secUzly = document.getElementById('section-uzly');
-    const djangoData = document.getElementById('django-data');    
+    const djangoData = document.getElementById('django-data');
 
     const showSifry = djangoData.getAttribute('data-show-sifry') === 'true';
     const hasMessages = document.querySelector('.alert') !== null;
@@ -72,17 +72,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const menuButtons = document.querySelectorAll('.menu-items button');
     menuButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const cipher = this.innerText.trim().toLowerCase();
             updateCipherUI(cipher);
         });
     });
 
     function setupSelect(labelText, optionsArray, savedValue) {
-        dContainer.style.display = 'block'; 
+        dContainer.style.display = 'block';
         dLabel.innerText = labelText;
         dSelect.disabled = false;
-        
+
         dSelect.innerHTML = optionsArray.map(opt => {
             const isSelected = opt.val == savedValue ? 'selected' : '';
             return `<option value="${opt.val}" ${isSelected}>${opt.text}</option>`;
@@ -97,8 +97,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 el.querySelectorAll('select, input').forEach(i => i.disabled = true);
             }
         });
-        
-        
+
+
 
         const savedStartBod = dSelect.getAttribute('data-start-bod');
         const savedSmerHad = dSelect.getAttribute('data-smer-had');
@@ -106,18 +106,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 3. Logika pro jednotlivé šifry
         if (val === 'morse') {
-            setupSelect('Režim šifrování:', [{val: '1', text: 'Klasická (.-)'}, {val: '2', text: 'Obrácená (-.)'}], savedMode);
+            setupSelect('Režim šifrování:', [{ val: '1', text: 'Klasická (.-)' }, { val: '2', text: 'Obrácená (-.)' }], savedMode);
             dInp1.style.display = 'block'; dInp2.style.display = 'block'; dInp3.style.display = 'block';
             document.getElementById('label-input-1').innerText = 'Tečka:';
             document.getElementById('label-input-2').innerText = 'Čárka:';
             document.getElementById('label-input-3').innerText = 'Oddělovač:';
-        } 
+        }
         else if (val === 'number_code') {
             shiftBox.style.display = 'block';
-            setupSelect('Typ abecedy:', [{val: '1', text: 'Anglická (26)'}, {val: '2', text: 'Česká (42)'}], savedMode);
+            setupSelect('Typ abecedy:', [{ val: '1', text: 'Anglická (26)' }, { val: '2', text: 'Česká (42)' }], savedMode);
             dCheck.style.display = 'block';
             document.getElementById('label-checkbox').innerText = 'Obrátit pořadí (A=26, Z=1)';
-        } 
+        }
         else if (val === 'binary') {
             shiftBox.style.display = 'block';
             dInp3.style.display = 'block';
@@ -126,9 +126,9 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('label-checkbox').innerText = 'Invertování bitů (0↔1)';
         }
         else if (val === 'spirala' || val === 'snek' || val === 'had') {
-            if (val === 'spirala') setupSelect('Startovní bod (roh):', [{val: '1', text: 'Vlevo nahoře'}, {val: '2', text: 'Vpravo nahoře'}, {val: '3', text: 'Vlevo dole'}, {val: '4', text: 'Vpravo dole'}], savedStartBod);
-            if (val === 'snek') setupSelect('Startovní střed:', [{val: '1', text: 'Vlevo dole'}, {val: '2', text: 'Vlevo nahoře'}, {val: '3', text: 'Vpravo nahoře'}, {val: '4', text: 'Vpravo dole'}], savedStartBod);
-            if (val === 'had') setupSelect('Směr pohybu hada:', [{val: 'shora', text: 'Shora dolů'}, {val: 'zdola', text: 'Zdola nahoru'}], savedSmerHad);
+            if (val === 'spirala') setupSelect('Startovní bod (roh):', [{ val: '1', text: 'Vlevo nahoře' }, { val: '2', text: 'Vpravo nahoře' }, { val: '3', text: 'Vlevo dole' }, { val: '4', text: 'Vpravo dole' }], savedStartBod);
+            if (val === 'snek') setupSelect('Startovní střed:', [{ val: '1', text: 'Vlevo dole' }, { val: '2', text: 'Vlevo nahoře' }, { val: '3', text: 'Vpravo nahoře' }, { val: '4', text: 'Vpravo dole' }], savedStartBod);
+            if (val === 'had') setupSelect('Směr pohybu hada:', [{ val: 'shora', text: 'Shora dolů' }, { val: 'zdola', text: 'Zdola nahoru' }], savedSmerHad);
         }
 
         // 4. Aktivace zobrazených inputů
@@ -142,80 +142,83 @@ document.addEventListener('DOMContentLoaded', function () {
     // Funkce, která upraví ovládací prvky podle vybrané šifry
     function updateCipherUI(cipherName) {
         const modeContainer = document.querySelector('.cipher-mode-container');
-    if (!modeContainer) return;
+        if (!modeContainer) return;
 
-    const encryptionOnlyCiphers = ['had', 'snek', 'spirala'];
+        const encryptionOnlyCiphers = ['had', 'snek', 'spirala'];
 
-    if (encryptionOnlyCiphers.includes(cipherName.toLowerCase())) {
-        // Použijeme tvé třídy, aby to vypadalo jako select
-        modeContainer.innerHTML = `
+        if (encryptionOnlyCiphers.includes(cipherName.toLowerCase())) {
+            // Použijeme tvé třídy, aby to vypadalo jako select
+            modeContainer.innerHTML = `
             <div class="form-select small-select label-as-select" style="text-align: center; color: #000000;">Pouze zašifrování</div>
             <input type="hidden" name="akce" value="sifrovat"> 
         `;
-    } else {
-        modeContainer.innerHTML = `
+        } else {
+            modeContainer.innerHTML = `
             <select name="akce" class="form-select small-select">
                 <option value="sifrovat">Zašifrovat</option>
                 <option value="desifrovat">Dešifrovat</option>
             </select>
         `;
-    }
-    }
-    
-    function generujMenuUzlu() {
-    const menuContainer = document.getElementById('uzly-menu-container');
-    menuContainer.innerHTML = '';
-
-    for (const [katNazev, uzly] of Object.entries(KATEGORIE_UZLU)) {
-        // Vytvořit tlačítko kategorie
-        const katBtn = document.createElement('div');
-        katBtn.className = 'btn-kategorie';
-        katBtn.innerText = katNazev;
-        
-        // Kontejner pro pod-tlačítka (uzly)
-        const podMenu = document.createElement('div');
-        podMenu.className = 'pod-menu';
-        podMenu.style.display = 'none';
-
-        // Přidat uzly do pod-menu
-        uzly.forEach(uzel => {
-            const uzelBtn = document.createElement('span');
-            uzelBtn.className = 'btn-uzel-text sub-item';
-            uzelBtn.innerText = uzel.nazev;
-            uzelBtn.onclick = () => window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis, uzel.barva);
-            podMenu.appendChild(uzelBtn);
-        });
-
-        // Kliknutí na kategorii rozbalí/zabalí uzly
-        katBtn.onclick = () => {
-            const jeVidět = podMenu.style.display === 'flex';
-            // Schovat všechna ostatní otevřená pod-menu (volitelné)
-            document.querySelectorAll('.pod-menu').forEach(m => m.style.display = 'none');
-            podMenu.style.display = jeVidět ? 'none' : 'flex';
-        };
-
-        menuContainer.appendChild(katBtn);
-        menuContainer.appendChild(podMenu);
-    }
+        }
     }
 
-    
+    window.generujMenuUzlu = function () {
+        const submenu = document.getElementById('uzly-submenu');
+        if (!submenu) return;
 
+        // Pokud je menu prázdné, naplníme ho kategoriemi
+        if (submenu.innerHTML.trim() === "") {
+            for (const [nazevKat, uzly] of Object.entries(KATEGORIE_UZLU)) {
+                const katDiv = document.createElement('div');
+                katDiv.className = 'submenu-category';
+                katDiv.innerText = nazevKat;
+
+                const podMenuUzly = document.createElement('div');
+                podMenuUzly.className = 'submenu-items-list';
+                podMenuUzly.style.display = 'none';
+
+                uzly.forEach(uzel => {
+                    const uzelLink = document.createElement('div');
+                    uzelLink.className = 'submenu-item-link';
+                    uzelLink.innerText = uzel.nazev;
+                    uzelLink.onclick = (e) => {
+                        e.stopPropagation();
+                        window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis, uzel.barva);
+                    };
+                    podMenuUzly.appendChild(uzelLink);
+                });
+
+                katDiv.onclick = (e) => {
+                    e.stopPropagation();
+                    const isVisible = podMenuUzly.style.display === 'block';
+                    // Zavřeme ostatní otevřené kategorie
+                    document.querySelectorAll('.submenu-items-list').forEach(el => el.style.display = 'none');
+                    podMenuUzly.style.display = isVisible ? 'none' : 'block';
+                };
+
+                submenu.appendChild(katDiv);
+                submenu.appendChild(podMenuUzly);
+            }
+        }
+
+        // Přepínání viditelnosti celého submenu
+        submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
+    };
 
     // --- EVENT LISTENERY PRO MENU (Nyní správně mimo funkci zobrazUzel) ---
-    btnSifry.onclick = () => { 
+    btnSifry.onclick = () => {
         secUvod.style.display = 'none'; secUzly.style.display = 'none';
-        secSifry.style.display = 'block'; 
+        secSifry.style.display = 'block';
     };
     btnOMne.onclick = () => {
         secSifry.style.display = 'none'; secUzly.style.display = 'none';
-        secUvod.style.display = 'block'; 
+        secUvod.style.display = 'block';
     };
-    btnUzly.onclick = () => { 
-    secUvod.style.display = 'none'; secSifry.style.display = 'none'; 
-    secUzly.style.display = 'block'; 
-    generujMenuUzlu();
-};
+    btnUzly.onclick = () => {
+        secUvod.style.display = 'none'; secSifry.style.display = 'none';
+        secUzly.style.display = 'block';
+        generujMenuUzlu();
+    };
 
     // Automatické otevření sekce šifry po odeslání z Django
     if (djangoData && djangoData.getAttribute('data-show-sifry') === 'true') {
@@ -223,57 +226,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     cipherType.onchange = (e) => handleCipherChange(e.target.value);
-    
+
     handleCipherChange(cipherType.value);
 });
 
-window.generujMenuUzlu = function() {
-    const submenu = document.getElementById('uzly-submenu');
-    if (!submenu) return;
-
-    if (submenu.innerHTML === "") {
-        for (const [nazevKat, uzly] of Object.entries(KATEGORIE_UZLU)) {
-            const katDiv = document.createElement('div');
-            katDiv.className = 'submenu-category';
-            katDiv.innerText = nazevKat;
-            
-            const podMenuUzly = document.createElement('div');
-            podMenuUzly.className = 'submenu-items-list';
-            podMenuUzly.style.display = 'none';
-
-            uzly.forEach(uzel => {
-                const uzelLink = document.createElement('div');
-                uzelLink.className = 'submenu-item-link';
-                uzelLink.innerText = uzel.nazev;
-                uzelLink.onclick = (e) => {
-                    e.stopPropagation();
-                    window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis, uzel.barva);
-                };
-                podMenuUzly.appendChild(uzelLink);
-            });
-
-            katDiv.onclick = (e) => {
-                e.stopPropagation();
-                const isVisible = podMenuUzly.style.display === 'block';
-                podMenuUzly.style.display = isVisible ? 'none' : 'block';
-            };
-
-            submenu.appendChild(katDiv);
-            submenu.appendChild(podMenuUzly);
-        }
-    }
-    submenu.style.display = (submenu.style.display === "none") ? "block" : "none";
-};
-
-document.getElementById('btn-uzly').onclick = () => { 
-    document.getElementById('section-uvod').style.display = 'none'; 
-    document.getElementById('section-sifry').style.display = 'none'; 
-    document.getElementById('section-uzly').style.display = 'block'; 
-    window.generujMenuUzlu(); 
+document.getElementById('btn-uzly').onclick = () => {
+    document.getElementById('section-uvod').style.display = 'none';
+    document.getElementById('section-sifry').style.display = 'none';
+    document.getElementById('section-uzly').style.display = 'block';
+    window.generujMenuUzlu();
 };
 
 // --- GLOBÁLNÍ FUNKCE PRO UZLY (Mimo DOMContentLoaded) ---
-window.zobrazUzel = function(folderName, nazev, ytUrl, popis) {
+window.zobrazUzel = function (folderName, nazev, ytUrl, popis) {
     const detail = document.getElementById('uzel-detail');
     const iframe = document.getElementById('uzel-video-frame');
     const obrazkyContainer = document.getElementById('uzel-obrazky');
@@ -288,7 +253,7 @@ window.zobrazUzel = function(folderName, nazev, ytUrl, popis) {
 
     // 3. Vygenerujeme 5 obrázků
     let imgHtml = '';
-    const pocetObrazku = 5; 
+    const pocetObrazku = 5;
 
     for (let i = 1; i <= pocetObrazku; i++) {
         imgHtml += `
