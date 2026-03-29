@@ -224,25 +224,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     cipherType.onchange = (e) => handleCipherChange(e.target.value);
     
-    // Prvotní spuštění při načtení
     handleCipherChange(cipherType.value);
-}); // <-- Tady končí DOMContentLoaded
+});
 
 window.generujMenuUzlu = function() {
     const submenu = document.getElementById('uzly-submenu');
     if (!submenu) return;
 
-    // Pokud je menu prázdné, vytvoříme kategorie (Nahazované, Spojovací atd.)
     if (submenu.innerHTML === "") {
-        submenu.style.display = "none"; // Výchozí stav
-        
         for (const [nazevKat, uzly] of Object.entries(KATEGORIE_UZLU)) {
-            // Tlačítko hlavní kategorie
-            const katBtn = document.createElement('div');
-            katBtn.className = 'submenu-category';
-            katBtn.innerText = nazevKat;
+            const katDiv = document.createElement('div');
+            katDiv.className = 'submenu-category';
+            katDiv.innerText = nazevKat;
             
-            // Kontejner pro konkrétní uzly (schovaný pod kategorií)
             const podMenuUzly = document.createElement('div');
             podMenuUzly.className = 'submenu-items-list';
             podMenuUzly.style.display = 'none';
@@ -253,25 +247,21 @@ window.generujMenuUzlu = function() {
                 uzelLink.innerText = uzel.nazev;
                 uzelLink.onclick = (e) => {
                     e.stopPropagation();
-                    // Volání funkce pro zobrazení videa a rozzáření
                     window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis, uzel.barva);
                 };
                 podMenuUzly.appendChild(uzelLink);
             });
 
-            // Kliknutí na kategorii (např. Spojovací) rozbalí uzly pod ní
-            katBtn.onclick = (e) => {
+            katDiv.onclick = (e) => {
                 e.stopPropagation();
                 const isVisible = podMenuUzly.style.display === 'block';
                 podMenuUzly.style.display = isVisible ? 'none' : 'block';
             };
 
-            submenu.appendChild(katBtn);
+            submenu.appendChild(katDiv);
             submenu.appendChild(podMenuUzly);
         }
     }
-
-    // Přepnutí viditelnosti celého bloku pod tlačítkem "Uzly"
     submenu.style.display = (submenu.style.display === "none") ? "block" : "none";
 };
 
