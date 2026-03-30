@@ -14,19 +14,20 @@ const KATEGORIE_UZLU = {
         { id: 'dobracek', nazev: 'Dobráček', url: 'https://www.youtube-nocookie.com/embed/eT47TEOTS8A', popis: 'Dekorativní nebo upevňovací uzel.'}
     ],
     'Kolem ruky': [
-        { id: 'liscak', nazev: 'Liščák', url: 'https://www.youtube-nocookie.com/embed/bdw2_9jnkwc', popis: 'Jednoduchá upevňovací smyčka.'},
+        { id: 'liscak', nazev: 'Liščák', url: 'https://www.youtube-nocookie.com/embed/bdw2_9jnhwc', popis: 'Jednoduchá upevňovací smyčka.'},
         { id: 'auticka', nazev: 'Autíčka', url: 'https://www.youtube-nocookie.com/embed/ltyfdXzHZi8', popis: 'Smyčka na hračky nebo drobnosti.'},
         { id: 'pouta', nazev: 'Pouta', url: 'https://www.youtube-nocookie.com/embed/GHfZHNNelAM', popis: 'Dvojitá stahovací smyčka.'}
     ]
 };
 
+// Poznámka: DATA_UZLU jsem ponechal, pokud bys chtěl v budoucnu nahradit generické texty "Krok X" těmito popisy.
 const DATA_UZLU = {
     'ambulak': [
-        "Příprava konců lan a jejich překřížení.", // Krok 1
-        "První provlečení konce pod lanem.",       // Krok 2
-        "Vytvoření druhé smyčky v opačném směru.", // Krok 3
-        "Dotažení uzlu rovnoměrným tahem.",        // Krok 4
-        "Kontrola správnosti – uzel musí být plochý." // Krok 5
+        "Příprava konců lan a jejich překřížení.",
+        "První provlečení konce pod lanem.",
+        "Vytvoření druhé smyčky v opačném směru.",
+        "Dotažení uzlu rovnoměrným tahem.",
+        "Kontrola správnosti – uzel musí být plochý."
     ],
     'skotak': [
         "Vytvoření smyčky na silnějším laně.",
@@ -34,14 +35,11 @@ const DATA_UZLU = {
         "Obtočení slabšího lana kolem celé smyčky.",
         "Provlečení pod sebou samým.",
         "Pořádné dotažení obou lan."
-    ],
-
+    ]
 };
 
-
-
 document.addEventListener('DOMContentLoaded', function () {
-    // --- 1. LOGIKA PRO VYSOUVACÍ MENU (NOVÉ) ---
+    // --- 1. SELEKTORY ---
     const cipherType = document.getElementById('cipher-type');
     const shiftBox = document.getElementById('shared-shift-container');
     const dSelect = document.getElementById('dynamic-select');
@@ -61,7 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const secUzly = document.getElementById('section-uzly');
     const djangoData = document.getElementById('django-data');
 
-    const showSifry = djangoData.getAttribute('data-show-sifry') === 'true';
+    // --- 2. POČÁTEČNÍ STAV ---
+    const showSifry = djangoData && djangoData.getAttribute('data-show-sifry') === 'true';
     const hasMessages = document.querySelector('.alert') !== null;
 
     if (showSifry || hasMessages) {
@@ -70,13 +69,27 @@ document.addEventListener('DOMContentLoaded', function () {
         secSifry.style.display = 'block';
     }
 
-    const menuButtons = document.querySelectorAll('.menu-items button');
-    menuButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const cipher = this.innerText.trim().toLowerCase();
-            updateCipherUI(cipher);
-        });
-    });
+    // --- 3. LOGIKA ŠIFER ---
+    function updateCipherUI(cipherName) {
+        const modeContainer = document.querySelector('.cipher-mode-container');
+        if (!modeContainer) return;
+
+        const encryptionOnlyCiphers = ['had', 'snek', 'spirala'];
+
+        if (encryptionOnlyCiphers.includes(cipherName.toLowerCase())) {
+            modeContainer.innerHTML = `
+                <div class="form-select small-select label-as-select" style="text-align: center; color: #000000;">Pouze zašifrování</div>
+                <input type="hidden" name="akce" value="sifrovat"> 
+            `;
+        } else {
+            modeContainer.innerHTML = `
+                <select name="akce" class="form-select small-select">
+                    <option value="sifrovat">Zašifrovat</option>
+                    <option value="desifrovat">Dešifrovat</option>
+                </select>
+            `;
+        }
+    }
 
     function setupSelect(labelText, optionsArray, savedValue) {
         dContainer.style.display = 'block';
@@ -98,13 +111,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-
-
         const savedStartBod = dSelect.getAttribute('data-start-bod');
         const savedSmerHad = dSelect.getAttribute('data-smer-had');
         const savedMode = dSelect.getAttribute('data-mode');
 
-        // 3. Logika pro jednotlivé šifry
         if (val === 'morse') {
             setupSelect('Režim šifrování:', [{ val: '1', text: 'Klasická (.-)' }, { val: '2', text: 'Obrácená (-.)' }], savedMode);
             dInp1.style.display = 'block'; dInp2.style.display = 'block'; dInp3.style.display = 'block';
@@ -131,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (val === 'had') setupSelect('Směr pohybu hada:', [{ val: 'shora', text: 'Shora dolů' }, { val: 'zdola', text: 'Zdola nahoru' }], savedSmerHad);
         }
 
-        // 4. Aktivace zobrazených inputů
         [shiftBox, dCheck, dInp1, dInp2, dInp3].forEach(el => {
             if (el && el.style.display !== 'none') {
                 el.querySelectorAll('select, input').forEach(i => i.disabled = false);
@@ -139,34 +148,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Funkce, která upraví ovládací prvky podle vybrané šifry
-    function updateCipherUI(cipherName) {
-        const modeContainer = document.querySelector('.cipher-mode-container');
-        if (!modeContainer) return;
-
-        const encryptionOnlyCiphers = ['had', 'snek', 'spirala'];
-
-        if (encryptionOnlyCiphers.includes(cipherName.toLowerCase())) {
-            // Použijeme tvé třídy, aby to vypadalo jako select
-            modeContainer.innerHTML = `
-            <div class="form-select small-select label-as-select" style="text-align: center; color: #000000;">Pouze zašifrování</div>
-            <input type="hidden" name="akce" value="sifrovat"> 
-        `;
-        } else {
-            modeContainer.innerHTML = `
-            <select name="akce" class="form-select small-select">
-                <option value="sifrovat">Zašifrovat</option>
-                <option value="desifrovat">Dešifrovat</option>
-            </select>
-        `;
-        }
-    }
-
+    // --- 4. LOGIKA UZLŮ ---
     window.generujMenuUzlu = function () {
         const submenu = document.getElementById('uzly-submenu');
         if (!submenu) return;
 
-        // Pokud je menu prázdné, naplníme ho kategoriemi
         if (submenu.innerHTML.trim() === "") {
             for (const [nazevKat, uzly] of Object.entries(KATEGORIE_UZLU)) {
                 const katDiv = document.createElement('div');
@@ -191,7 +177,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 katDiv.onclick = (e) => {
                     e.stopPropagation();
                     const isVisible = podMenuUzly.style.display === 'block';
-                    // Zavřeme ostatní otevřené kategorie
                     document.querySelectorAll('.submenu-items-list').forEach(el => el.style.display = 'none');
                     podMenuUzly.style.display = isVisible ? 'none' : 'block';
                 };
@@ -200,12 +185,38 @@ document.addEventListener('DOMContentLoaded', function () {
                 submenu.appendChild(podMenuUzly);
             }
         }
-
-        // Přepínání viditelnosti celého submenu
         submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
     };
 
-    // --- EVENT LISTENERY PRO MENU (Nyní správně mimo funkci zobrazUzel) ---
+    window.zobrazUzel = function (folderName, nazev, ytUrl, popis) {
+        const detail = document.getElementById('uzel-detail');
+        const iframe = document.getElementById('uzel-video-frame');
+        const obrazkyContainer = document.getElementById('uzel-obrazky');
+
+        document.getElementById('uzel-nazev').innerText = nazev;
+        document.getElementById('uzel-popis').innerText = popis;
+        
+        if (iframe) { 
+            iframe.src = ytUrl; 
+        }
+
+        let imgHtml = '';
+        const pocetObrazku = 5;
+
+        for (let i = 1; i <= pocetObrazku; i++) {
+            imgHtml += `
+                <div class="col" style="flex: 1; min-width: 150px;">
+                    <img src="/static/uzly/${folderName}/${i}.png" class="uzel-img-div" alt="Krok ${i}" style="width:100%; border-radius:4px;">
+                    <small style="display:block; text-align:center; color:#d4f0c7; font-family: 'Comic Sans MS';">Krok ${i}</small>
+                </div>`;
+        }
+        obrazkyContainer.innerHTML = imgHtml;
+
+        detail.style.display = 'block';
+        detail.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    // --- 5. EVENT LISTENERY PRO HLAVNÍ MENU ---
     btnSifry.onclick = () => {
         secUvod.style.display = 'none'; secUzly.style.display = 'none';
         secSifry.style.display = 'block';
@@ -217,48 +228,11 @@ document.addEventListener('DOMContentLoaded', function () {
     btnUzly.onclick = () => {
         secUvod.style.display = 'none'; secSifry.style.display = 'none';
         secUzly.style.display = 'block';
-        generujMenuUzlu();
+        window.generujMenuUzlu();
     };
 
-    if (djangoData && djangoData.getAttribute('data-show-sifry') === 'true') {
-        secUvod.style.display = 'none'; secUzly.style.display = 'none'; secSifry.style.display = 'block';
+    if (cipherType) {
+        cipherType.onchange = (e) => handleCipherChange(e.target.value);
+        handleCipherChange(cipherType.value);
     }
-
-    cipherType.onchange = (e) => handleCipherChange(e.target.value);
-
-    handleCipherChange(cipherType.value);
 });
-
-document.getElementById('btn-uzly').onclick = () => {
-    document.getElementById('section-uvod').style.display = 'none';
-    document.getElementById('section-sifry').style.display = 'none';
-    document.getElementById('section-uzly').style.display = 'block';
-    window.generujMenuUzlu();
-};
-
-window.zobrazUzel = function (folderName, nazev, ytUrl, popis) {
-    const detail = document.getElementById('uzel-detail');
-    const iframe = document.getElementById('uzel-video-frame');
-    const obrazkyContainer = document.getElementById('uzel-obrazky');
-
-    document.getElementById('uzel-nazev').innerText = nazev;
-    document.getElementById('uzel-popis').innerText = popis;
-    if (iframe) { iframe.src = ytUrl; }
-
-    iframe.src = ytUrl;
-
-    let imgHtml = '';
-    const pocetObrazku = 5;
-
-    for (let i = 1; i <= pocetObrazku; i++) {
-        imgHtml += `
-            <div class="col" style="flex: 1; min-width: 150px;">
-                <img src="/static/uzly/${folderName}/${i}.png" class="uzel-img-div" alt="Krok ${i}" style="width:100%; border-radius:4px;">
-                <small style="display:block; text-align:center; color:#d4f0c7; font-family: 'Comic Sans MS'>Krok ${i}</small>
-            </div>`;
-    }
-    obrazkyContainer.innerHTML = imgHtml;
-
-    detail.style.display = 'block';
-    detail.scrollIntoView({ behavior: 'smooth' });
-};
