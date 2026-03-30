@@ -190,10 +190,11 @@ body {
 /* 6. SUBMENU PRO UZLY */
 .submenu-container {
     display: none;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.2);
     margin: 5px 0 10px 0;
-    border-radius: 5px;
+    padding: 5px 0;
     border-left: 3px solid #b5e48c;
+    border-radius: 0;
 }
 
 .submenu-category {
