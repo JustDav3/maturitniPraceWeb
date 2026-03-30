@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnSifry = document.getElementById('btn-sifry');
     const btnOMne = document.getElementById('btn-o-mne');
     const btnUzly = document.getElementById('btn-uzly');
+    const submenu = document.getElementById('uzly-submenu');
 
     const secUvod = document.getElementById('section-uvod');
     const secSifry = document.getElementById('section-sifry');
@@ -100,6 +101,22 @@ document.addEventListener('DOMContentLoaded', function () {
             const isSelected = opt.val == savedValue ? 'selected' : '';
             return `<option value="${opt.val}" ${isSelected}>${opt.text}</option>`;
         }).join('');
+    }
+
+    function nastavAktivniTlacitko(idTlacitka) {
+        // Seznam všech tvých ID tlačítek
+        const tlacitka = ['btn-o-mne', 'btn-sifry', 'btn-uzly', 'btn-test'];
+        
+        tlacitka.forEach(id => {
+            const btn = document.getElementById(id);
+            if (btn) {
+                if (id === idTlacitka) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            }
+        });
     }
 
     function handleCipherChange(val) {
@@ -188,6 +205,8 @@ document.addEventListener('DOMContentLoaded', function () {
         submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
     };
 
+    
+
     window.zobrazUzel = function (folderName, nazev, ytUrl, popis) {
         const detail = document.getElementById('uzel-detail');
         const iframe = document.getElementById('uzel-video-frame');
@@ -221,18 +240,20 @@ document.addEventListener('DOMContentLoaded', function () {
         secUvod.style.display = 'none'; secUzly.style.display = 'none';
         secSifry.style.display = 'block';
         if(submenu) submenu.style.display = 'none';
+        nastavAktivniTlacitko('btn-sifry');
     };
     btnOMne.onclick = () => {
         secSifry.style.display = 'none'; secUzly.style.display = 'none';
         secUvod.style.display = 'block';
         if(submenu) submenu.style.display = 'none';
-
+        nastavAktivniTlacitko('btn-o-mne');
     };
     btnUzly.onclick = () => {
         secUvod.style.display = 'none'; secSifry.style.display = 'none';
         secUzly.style.display = 'block';
         window.generujMenuUzlu();
         /* if(submenu) submenu.style.display = 'block'; */
+        nastavAktivniTlacitko('btn-uzly');
     };
 
     if (cipherType) {

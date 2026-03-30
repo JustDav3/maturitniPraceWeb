@@ -131,6 +131,14 @@ body {
     font-family: 'Comic Sans MS';
 }
 
+.menu-items button.active {
+    background-color: #b5e48c !important; /* Ta svěží mechová */
+    color: #1a2a16 !important;
+    font-weight: bold;
+    transform: scale(0.98); /* Efekt promáčknutí */
+    box-shadow: inset 0 4px 8px rgba(0,0,0,0.3);
+}
+
 .small-select {
     display: block;
     width: 160px !important; /* Fixní šířka pro menší výběry u šifer */
