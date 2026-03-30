@@ -306,6 +306,19 @@ body {
 }
 
 /* --- 6. VÝSLEDKY A MATICE --- */
+#result-nazev {
+    color: #d4f0c7;
+}
+
+.result-nazev-forCopy, .matrix-nazev , .matrix-nazev-forCopy{
+    color: #d4f0c7;
+    font-family: 'Comic Sans MS'
+}
+
+#result-frame {
+    border-color: rgba(255,255,255,0.1);
+}
+
 .result-text {
     word-break: break-all;
     white-space: normal;
@@ -328,6 +341,17 @@ body {
     white-space: pre-wrap;
     border-radius: 4px;
 }
+
+.matrix-result-box {
+    background: rgba(0,0,0,0.3);
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-family: monospace;
+    white-space: pre;
+}
+
+
 
 .matrix-display {
     margin-top: 10px;
@@ -399,9 +423,20 @@ body {
     background: rgba(181, 228, 140, 0.2);
 }
 
+#uzel-nazev {
+    color: #d4f0c7;
+    border-bottom: 1px solid rgba(212,240,199,0.3);
+    padding-bottom: 5px;
+}
+
+#uzel-popis {
+    font-style: italic;
+}
+
 #uzly-menu-container{
     margin-bottom: 10px;
 }
+
 
 .uzly-video-div {
     display: flex !important;
