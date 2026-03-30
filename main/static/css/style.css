@@ -216,11 +216,14 @@ body {
     display: none;
     background: rgba(0, 0, 0, 0.15);
     margin: 0;
+    margin-top: -15px;
     padding: 5px 0;
     border-left: 3px solid #b5e48c;
     border-right: 1px solid rgba(181, 228, 140, 0.2);
     border-bottom: 1px solid rgba(181, 228, 140, 0.2);
-    width: 100%; 
+    width: 97%; 
+    position: relative;
+    left: 3px;
     box-sizing: border-box;
 }
 
