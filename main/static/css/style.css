@@ -72,7 +72,7 @@ body {
 .row { display: flex; gap: 10px; flex-wrap: wrap; }
 .col { flex: 1; }
 
-/* 3. BOČNÍ PANELY */
+/* 3. BOČNÍ PANELY (MENU A LOGIN) */
 .menu-bar, .right-container {
     position: fixed;
     top: 95px;
@@ -100,12 +100,11 @@ body {
     text-transform: uppercase;
 }
 
-/* Formláře v bočním panelu */
 .login-form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
 }
 
 .login-form input {
@@ -119,60 +118,7 @@ body {
     box-sizing: border-box;
 }
 
-/* 4. MENU A SUBMENU */
-.menu-items {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.menu-items button {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    border: none;
-    color: white;
-    padding: 12px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    text-align: left;
-    font-family: 'Comic Sans MS', cursive;
-    transition: all 0.2s ease;
-}
-
-.menu-items button:hover { background: rgba(181, 228, 140, 0.2); }
-.menu-items button:active { transform: scale(0.96); }
-
-/* Sjednocené sub-menu */
-.submenu-container {
-    display: none; 
-    background: rgba(0, 0, 0, 0.1);
-    margin: 5px 0 10px 0;
-    border-radius: 5px;
-    border-left: 3px solid #b5e48c;
-}
-
-.submenu-category {
-    padding: 10px 15px;
-    color: #d4f0c7;
-    font-size: 0.8rem;
-    font-weight: bold;
-    cursor: pointer;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.submenu-category:hover { background: rgba(212, 240, 199, 0.1); }
-
-.submenu-item-link {
-    padding: 8px 25px;
-    font-size: 0.85rem;
-    color: white;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.submenu-item-link:hover { background: rgba(181, 228, 140, 0.2); color: #d4f0c7; }
-
-/* 5. KOMPONENTY FORMULÁŘE A TLAČÍTKA */
+/* 4. KOMPONENTY FORMULÁŘE */
 .form-control, .form-select {
     width: 100%;
     padding: 10px;
@@ -181,9 +127,25 @@ body {
     color: #333;
     border: none;
     border-radius: 2px;
+    resize: vertical; /* Povolí pouze svislé zvětšování textarey */
     font-family: 'Comic Sans MS';
 }
 
+.small-select {
+    display: block;
+    width: 160px !important; /* Fixní šířka pro menší výběry u šifer */
+    margin: 5px 0;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/* 5. TLAČÍTKA */
 .btn-login, .btn-submit {
     padding: 10px 20px;
     background-color: #1a2a16;
@@ -191,13 +153,12 @@ body {
     border: 1px solid #4a6d3f;
     border-radius: 4px;
     cursor: pointer;
-    font-family: 'Comic Sans MS', sans-serif;
+    font-family: 'Comic Sans MS';
     font-weight: bold;
     transition: 0.3s ease;
 }
 
-.btn-submit { padding: 12px 40px; display: block; margin: 25px auto 5px; }
-
+.btn-submit { display: block; margin: 25px auto 5px; padding: 12px 40px; }
 .btn-login:hover, .btn-submit:hover { background-color: #2d4526; }
 
 .btn-uzel-text {
@@ -213,35 +174,46 @@ body {
 }
 
 .btn-uzel-text:hover {
-    background-color: rgba(181, 228, 140, 0.4); 
+    background-color: rgba(181, 228, 140, 0.4);
     color: #1a2a16;
     transform: scale(1.05);
-    box-shadow: 0 0 10px #b5e48c;
 }
 
-/* 6. VÝSLEDKY A UZLY */
-.result-area, .matrix-result-box {
-    margin-top: 10px;
-    padding: 15px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
+/* 6. SUBMENU PRO UZLY */
+.submenu-container {
+    display: none;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 5px 0 10px 0;
+    border-radius: 5px;
+    border-left: 3px solid #b5e48c;
 }
 
-.result-area { border-left: 4px solid #77a868; }
-
-#uzel-nazev {
+.submenu-category {
+    padding: 10px 15px;
     color: #d4f0c7;
-    border-bottom: 1px solid rgba(212,240,199,0.3);
-    padding-bottom: 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Oprava kontejneru pro video */
+.submenu-item-link {
+    padding: 8px 25px;
+    font-size: 0.85rem;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.submenu-item-link:hover { background: rgba(181, 228, 140, 0.2); }
+
+/* 7. DETAIL UZLU (VIDEO A OBRÁZKY) */
 .uzly-video-div {
     position: relative;
-    width: 100%;
-    padding-bottom: 56.25%; /* Poměr stran 16:9 */
+    width: 80%; /* Video zabere 80% panelu */
+    margin: 20px auto;
+    padding-bottom: 45%; /* Poměr stran 16:9 přepočtený na šířku */
     height: 0;
-    margin: 20px 0;
 }
 
 .uzly-video-div iframe {
@@ -254,18 +226,29 @@ body {
     border-radius: 8px;
 }
 
-.uzel-img-div {
-    width: 100%;
-    border-radius: 4px;
-    border: 1px solid rgba(255,255,255,0.1);
-    margin-bottom: 10px;
+#uzel-obrazky {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
 }
+
+.uzel-img-div {
+    max-width: 160px; /* Kompaktní velikost obrázků */
+    height: auto;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s;
+}
+
+.uzel-img-div:hover { transform: scale(1.1); }
 
 .alert {
     padding: 12px;
     border-radius: 8px;
-    margin-bottom: 20px;
-    border: 1px solid #ffeeba;
     background-color: rgba(255, 0, 23, 0.35);
     color: #ffeeba;
+    border: 1px solid #ffeeba;
+    margin-bottom: 20px;
 }
