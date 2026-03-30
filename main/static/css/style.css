@@ -445,20 +445,6 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Třída pro aktivní záři */
-.uzel-glow-active {
-    border-color: var(--glow-color) !important;
-    animation: pulse-glow-category 3s infinite alternate;
-}
-
-@keyframes pulse-glow-category {
-    0% {
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-    }
-    100% {
-        box-shadow: 0 0 40px var(--glow-color);
-    }
-}
 
 .alert {
     padding: 12px;
