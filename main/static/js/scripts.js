@@ -1,22 +1,22 @@
 const KATEGORIE_UZLU = {
     'Spojovací': [
-        { id: 'ambulak', nazev: 'Ambulák', url: 'https://www.youtube-nocookie.com/embed/zUTuDpYQsvI', popis: 'Pro spojení stejně silných lan.', barva: '#26de81' },
-        { id: 'skotak', nazev: 'Škoťák', url: 'https://www.youtube-nocookie.com/embed/n5P6xnNa5nI', popis: 'Pro spojení lan různé tloušťky.', barva: '#26de81' },
-        { id: 'sevcak', nazev: 'Ševčák', url: 'https://www.youtube-nocookie.com/embed/gleZlA655WI', popis: 'Pevný spojovací uzel.', barva: '#26de81' }
+        { id: 'ambulak', nazev: 'Ambulák', url: 'https://www.youtube-nocookie.com/embed/zUTuDpYQsvI', popis: 'Pro spojení stejně silných lan.'},
+        { id: 'skotak', nazev: 'Škoťák', url: 'https://www.youtube-nocookie.com/embed/n5P6xnNa5nI', popis: 'Pro spojení lan různé tloušťky.'},
+        { id: 'sevcak', nazev: 'Ševčák', url: 'https://www.youtube-nocookie.com/embed/gleZlA655WI', popis: 'Pevný spojovací uzel.'}
     ],
     'Nahazované': [
-        { id: 'lodak', nazev: 'Lodák', url: 'https://www.youtube-nocookie.com/embed/HEW92nDCrmg', popis: 'Rychlé připevnění ke kůlu.', barva: '#00d2ff' },
-        { id: 'drevarak', nazev: 'Dřevařák', url: 'https://www.youtube-nocookie.com/embed/kXSCqdBSdQM', popis: 'Vlečení kmenů.', barva: '#00d2ff' },
-        { id: 'zkracovacka', nazev: 'Zkracovačka', url: 'https://www.youtube-nocookie.com/embed/gdoa6zCbR5A', popis: 'Zkrácení lana bez řezání.', barva: '#00d2ff' }
+        { id: 'lodak', nazev: 'Lodák', url: 'https://www.youtube-nocookie.com/embed/HEW92nDCrmg', popis: 'Rychlé připevnění ke kůlu.'},
+        { id: 'drevarak', nazev: 'Dřevařák', url: 'https://www.youtube-nocookie.com/embed/kXSCqdBSdQM', popis: 'Vlečení kmenů.'},
+        { id: 'zkracovacka', nazev: 'Zkracovačka', url: 'https://www.youtube-nocookie.com/embed/gdoa6zCbR5A', popis: 'Zkrácení lana bez řezání.'}
     ],
     'Kolem pasu': [
-        { id: 'dracak', nazev: 'Dračák', url: 'https://www.youtube-nocookie.com/embed/_E0KBUc2GFg', popis: 'Pevná smyčka, která se nestahuje.', barva: '#ff9f43' },
-        { id: 'dobracek', nazev: 'Dobráček', url: 'https://www.youtube-nocookie.com/embed/eT47TEOTS8A', popis: 'Dekorativní nebo upevňovací uzel.', barva: '#ff9f43' }
+        { id: 'dracak', nazev: 'Dračák', url: 'https://www.youtube-nocookie.com/embed/_E0KBUc2GFg', popis: 'Pevná smyčka, která se nestahuje.'},
+        { id: 'dobracek', nazev: 'Dobráček', url: 'https://www.youtube-nocookie.com/embed/eT47TEOTS8A', popis: 'Dekorativní nebo upevňovací uzel.'}
     ],
     'Kolem ruky': [
-        { id: 'liscak', nazev: 'Liščák', url: 'https://www.youtube-nocookie.com/embed/bdw2_9jnkwc', popis: 'Jednoduchá upevňovací smyčka.', barva: '#a55eea' },
-        { id: 'auticka', nazev: 'Autíčka', url: 'https://www.youtube-nocookie.com/embed/ltyfdXzHZi8', popis: 'Smyčka na hračky nebo drobnosti.', barva: '#a55eea' },
-        { id: 'pouta', nazev: 'Pouta', url: 'https://www.youtube-nocookie.com/embed/GHfZHNNelAM', popis: 'Dvojitá stahovací smyčka.', barva: '#a55eea' }
+        { id: 'liscak', nazev: 'Liščák', url: 'https://www.youtube-nocookie.com/embed/bdw2_9jnkwc', popis: 'Jednoduchá upevňovací smyčka.'},
+        { id: 'auticka', nazev: 'Autíčka', url: 'https://www.youtube-nocookie.com/embed/ltyfdXzHZi8', popis: 'Smyčka na hračky nebo drobnosti.'},
+        { id: 'pouta', nazev: 'Pouta', url: 'https://www.youtube-nocookie.com/embed/GHfZHNNelAM', popis: 'Dvojitá stahovací smyčka.'}
     ]
 };
 
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     uzelLink.innerText = uzel.nazev;
                     uzelLink.onclick = (e) => {
                         e.stopPropagation();
-                        window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis, uzel.barva);
+                        window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis);
                     };
                     podMenuUzly.appendChild(uzelLink);
                 });
@@ -220,7 +220,6 @@ document.addEventListener('DOMContentLoaded', function () {
         generujMenuUzlu();
     };
 
-    // Automatické otevření sekce šifry po odeslání z Django
     if (djangoData && djangoData.getAttribute('data-show-sifry') === 'true') {
         secUvod.style.display = 'none'; secUzly.style.display = 'none'; secSifry.style.display = 'block';
     }
@@ -237,21 +236,17 @@ document.getElementById('btn-uzly').onclick = () => {
     window.generujMenuUzlu();
 };
 
-// --- GLOBÁLNÍ FUNKCE PRO UZLY (Mimo DOMContentLoaded) ---
 window.zobrazUzel = function (folderName, nazev, ytUrl, popis) {
     const detail = document.getElementById('uzel-detail');
     const iframe = document.getElementById('uzel-video-frame');
     const obrazkyContainer = document.getElementById('uzel-obrazky');
 
-    // 1. Nastavíme texty
     document.getElementById('uzel-nazev').innerText = nazev;
     document.getElementById('uzel-popis').innerText = popis;
     if (iframe) { iframe.src = ytUrl; }
 
-    // 2. Nastavíme YouTube video
     iframe.src = ytUrl;
 
-    // 3. Vygenerujeme 5 obrázků
     let imgHtml = '';
     const pocetObrazku = 5;
 
@@ -264,7 +259,6 @@ window.zobrazUzel = function (folderName, nazev, ytUrl, popis) {
     }
     obrazkyContainer.innerHTML = imgHtml;
 
-    // 4. Zviditelníme detail
     detail.style.display = 'block';
     detail.scrollIntoView({ behavior: 'smooth' });
 };
