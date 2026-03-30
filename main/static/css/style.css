@@ -77,6 +77,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    position: relative;
 }
 
 .menu-items button {
@@ -218,20 +219,26 @@ body {
     padding: 5px 0;
     border-left: 3px solid #b5e48c;
     border-radius: 0;
+    position: absolute;
+    left: 100%;       /* Posune submenu napravo od menu */
+    top: 90px;        /* Tuto hodnotu doladíme podle pozice tlačítka Uzly */
+    width: 180px;     /* Zmenšení šířky */
+    z-index: 100;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
 }
 
 .submenu-category {
     padding: 10px 15px;
     color: #d4f0c7;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: bold;
     cursor: pointer;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .submenu-item-link {
-    padding: 8px 25px;
-    font-size: 0.85rem;
+    padding: 6px 15px;
+    font-size: 0.8rem;
     color: white;
     cursor: pointer;
     transition: 0.2s;
