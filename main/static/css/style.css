@@ -10,7 +10,7 @@ body {
     font-family: 'Comic Sans MS', cursive;
 }
 
-/*2. LAYOUT STRÁNKY */
+/* 2. LAYOUT STRÁNKY */
 .main-header {
     width: 100%;
     height: 80px;
@@ -53,7 +53,7 @@ body {
     grid-template-columns: 1fr;
     gap: 20px;
     width: 100%;
-    padding: 20px 270px 20px 270px;
+    padding: 20px 270px;
     box-sizing: border-box;
 }
 
@@ -69,14 +69,13 @@ body {
     box-sizing: border-box;
 }
 
-.row { display: flex; gap: 10px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
 .col { flex: 1; }
 
 /* 3. BOČNÍ PANELY */
-.menu-bar {
+.menu-bar, .right-container {
     position: fixed;
     top: 95px;
-    left: 15px;
     width: 240px;
     height: calc(100vh - 110px);
     background: linear-gradient(180deg, #5b8a4d 0%, #2d4526 100%);
@@ -88,28 +87,10 @@ body {
     overflow-y: auto;
 }
 
-.right-container {
-    position: fixed;
-    top: 95px;
-    right: 15px;
-    width: 240px;
-    height: calc(100vh - 110px);
-    gap: 15px;
-    background: linear-gradient(180deg, #5b8a4d 0%, #2d4526 100%);
-    box-shadow: inset 0 0 30px rgba(0,0,0,0.5), 5px 5px 15px rgba(0,0,0,0.3);
-    border-radius: 8px;
-    padding: 25px 20px;
-    z-index: 1000;
-    box-sizing: border-box;
-    overflow-y: auto;
-}
+.menu-bar { left: 15px; }
+.right-container { right: 15px; padding: 25px 20px; }
 
-.right-container form {
-    gap: 12px;
-    width: 100%;
-}
-
-.right-container-title {
+.menu-title, .right-container-title {
     text-align: center;
     font-size: 1.1rem;
     color: #ffffff;
@@ -119,16 +100,17 @@ body {
     text-transform: uppercase;
 }
 
+/* Formláře v bočním panelu */
 .login-form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 5px;
 }
 
 .login-form input {
-    width: 96%;
+    width: 100%;
     padding: 10px;
-    margin: 5px;
     background: rgba(255, 255, 255, 0.9);
     border: none;
     border-radius: 4px;
@@ -137,35 +119,7 @@ body {
     box-sizing: border-box;
 }
 
-.btn-login {
-    width: auto;
-    min-width: 120px;
-    padding: 10px 20px;
-    margin-top: 8px;
-    background-color: #1a2a16;
-    color: white;
-    border: 1px solid #4a6d3f;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'Comic Sans MS', bold;
-    text-align: center;
-    transition: 0.3s ease;
-}
-
-.btn-login:hover {
-    background-color: #2d4526;
-}
-
-.menu-title {
-    text-align: center;
-    font-size: 1.1rem;
-    color: #ffffff;
-    margin: 0 0 20px 0;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(181, 228, 140, 0.2);
-    text-transform: uppercase;
-}
-
+/* 4. MENU A SUBMENU */
 .menu-items {
     display: flex;
     flex-direction: column;
@@ -185,220 +139,15 @@ body {
     transition: all 0.2s ease;
 }
 
-.menu-items button:hover {
-    background: rgba(181, 228, 140, 0.2);
-}
+.menu-items button:hover { background: rgba(181, 228, 140, 0.2); }
+.menu-items button:active { transform: scale(0.96); }
 
-.menu-items button:active {
-    transform: scale(0.96);
-    background: rgba(0, 0, 0, 0.3);
-}
-
+/* Sjednocené sub-menu */
 .submenu-container {
-    background: rgba(0, 0, 0, 0.2);
-    margin-top: 5px;
-    border-radius: 5px;
-}
-
-.submenu-category {
-    padding: 8px 15px;
-    color: #d4f0c7;
-    font-size: 0.85rem;
-    font-weight: bold;
-    cursor: pointer;
-    border-bottom: 1px solid rgba(212, 240, 199, 0.1);
-}
-
-.submenu-category:hover {
-    background: rgba(212, 240, 199, 0.1);
-}
-
-.submenu-item-link {
-    padding: 5px 25px; /* Větší odsazení zleva */
-    font-size: 0.8rem;
-    color: #ffffff;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.submenu-item-link:hover {
-    color: #d4f0c7;
-    background: rgba(255, 255, 255, 0.05);
-}
-
-/* 4. KOMPONENTY FORMULÁŘE */
-.form-control, 
-.form-select {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.9);
-    color: #333;
-    border: none;
-    border-radius: 2px;
-    resize: vertical;
-    font-family: 'Comic Sans MS';
-}
-
-.form-check {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.form-check-input {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-}
-
-.small-select {
-    display: block;
-    width: 150px !important;
-    margin: 5px;
-}
-
-/* --- 5. TLAČÍTKA A AKCE --- */
-.btn-container {
-    margin-top: 25px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-}
-
-.btn-submit {
-    padding: 12px 40px;
-    margin: 5px auto;
-    color: white;
-    font-family: 'Comic Sans MS', bold;
-    text-decoration: none;
-    background-color: #1a2a16;
-    border: 1px solid #4a6d3f;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
-
-.btn-submit:hover {
-    background-color: #2d4526;
-}
-
-.btn-uzel-text {
-    display: inline-block;
-    margin: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    border: 1px solid #b5e48c;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-}
-
-.btn-uzel-text:hover {
-    background-color: rgba(181, 228, 140, 0.4); 
-    color: #1a2a16;
-    font-weight: bold;
-    box-shadow: 0 0 10px #b5e48c, 0 0 25px rgba(181, 228, 140, 0.6);
-    transform: scale(1.05);
-}
-
-/* --- 6. VÝSLEDKY A MATICE --- */
-#result-nazev {
-    color: #d4f0c7;
-}
-
-.result-nazev-forCopy, .matrix-nazev , .matrix-nazev-forCopy{
-    color: #d4f0c7;
-    font-family: 'Comic Sans MS'
-}
-
-#result-frame {
-    border-color: rgba(255,255,255,0.1);
-}
-
-.result-text {
-    word-break: break-all;
-    white-space: normal;
-    line-height: 1.6;
-}
-
-.result-area {
-    margin-top: 10px;
-    padding: 15px;
-    background: rgba(0, 0, 0, 0.3);
-    border-left: 4px solid #77a868;
-    border-radius: 4px;
-}
-
-.result-prepis-box {
-    font-family: monospace;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 10px;
-    word-break: break-all;
-    white-space: pre-wrap;
-    border-radius: 4px;
-}
-
-.matrix-result-box {
-    background: rgba(0,0,0,0.3);
-    padding: 10px;
-    border-radius: 5px;
-    color: white;
-    font-family: monospace;
-    white-space: pre;
-}
-
-
-
-.matrix-display {
-    margin-top: 10px;
-    text-align: center;
-}
-
-.matrix-cell {
-    display: inline-block;
-    width: 35px;
-    font-weight: bold;
-}
-
-/* 5. MULTIMÉDIA A SYSTÉM */
-/* Tlačítko hlavní kategorie */
-.btn-kategorie {
-    display: block;
-    width: 96%;
-    background: rgba(212, 240, 199, 0.1);
-    color: #d4f0c7;
-    padding: 10px 15px;
-    margin-top: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: bold;
-    text-transform: uppercase;
-    border: 1px solid rgba(212, 240, 199, 0.3);
-    transition: 0.3s;
-}
-
-.btn-kategorie:hover {
-    background: rgba(212, 240, 199, 0.2);
-}
-
-/* Kontejner celého podmenu vlevo */
-.submenu-container {
-    background: rgba(0, 0, 0, 0.2);
-    margin: 5px 10px;
-    border-radius: 5px;
-    border-left: 2px solid #b5e48c;
-}
-
-/* Styl pro názvy kategorií (SPOJOVACÍ, NAHAZOVANÉ...) */
-.submenu-container {
-    display: none; /* Skryje mezeru v menu, dokud neklikneš */
-    margin: 0;
-    padding: 0;
+    display: none; 
     background: rgba(0, 0, 0, 0.1);
+    margin: 5px 0 10px 0;
+    border-radius: 5px;
     border-left: 3px solid #b5e48c;
 }
 
@@ -411,17 +160,74 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.submenu-category:hover { background: rgba(212, 240, 199, 0.1); }
+
 .submenu-item-link {
     padding: 8px 25px;
     font-size: 0.85rem;
     color: white;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: 0.2s;
 }
 
-.submenu-item-link:hover {
-    background: rgba(181, 228, 140, 0.2);
+.submenu-item-link:hover { background: rgba(181, 228, 140, 0.2); color: #d4f0c7; }
+
+/* 5. KOMPONENTY FORMULÁŘE A TLAČÍTKA */
+.form-control, .form-select {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border: none;
+    border-radius: 2px;
+    font-family: 'Comic Sans MS';
 }
+
+.btn-login, .btn-submit {
+    padding: 10px 20px;
+    background-color: #1a2a16;
+    color: white;
+    border: 1px solid #4a6d3f;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Comic Sans MS', sans-serif;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.btn-submit { padding: 12px 40px; display: block; margin: 25px auto 5px; }
+
+.btn-login:hover, .btn-submit:hover { background-color: #2d4526; }
+
+.btn-uzel-text {
+    display: inline-block;
+    margin: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid #b5e48c;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-uzel-text:hover {
+    background-color: rgba(181, 228, 140, 0.4); 
+    color: #1a2a16;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #b5e48c;
+}
+
+/* 6. VÝSLEDKY A UZLY */
+.result-area, .matrix-result-box {
+    margin-top: 10px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.result-area { border-left: 4px solid #77a868; }
 
 #uzel-nazev {
     color: #d4f0c7;
@@ -429,72 +235,37 @@ body {
     padding-bottom: 5px;
 }
 
-#uzel-popis {
-    font-style: italic;
-}
-
-#uzly-menu-container{
-    margin-bottom: 10px;
-}
-
-
+/* Oprava kontejneru pro video */
 .uzly-video-div {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    width: 100% !important;
-    margin: 20px 0 !important;
-    /* Zrušíme ty staré paddingy a výšky, co tam byly předtím */
-    padding-bottom: 0 !important;
-    height: auto !important;
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* Poměr stran 16:9 */
+    height: 0;
+    margin: 20px 0;
 }
 
 .uzly-video-div iframe {
-    display: block;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 4px;
+    border: none;
+    border-radius: 8px;
 }
 
 .uzel-img-div {
     width: 100%;
-    height: auto;
     border-radius: 4px;
     border: 1px solid rgba(255,255,255,0.1);
     margin-bottom: 10px;
 }
 
-#uzel-obrazky img {
-    max-width: 250px; 
-    border-radius: 5px;
-}
-
-#uzel-detail {
-    transition: all 0.5s ease-in-out;
-    border-radius: 15px;
-    padding: 25px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-
 .alert {
     padding: 12px;
     border-radius: 8px;
     margin-bottom: 20px;
-    font-size: 0.9rem;
-    border: 1px solid transparent;
-}
-
-.alert-warning {
-    background-color: #ff001759;
+    border: 1px solid #ffeeba;
+    background-color: rgba(255, 0, 23, 0.35);
     color: #ffeeba;
-    border-color: #ffeeba;
 }
-
-/*  git add .
-    git commit -m "beta verze 0.3.16 - Pravy blok"
-    git push origin main */
