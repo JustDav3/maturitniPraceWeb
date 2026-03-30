@@ -220,15 +220,19 @@ document.addEventListener('DOMContentLoaded', function () {
     btnSifry.onclick = () => {
         secUvod.style.display = 'none'; secUzly.style.display = 'none';
         secSifry.style.display = 'block';
+        if(submenu) submenu.style.display = 'none';
     };
     btnOMne.onclick = () => {
         secSifry.style.display = 'none'; secUzly.style.display = 'none';
         secUvod.style.display = 'block';
+        if(submenu) submenu.style.display = 'none';
+
     };
     btnUzly.onclick = () => {
         secUvod.style.display = 'none'; secSifry.style.display = 'none';
         secUzly.style.display = 'block';
         window.generujMenuUzlu();
+        /* if(submenu) submenu.style.display = 'block'; */
     };
 
     if (cipherType) {
