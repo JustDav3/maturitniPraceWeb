@@ -242,6 +242,7 @@ body {
     color: white;
     cursor: pointer;
     transition: 0.2s;
+    margin-left: 14px;
 }
 
 .submenu-item-link:hover { background: rgba(181, 228, 140, 0.2); }
