@@ -284,13 +284,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     
 
-    window.zobrazUzel = function (folderName, nazev, ytUrl, popis) {
+    window.zobrazUzel = function (folderName, nazev, ytUrl) {
     const detail = document.getElementById('uzel-detail');
     const iframe = document.getElementById('uzel-video-frame');
     const obrazkyContainer = document.getElementById('uzel-obrazky');
 
     document.getElementById('uzel-nazev').innerText = nazev;
-    document.getElementById('uzel-popis').innerText = popis;
     
     if (iframe) { 
         iframe.src = ytUrl; 
