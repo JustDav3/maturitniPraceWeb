@@ -32,9 +32,11 @@
             <button id="btn-sifry">Šifry</button>
             <button id="btn-uzly">Uzly</button>
             <div id="uzly-submenu" class="submenu-container"></div>
+            {% if user.is_authenticated %}
             <button id="btn-test">Test</button>
             <button id="btn-vysledky">Výsledky testu</button>
             <button id="btn-prihlasky">Přihlášky</button>
+            {% endif %}
         </div>
     </nav>
 
@@ -112,9 +114,11 @@
 
                         <div class="mt-3">
                             <label>Operace:</label>
-                                <div class="cipher-mode-container"><select name="akce" class="form-select small-select"></select>
+                                <div class="cipher-mode-container">
+                                    <select name="akce" class="form-select small-select">
                                         <option value="sifrovat" {% if akce == "sifrovat" %}selected{% endif %}>Zašifrovat</option>
-                                        <option value="desifrovat {% if akce == "desifrovat" %}selected{% endif %}">Dešifrovat</option>
+                                        <option value="desifrovat" {% if akce == "desifrovat" %}selected{% endif %}>Dešifrovat</option>
+                                    </select>
                                 </div>
                             </select>
                         </div>
@@ -162,7 +166,7 @@
                         <h2 id="uzel-nazev"></h2>
                         
                         <div class="uzel-video-div mt-3">
-                            <iframe id="uzel-video-frame" width="560" height="315" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" lowfullscreen>></iframe>
+                            <iframe id="uzel-video-frame" width="560" height="315" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>></iframe>
                         </div>
                     </div>
                 </div>
