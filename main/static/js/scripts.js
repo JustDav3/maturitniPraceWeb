@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     uzelLink.innerText = uzel.nazev;
                     uzelLink.onclick = (e) => {
                         e.stopPropagation();
-                        window.zobrazUzel(uzel.id, uzel.nazev, uzel.url, uzel.popis);
+                        window.zobrazUzel(uzel.id, uzel.nazev, uzel.url);
                     };
                     podMenuUzly.appendChild(uzelLink);
                 });
