@@ -1,40 +1,117 @@
 const KATEGORIE_UZLU = {
     'Spojovací': [
         { id: 'ambulak', nazev: 'Ambulák', url: 'https://www.youtube-nocookie.com/embed/zUTuDpYQsvI', popis: 'Pro spojení stejně silných lan.'},
+        { id: 'auticka', nazev: 'Autíčka', url: 'https://www.youtube-nocookie.com/embed/ltyfdXzHZi8', popis: 'Smyčka na hračky nebo drobnosti.'},
         { id: 'skotak', nazev: 'Škoťák', url: 'https://www.youtube-nocookie.com/embed/n5P6xnNa5nI', popis: 'Pro spojení lan různé tloušťky.'},
-        { id: 'sevcak', nazev: 'Ševčák', url: 'https://www.youtube-nocookie.com/embed/gleZlA655WI', popis: 'Pevný spojovací uzel.'}
     ],
     'Nahazované': [
-        { id: 'lodak', nazev: 'Lodák', url: 'https://www.youtube-nocookie.com/embed/HEW92nDCrmg', popis: 'Rychlé připevnění ke kůlu.'},
         { id: 'drevarak', nazev: 'Dřevařák', url: 'https://www.youtube-nocookie.com/embed/kXSCqdBSdQM', popis: 'Vlečení kmenů.'},
-        { id: 'zkracovacka', nazev: 'Zkracovačka', url: 'https://www.youtube-nocookie.com/embed/gdoa6zCbR5A', popis: 'Zkrácení lana bez řezání.'}
+        { id: 'liscak', nazev: 'Liščák', url: 'https://www.youtube-nocookie.com/embed/bdw2_9jnkwc?si=Qw71WTn1mj8v9oBd', popis: 'Jednoduchá upevňovací smyčka.'},
+        { id: 'lodak', nazev: 'Lodák', url: 'https://www.youtube-nocookie.com/embed/HEW92nDCrmg', popis: 'Rychlé připevnění ke kůlu.'},
+        { id: 'zkracovacka', nazev: 'Zkracovačka', url: 'https://www.youtube-nocookie.com/embed/gdoa6zCbR5A', popis: 'Zkrácení lana bez řezání.'},
     ],
-    'Kolem pasu': [
+    'Estetické': [
+        { id: 'dobracek', nazev: 'Dobráček', url: 'https://www.youtube-nocookie.com/embed/eT47TEOTS8A', popis: 'Dekorativní nebo upevňovací uzel.'},
         { id: 'dracak', nazev: 'Dračák', url: 'https://www.youtube-nocookie.com/embed/_E0KBUc2GFg', popis: 'Pevná smyčka, která se nestahuje.'},
-        { id: 'dobracek', nazev: 'Dobráček', url: 'https://www.youtube-nocookie.com/embed/eT47TEOTS8A', popis: 'Dekorativní nebo upevňovací uzel.'}
+        { id: 'sevcak', nazev: 'Ševčák', url: 'https://www.youtube-nocookie.com/embed/gleZlA655WI', popis: 'Pevný spojovací uzel.'},
     ],
     'Kolem ruky': [
-        { id: 'liscak', nazev: 'Liščák', url: 'https://www.youtube-nocookie.com/embed/bdw2_9jnhwc', popis: 'Jednoduchá upevňovací smyčka.'},
-        { id: 'auticka', nazev: 'Autíčka', url: 'https://www.youtube-nocookie.com/embed/ltyfdXzHZi8', popis: 'Smyčka na hračky nebo drobnosti.'},
-        { id: 'pouta', nazev: 'Pouta', url: 'https://www.youtube-nocookie.com/embed/GHfZHNNelAM', popis: 'Dvojitá stahovací smyčka.'}
+        { id: 'pouta', nazev: 'Pouta', url: 'https://www.youtube-nocookie.com/embed/GHfZHNNelAM', popis: 'Dvojitá stahovací smyčka.'},
     ]
 };
 
-// Poznámka: DATA_UZLU jsem ponechal, pokud bys chtěl v budoucnu nahradit generické texty "Krok X" těmito popisy.
 const DATA_UZLU = {
     'ambulak': [
-        "Příprava konců lan a jejich překřížení.",
-        "První provlečení konce pod lanem.",
-        "Vytvoření druhé smyčky v opačném směru.",
-        "Dotažení uzlu rovnoměrným tahem.",
-        "Kontrola správnosti – uzel musí být plochý."
+        "Zajímavost: Ambulák (vozatajský uzel) funguje jako kladkostroj. Je to král tábořiště pro vypínání hřebenovek u celt nebo stavbu lanových drah. Dává ti sílu tří lidí, takže s ním lano napneš jako strunu kytary.",
+        "NÁVOD:",
+        "1. Jeden konec lana pevně ukotvi.",
+        "2. Na laně vytvoř pevnou smyčku (Alpský motýlek).",
+        "3. Volný konec obtoč kolem druhého bodu a provlékni ho smyčkou.",
+        "4. Silným tahem lano vypni.",
+        "5. Zajisti dvěma polovičními lodními smyčkami."
+    ],
+    'auticka': [
+        "Zajímavost: Oficiálně se jmenuje 'Rybářská spojka'. Je to nejlepší uzel na spojování kluzkých silonů nebo mokrých šňůr. Říká se mu autíčka, protože dvě očka do sebe zapadnou jako nárazníky.",
+        "NÁVOD:",
+        "1. Polož dvě lana konci proti sobě.",
+        "2. Na prvním laně uvaž jednoduchý uzel kolem druhého lana.",
+        "3. Na druhém laně uvaž jednoduchý uzel kolem prvního lana.",
+        "4. Zatáhni za dlouhé konce tak, aby se uzly k sobě sjely.",
+        "5. Zkontroluj, zda oba volné konce koukají na opačné strany."
+    ],
+    'dobracek': [
+        "Zajímavost: Dobráček (nebo dobrý uzel) je symbol přátelství. Skauti ho nosí na cípu šátku. Je to uzel, který tě má naučit, že každý den máš vykonat alespoň jeden dobrý skutek.",
+        "NÁVOD:",
+        "1. Vezmi cíp šátku a udělej na něm jednoduchou smyčku.",
+        "2. Druhý cíp provlékni smyčkou, obtoč kolem a znovu provlékni.",
+        "3. Uzel musí po dotažení tvořit pravidelný čtverec.",
+        "4. Srovnej prameny, aby uzel vypadal úhledně."
+    ],
+    'dracak': [
+        "Zajímavost: Král uzlů. Je to pevná smyčka, která se nikdy sama nestáhne a nezadrhne, ale přitom se lehce rozvazuje. Používá se všude tam, kde potřebuješ oko, kterému můžeš věřit život.",
+        "NÁVOD:",
+        "1. Udělej na laně malé očko (vypadá jako jezírko).",
+        "2. Konec lana (princezna) vyleze z jezírka spodem.",
+        "3. Oběhne strom (dlouhé lano) zezadu.",
+        "4. Skočí zpátky do jezírka.",
+        "5. Pořádně dotáhni."
+    ],
+    'drevarak': [
+        "Zajímavost: Ideální uzel na tahání klád z lesa. Čím víc za lano taháš, tím víc se uzel do dřeva zakusuje. Na hladkém kůlu ale může klouzat, tak bacha!",
+        "NÁVOD:",
+        "1. Obtoč lano kolem kmene nebo klády.",
+        "2. Volný konec obtoč kolem pevné části lana.",
+        "3. Poté volný konec omotej alespoň 3x kolem sebe samého uvnitř smyčky.",
+        "4. Utáhni tak, aby ovinutí přiléhalo ke dřevu."
+    ],
+    'liscak': [
+        "Zajímavost: Nejjednodušší uzel na světě. Používá se na připevnění provazu ke kroužku nebo když chceš na šňůru pověsit hrneček. Drží jen tehdy, když jsou oba konce stejně zatížené.",
+        "NÁVOD:",
+        "1. Ohni lano napůl, abys vytvořil očko.",
+        "2. Očko přilož ke kůlu nebo břevnu.",
+        "3. Oba volné konce protáhni vnitřkem očka přes kůl.",
+        "4. Stejnoměrně dotáhni."
+    ],
+    'lodak': [
+        "Zajímavost: Základní uzel pro každého vodáka i stavitele. Drží skvěle na kulatém dřevě. Uvázat ho můžeš buď nahozením, nebo postupným provlékáním.",
+        "NÁVOD:",
+        "1. Obtoč lano kolem kůlu.",
+        "2. Překřiž lano a obtoč ho kolem kůlu podruhé.",
+        "3. Konec lana provlékni pod posledním ovinem.",
+        "4. Utáhni oba konce směrem od sebe."
+    ],
+    'pouta': [
+        "Zajímavost: Vytvoří dvě pevná oka, která se dají stáhnout. V nouzi se používal na fixaci rukou, ale v oddíle ho využiješ spíš jako efektní uzel na hry nebo fixaci břemen.",
+        "NÁVOD:",
+        "1. Udělej dvě smyčky vedle sebe (jako brýle).",
+        "2. Vnitřní části smyček provlékni navzájem skrz sebe.",
+        "3. Zatáhni za vzniklá oka.",
+        "4. Uzlem se dá posouvat a měnit velikost ok před dotažením."
+    ],
+    'sevcak': [
+        "Zajímavost: Nejsilnější spojka na dvě lana. Ševčák (nebo rybářský kříž) se používá, když potřebuješ spojit dvě lana tak pevně, aby spoj nepovolil ani pod velkým tahem.",
+        "NÁVOD:",
+        "1. Překřiž konce dvou lan.",
+        "2. Prvním koncem udělej smyčku kolem druhého lana a provlékni.",
+        "3. To samé zopakuj na druhé straně.",
+        "4. Uzly k sobě pevně dotáhni."
     ],
     'skotak': [
-        "Vytvoření smyčky na silnějším laně.",
-        "Provlečení slabšího lana smyčkou spodem.",
-        "Obtočení slabšího lana kolem celé smyčky.",
-        "Provlečení pod sebou samým.",
-        "Pořádné dotažení obou lan."
+        "Zajímavost: Nejlepší způsob, jak spojit dvě lana, která mají různou tloušťku (třeba tlusté lano a tkaničku). Skoták drží tam, kde se ambulantní uzel rozvazuje.",
+        "NÁVOD:",
+        "1. Na silnějším laně vytvoř ohyb (podkovu).",
+        "2. Slabší lano provlékni ohybem spodem.",
+        "3. Obtoč slabší lano kolem celého ohybu.",
+        "4. Konec slabšího lana provlékni pod sebou samým.",
+        "5. Dotaž."
+    ],
+    'zkracovacka': [
+        "Zajímavost: Kouzelný uzel, který zkrátí lano, aniž bys ho musel řezat. Navíc tím můžeš vyřadit poškozený kus lana – stačí, aby to poškození bylo uprostřed uzlu.",
+        "NÁVOD:",
+        "1. Vytvoř na laně tři smyčky za sebou (jako vlnovku).",
+        "2. Krajní smyčky částečně protáhni prostřední smyčkou.",
+        "3. Za tyhle 'uši' lano napni.",
+        "4. Uzel drží jen pod stálým tahem, jinak se může rozpadnout!"
     ]
 };
 
@@ -208,31 +285,44 @@ document.addEventListener('DOMContentLoaded', function () {
     
 
     window.zobrazUzel = function (folderName, nazev, ytUrl, popis) {
-        const detail = document.getElementById('uzel-detail');
-        const iframe = document.getElementById('uzel-video-frame');
-        const obrazkyContainer = document.getElementById('uzel-obrazky');
+    const detail = document.getElementById('uzel-detail');
+    const iframe = document.getElementById('uzel-video-frame');
+    const obrazkyContainer = document.getElementById('uzel-obrazky');
 
-        document.getElementById('uzel-nazev').innerText = nazev;
-        document.getElementById('uzel-popis').innerText = popis;
-        
-        if (iframe) { 
-            iframe.src = ytUrl; 
+    document.getElementById('uzel-nazev').innerText = nazev;
+    document.getElementById('uzel-popis').innerText = popis;
+    
+    if (iframe) { 
+        iframe.src = ytUrl; 
+    }
+
+    let textHtml = '';
+    const data = DATA_UZLU[folderName];
+
+    if (data) {
+        textHtml += `
+            <div class="uzel-zajimavost" style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #d4f0c7;">
+                <p style="font-style: italic; color: #d4f0c7; margin-bottom: 0;">${data[0]}</p>
+            </div>
+        `;
+
+        textHtml += `<div class="uzel-navod-text" style="color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6;">`;
+        for (let i = 1; i < data.length; i++) {
+            if (data[i] === "NÁVOD:") {
+                textHtml += `<h4 style="color: #d4f0c7; margin-top: 10px;">${data[i]}</h4>`;
+            } else {
+                textHtml += `<p style="margin-bottom: 8px;">${data[i]}</p>`;
+            }
         }
+        textHtml += `</div>`;
+    } else {
+        textHtml = '<p style="color: white;">Návod pro tento uzel připravujeme.</p>';
+    }
+;
+    obrazkyContainer.innerHTML = textHtml;
 
-        let imgHtml = '';
-        const pocetObrazku = 5;
-
-        for (let i = 1; i <= pocetObrazku; i++) {
-            imgHtml += `
-                <div class="col" style="flex: 1; min-width: 150px;">
-                    <img src="/static/uzly/${folderName}/${i}.png" class="uzel-img-div" alt="Krok ${i}" style="width:100%; border-radius:4px;">
-                    <small style="display:block; text-align:center; color:#d4f0c7; font-family: 'Comic Sans MS';">Krok ${i}</small>
-                </div>`;
-        }
-        obrazkyContainer.innerHTML = imgHtml;
-
-        detail.style.display = 'block';
-        detail.scrollIntoView({ behavior: 'smooth' });
+    detail.style.display = 'block';
+    detail.scrollIntoView({ behavior: 'smooth' });
     };
 
     // --- 5. EVENT LISTENERY PRO HLAVNÍ MENU ---
