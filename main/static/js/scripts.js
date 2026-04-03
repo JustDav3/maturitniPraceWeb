@@ -22,7 +22,7 @@ const KATEGORIE_UZLU = {
 
 const DATA_UZLU = {
     'ambulak': [
-        "Zajímavost: Ambulák (vozatajský uzel) funguje jako kladkostroj. Je to král tábořiště pro vypínání hřebenovek u celt nebo stavbu lanových drah. Dává ti sílu tří lidí, takže s ním lano napneš jako strunu kytary.",
+        "Zajímavost: Slouží ke spojování dvou stejně silných lan. Je plochý a netlačí, proto se používá i v první pomoci k zavázání trojcípého šátku.",
         "NÁVOD:",
         "1. Jeden konec lana pevně ukotvi.",
         "2. Na laně vytvoř pevnou smyčku (Alpský motýlek).",
@@ -285,44 +285,47 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     window.zobrazUzel = function (folderName, nazev, ytUrl) {
-        const detail = document.getElementById('uzel-detail');
-        const iframe = document.getElementById('uzel-video-frame');
-        const obrazkyContainer = document.getElementById('uzel-obrazky');
+    const detail = document.getElementById('uzel-detail');
+    const iframe = document.getElementById('uzel-video-frame');
+    const obrazkyContainer = document.getElementById('uzel-obrazky');
 
-        document.getElementById('uzel-nazev').innerText = nazev;
+    if (!detail || !obrazkyContainer) return; // Bezpečnostní kontrola
 
-        if (iframe) {
-            iframe.src = ytUrl;
-        }
+    document.getElementById('uzel-nazev').innerText = nazev;
 
-        let textHtml = '';
-        const data = DATA_UZLU[folderName];
+    if (iframe) {
+        iframe.src = ytUrl;
+    }
 
-        if (data) {
-            textHtml += `
+    let textHtml = '';
+    const data = DATA_UZLU[folderName];
+
+    if (data) {
+        // Zobrazení zajímavosti
+        textHtml += `
             <div class="uzel-zajimavost" style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #d4f0c7;">
                 <p style="font-style: italic; color: #d4f0c7; margin-bottom: 0;">${data[0]}</p>
             </div>
         `;
 
-            textHtml += `<div class="uzel-navod-text" style="color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6;">`;
-            for (let i = 1; i < data.length; i++) {
-                if (data[i] === "NÁVOD:") {
-                    textHtml += `<h4 style="color: #d4f0c7; margin-top: 10px;">${data[i]}</h4>`;
-                } else {
-                    textHtml += `<p style="margin-bottom: 8px;">${data[i]}</p>`;
-                }
+        // Zobrazení návodu
+        textHtml += `<div class="uzel-navod-text" style="color: white; font-family: sans-serif; line-height: 1.6;">`;
+        for (let i = 1; i < data.length; i++) {
+            if (data[i] === "NÁVOD:") {
+                textHtml += `<h4 style="color: #d4f0c7; margin-top: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">${data[i]}</h4>`;
+            } else {
+                textHtml += `<p style="margin-bottom: 8px;">${data[i]}</p>`;
             }
-            textHtml += `</div>`;
-        } else {
-            textHtml = '<p style="color: white;">Návod pro tento uzel připravujeme.</p>';
         }
-        ;
-        obrazkyContainer.innerHTML = textHtml;
+        textHtml += `</div>`;
+    } else {
+        textHtml = '<p style="color: white;">Návod pro tento uzel připravujeme.</p>';
+    }
 
-        detail.style.display = 'block';
-        detail.scrollIntoView({ behavior: 'smooth' });
-    };
+    obrazkyContainer.innerHTML = textHtml;
+    detail.style.display = 'block';
+    detail.scrollIntoView({ behavior: 'smooth' });
+};
 
     // --- 5. EVENT LISTENERY PRO HLAVNÍ MENU ---
     btnSifry.onclick = () => {
