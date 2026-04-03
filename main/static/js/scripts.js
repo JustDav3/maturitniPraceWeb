@@ -1,22 +1,22 @@
 const KATEGORIE_UZLU = {
     'Spojovací': [
-        { id: 'ambulak', nazev: 'Ambulák', url: 'https://www.youtube-nocookie.com/embed/zUTuDpYQsvI' },
-        { id: 'auticka', nazev: 'Autíčka', url: 'https://www.youtube-nocookie.com/embed/ltyfdXzHZi8' },
-        { id: 'skotak', nazev: 'Škoťák', url: 'https://www.youtube-nocookie.com/embed/n5P6xnNa5nI' },
+        { id: 'ambulak', nazev: 'Ambulák', url: 'https://www.youtube-nocookie.com/embed/zUTuDpYQsvI?si=ctbF-ET3qkjTc4N4' },
+        { id: 'auticka', nazev: 'Autíčka', url: 'https://www.youtube-nocookie.com/embed/ltyfdXzHZi8?si=ezOOsv_N3RB4tKEq' },
+        { id: 'skotak', nazev: 'Škoťák', url: 'https://www.youtube-nocookie.com/embed/n5P6xnNa5nI?si=o6lbmg5zuNQFmmM3' },
     ],
     'Nahazované': [
-        { id: 'drevarak', nazev: 'Dřevařák', url: 'https://www.youtube-nocookie.com/embed/kXSCqdBSdQM' },
-        { id: 'liscak', nazev: 'Liščák', url: 'https://www.youtube-nocookie.com/embed/bdw2_9jnkwc?si=Qw71WTn1mj8v9oBd' },
-        { id: 'lodak', nazev: 'Lodák', url: 'https://www.youtube-nocookie.com/embed/HEW92nDCrmg' },
-        { id: 'zkracovacka', nazev: 'Zkracovačka', url: 'https://www.youtube-nocookie.com/embed/gdoa6zCbR5A' },
+        { id: 'drevarak', nazev: 'Dřevařák', url: 'https://www.youtube-nocookie.com/embed/kXSCqdBSdQM?si=xnSGgd_jwu6EXOkn' },
+        { id: 'liscak', nazev: 'Liščák', url: 'https://www.youtube-nocookie.com/embed/bdw2_9jnkwc?si=2HWge-0mYYF8zj4X' },
+        { id: 'lodak', nazev: 'Lodák', url: 'https://www.youtube-nocookie.com/embed/HEW92nDCrmg?si=IXPPXmO0DkgKAUPh' },
+        { id: 'zkracovacka', nazev: 'Zkracovačka', url: 'https://www.youtube-nocookie.com/embed/gdoa6zCbR5A?si=sb8H_6HtUd1qRlXk' },
     ],
     'Estetické': [
-        { id: 'dobracek', nazev: 'Dobráček', url: 'https://www.youtube-nocookie.com/embed/eT47TEOTS8A' },
-        { id: 'dracak', nazev: 'Dračák', url: 'https://www.youtube-nocookie.com/embed/_E0KBUc2GFg' },
-        { id: 'sevcak', nazev: 'Ševčák', url: 'https://www.youtube-nocookie.com/embed/gleZlA655WI' },
+        { id: 'dobracek', nazev: 'Dobráček', url: 'https://www.youtube-nocookie.com/embed/eT47TEOTS8A?si=YZ2N0_qQfnUEIGoq' },
+        { id: 'dracak', nazev: 'Dračák', url: 'https://www.youtube-nocookie.com/embed/_E0KBUc2GFg?si=L7smB5MGd_tReHke' },
+        { id: 'sevcak', nazev: 'Ševčák', url: 'https://www.youtube-nocookie.com/embed/gleZlA655WI?si=Tx170LZfq0l5VGOd' },
     ],
     'Kolem ruky': [
-        { id: 'pouta', nazev: 'Pouta', url: 'https://www.youtube-nocookie.com/embed/GHfZHNNelAM' },
+        { id: 'pouta', nazev: 'Pouta', url: 'https://www.youtube-nocookie.com/embed/GHfZHNNelAM?si=5UZQwaCJwNetN4dG' },
     ]
 };
 
@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const iframe = document.getElementById('uzel-video-frame');
     const obrazkyContainer = document.getElementById('uzel-obrazky');
 
-    if (!detail || !obrazkyContainer) return; // Bezpečnostní kontrola
+    if (!detail || !obrazkyContainer) return;
 
     document.getElementById('uzel-nazev').innerText = nazev;
 
@@ -301,14 +301,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const data = DATA_UZLU[folderName];
 
     if (data) {
-        // Zobrazení zajímavosti
         textHtml += `
             <div class="uzel-zajimavost" style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #d4f0c7;">
                 <p style="font-style: italic; color: #d4f0c7; margin-bottom: 0;">${data[0]}</p>
             </div>
         `;
 
-        // Zobrazení návodu
         textHtml += `<div class="uzel-navod-text" style="color: white; font-family: sans-serif; line-height: 1.6;">`;
         for (let i = 1; i < data.length; i++) {
             if (data[i] === "NÁVOD:") {
