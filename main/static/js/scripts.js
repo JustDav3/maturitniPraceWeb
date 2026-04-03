@@ -1,22 +1,22 @@
 const KATEGORIE_UZLU = {
     'Spojovací': [
-        { id: 'ambulak', nazev: 'Ambulák', url: 'https://www.youtube-nocookie.com/embed/zUTuDpYQsvI'},
-        { id: 'auticka', nazev: 'Autíčka', url: 'https://www.youtube-nocookie.com/embed/ltyfdXzHZi8'},
-        { id: 'skotak', nazev: 'Škoťák', url: 'https://www.youtube-nocookie.com/embed/n5P6xnNa5nI'},
+        { id: 'ambulak', nazev: 'Ambulák', url: 'https://www.youtube-nocookie.com/embed/zUTuDpYQsvI' },
+        { id: 'auticka', nazev: 'Autíčka', url: 'https://www.youtube-nocookie.com/embed/ltyfdXzHZi8' },
+        { id: 'skotak', nazev: 'Škoťák', url: 'https://www.youtube-nocookie.com/embed/n5P6xnNa5nI' },
     ],
     'Nahazované': [
-        { id: 'drevarak', nazev: 'Dřevařák', url: 'https://www.youtube-nocookie.com/embed/kXSCqdBSdQM'},
-        { id: 'liscak', nazev: 'Liščák', url: 'https://www.youtube-nocookie.com/embed/bdw2_9jnkwc?si=Qw71WTn1mj8v9oBd'},
-        { id: 'lodak', nazev: 'Lodák', url: 'https://www.youtube-nocookie.com/embed/HEW92nDCrmg'},
-        { id: 'zkracovacka', nazev: 'Zkracovačka', url: 'https://www.youtube-nocookie.com/embed/gdoa6zCbR5A'},
+        { id: 'drevarak', nazev: 'Dřevařák', url: 'https://www.youtube-nocookie.com/embed/kXSCqdBSdQM' },
+        { id: 'liscak', nazev: 'Liščák', url: 'https://www.youtube-nocookie.com/embed/bdw2_9jnkwc?si=Qw71WTn1mj8v9oBd' },
+        { id: 'lodak', nazev: 'Lodák', url: 'https://www.youtube-nocookie.com/embed/HEW92nDCrmg' },
+        { id: 'zkracovacka', nazev: 'Zkracovačka', url: 'https://www.youtube-nocookie.com/embed/gdoa6zCbR5A' },
     ],
     'Estetické': [
-        { id: 'dobracek', nazev: 'Dobráček', url: 'https://www.youtube-nocookie.com/embed/eT47TEOTS8A'},
-        { id: 'dracak', nazev: 'Dračák', url: 'https://www.youtube-nocookie.com/embed/_E0KBUc2GFg'},
-        { id: 'sevcak', nazev: 'Ševčák', url: 'https://www.youtube-nocookie.com/embed/gleZlA655WI'},
+        { id: 'dobracek', nazev: 'Dobráček', url: 'https://www.youtube-nocookie.com/embed/eT47TEOTS8A' },
+        { id: 'dracak', nazev: 'Dračák', url: 'https://www.youtube-nocookie.com/embed/_E0KBUc2GFg' },
+        { id: 'sevcak', nazev: 'Ševčák', url: 'https://www.youtube-nocookie.com/embed/gleZlA655WI' },
     ],
     'Kolem ruky': [
-        { id: 'pouta', nazev: 'Pouta', url: 'https://www.youtube-nocookie.com/embed/GHfZHNNelAM'},
+        { id: 'pouta', nazev: 'Pouta', url: 'https://www.youtube-nocookie.com/embed/GHfZHNNelAM' },
     ]
 };
 
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function nastavAktivniTlacitko(idTlacitka) {
         // Seznam všech tvých ID tlačítek
         const tlacitka = ['btn-o-mne', 'btn-sifry', 'btn-uzly', 'btn-test'];
-        
+
         tlacitka.forEach(id => {
             const btn = document.getElementById(id);
             if (btn) {
@@ -282,59 +282,59 @@ document.addEventListener('DOMContentLoaded', function () {
         submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
     };
 
-    
+
 
     window.zobrazUzel = function (folderName, nazev, ytUrl) {
-    const detail = document.getElementById('uzel-detail');
-    const iframe = document.getElementById('uzel-video-frame');
-    const obrazkyContainer = document.getElementById('uzel-obrazky');
+        const detail = document.getElementById('uzel-detail');
+        const iframe = document.getElementById('uzel-video-frame');
+        const obrazkyContainer = document.getElementById('uzel-obrazky');
 
-    document.getElementById('uzel-nazev').innerText = nazev;
-    
-    if (iframe) { 
-        iframe.src = ytUrl; 
-    }
+        document.getElementById('uzel-nazev').innerText = nazev;
 
-    let textHtml = '';
-    const data = DATA_UZLU[folderName];
+        if (iframe) {
+            iframe.src = ytUrl;
+        }
 
-    if (data) {
-        textHtml += `
+        let textHtml = '';
+        const data = DATA_UZLU[folderName];
+
+        if (data) {
+            textHtml += `
             <div class="uzel-zajimavost" style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #d4f0c7;">
                 <p style="font-style: italic; color: #d4f0c7; margin-bottom: 0;">${data[0]}</p>
             </div>
         `;
 
-        textHtml += `<div class="uzel-navod-text" style="color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6;">`;
-        for (let i = 1; i < data.length; i++) {
-            if (data[i] === "NÁVOD:") {
-                textHtml += `<h4 style="color: #d4f0c7; margin-top: 10px;">${data[i]}</h4>`;
-            } else {
-                textHtml += `<p style="margin-bottom: 8px;">${data[i]}</p>`;
+            textHtml += `<div class="uzel-navod-text" style="color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6;">`;
+            for (let i = 1; i < data.length; i++) {
+                if (data[i] === "NÁVOD:") {
+                    textHtml += `<h4 style="color: #d4f0c7; margin-top: 10px;">${data[i]}</h4>`;
+                } else {
+                    textHtml += `<p style="margin-bottom: 8px;">${data[i]}</p>`;
+                }
             }
+            textHtml += `</div>`;
+        } else {
+            textHtml = '<p style="color: white;">Návod pro tento uzel připravujeme.</p>';
         }
-        textHtml += `</div>`;
-    } else {
-        textHtml = '<p style="color: white;">Návod pro tento uzel připravujeme.</p>';
-    }
-;
-    obrazkyContainer.innerHTML = textHtml;
+        ;
+        obrazkyContainer.innerHTML = textHtml;
 
-    detail.style.display = 'block';
-    detail.scrollIntoView({ behavior: 'smooth' });
+        detail.style.display = 'block';
+        detail.scrollIntoView({ behavior: 'smooth' });
     };
 
     // --- 5. EVENT LISTENERY PRO HLAVNÍ MENU ---
     btnSifry.onclick = () => {
         secUvod.style.display = 'none'; secUzly.style.display = 'none';
         secSifry.style.display = 'block';
-        if(submenu) submenu.style.display = 'none';
+        if (submenu) submenu.style.display = 'none';
         nastavAktivniTlacitko('btn-sifry');
     };
     btnOMne.onclick = () => {
         secSifry.style.display = 'none'; secUzly.style.display = 'none';
         secUvod.style.display = 'block';
-        if(submenu) submenu.style.display = 'none';
+        if (submenu) submenu.style.display = 'none';
         nastavAktivniTlacitko('btn-o-mne');
     };
     btnUzly.onclick = () => {
