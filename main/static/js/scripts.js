@@ -1,6 +1,6 @@
 const KATEGORIE_UZLU = {
     'Spojovací': [
-        { id: 'ambulak', nazev: 'Ambulák', url: 'https://www.youtube.com/embed/zUTuDpYQsvI?si=_2xH30NLCiaHDIJu' },
+        { id: 'ambulak', nazev: 'Ambulák', url: 'https://www.youtube-nocookie.com/embed/zUTuDpYQsvI?si=ctbF-ET3qkjTc4N4' },
         { id: 'auticka', nazev: 'Autíčka', url: 'https://www.youtube-nocookie.com/embed/ltyfdXzHZi8?si=ezOOsv_N3RB4tKEq' },
         { id: 'skotak', nazev: 'Škoťák', url: 'https://www.youtube-nocookie.com/embed/n5P6xnNa5nI?si=o6lbmg5zuNQFmmM3' },
     ],
@@ -302,12 +302,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (data) {
         textHtml += `
-            <div class="uzel-zajimavost" style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #d4f0c7;">
+            <div class="uzel-zajimavost" style="background: rgba(255,255,255,0.1); padding: 15px; margin-bottom: 20px;">
                 <p style="font-style: italic; color: #d4f0c7; margin-bottom: 0;">${data[0]}</p>
             </div>
         `;
 
-        textHtml += `<div class="uzel-navod-text" style="color: white; font-family: sans-serif; line-height: 1.6;">`;
+        textHtml += `<div class="uzel-navod-text" style="color: white; font-family: Comic Sans MS; line-height: 1.6;">`;
         for (let i = 1; i < data.length; i++) {
             if (data[i] === "NÁVOD:") {
                 textHtml += `<h4 style="color: #d4f0c7; margin-top: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">${data[i]}</h4>`;
