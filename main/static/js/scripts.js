@@ -1,6 +1,6 @@
 const KATEGORIE_UZLU = {
     'Spojovací': [
-        { id: 'ambulak', nazev: 'Ambulák', url: 'https://www.youtube-nocookie.com/embed/zUTuDpYQsvI?si=ctbF-ET3qkjTc4N4' },
+        { id: 'ambulak', nazev: 'Ambulák', url: 'https://www.youtube.com/embed/zUTuDpYQsvI?si=_2xH30NLCiaHDIJu' },
         { id: 'auticka', nazev: 'Autíčka', url: 'https://www.youtube-nocookie.com/embed/ltyfdXzHZi8?si=ezOOsv_N3RB4tKEq' },
         { id: 'skotak', nazev: 'Škoťák', url: 'https://www.youtube-nocookie.com/embed/n5P6xnNa5nI?si=o6lbmg5zuNQFmmM3' },
     ],
