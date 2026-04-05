@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (data) {
         textHtml += `
             <div class="uzel-zajimavost" style="padding: 15px; margin-bottom: 20px;">
-                <p style="font-style: italic; color: #d4f0c7; margin-bottom: 0;">${data[0]}</p>
+                <p style="font-style: italic; color: #ffffff; margin-bottom: 0;">${data[0]}</p>
             </div>
         `;
 
