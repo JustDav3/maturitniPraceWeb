@@ -115,6 +115,11 @@ const DATA_UZLU = {
     ]
 };
 
+let aktualniSifraZadani = "";
+let aktualniSifraSpravne = "";
+let aktualniUzelId = "";
+let aktualniUzelNazev = "";
+
 document.addEventListener('DOMContentLoaded', function () {
     // --- 1. SELEKTORY ---
     const cipherType = document.getElementById('cipher-type');
@@ -130,11 +135,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnSifry = document.getElementById('btn-sifry');
     const btnOMne = document.getElementById('btn-o-mne');
     const btnUzly = document.getElementById('btn-uzly');
+    const btnTest = document.getElementById('btn-test');
     const submenu = document.getElementById('uzly-submenu');
 
     const secUvod = document.getElementById('section-uvod');
     const secSifry = document.getElementById('section-sifry');
     const secUzly = document.getElementById('section-uzly');
+    const secTest = document.getElementById('section-test');
     const djangoData = document.getElementById('django-data');
 
     // --- 2. POČÁTEČNÍ STAV ---
@@ -323,7 +330,93 @@ document.addEventListener('DOMContentLoaded', function () {
     obrazkyContainer.innerHTML = textHtml;
     detail.style.display = 'block';
     detail.scrollIntoView({ behavior: 'smooth' });
-};
+    };
+
+    // Testovaní uživatele na uzly/šifry
+    function pripravNahodnyTest() {
+    const kategorie = Object.keys(KATEGORIE_UZLU);
+    const nahodnaKat = kategorie[Math.floor(Math.random() * kategorie.length)];
+    const uzlyVKategorii = KATEGORIE_UZLU[nahodnaKat];
+    const uzel = uzlyVKategorii[Math.floor(Math.random() * uzlyVKategorii.length)];
+
+    aktualUzelId = uzel.id;
+    aktualniUzelNazev = uzel.nazev;
+
+    // 2. Nastavení šifry (Příklad: slovo ROZRAZIL v morseovce)
+    // Později sem můžeš dát fetch na Django, aby ti poslalo fakt náhodné slovo
+    aktualniSifraZadani = ".-. --- --.. .-. .- --.. .. .-..";
+    aktualniSifraSpravne = "ROZRAZIL";
+
+    document.getElementById('test-sifra-display').innerText = aktualniSifraZadani;
+    document.getElementById('test-uzel-nazev').innerText = `Uvaž: ${uzel.nazev}`;
+    
+    // Zobrazení prvního obrázku uzlu (předpokládáme strukturu static/uzly/id/1.png)
+    const imgContainer = document.getElementById('test-uzel-img-container');
+    imgContainer.innerHTML = `<img src="/static/uzly/${uzel.id}/1.png" style="max-width: 250px; border: 2px solid #b5e48c; border-radius: 10px;">`;
+    
+    document.getElementById('test-sifra-odpoved').value = "";
+    document.getElementById('test-uzel-check').checked = false;
+    }
+
+    async function odeslatTest() {
+        const odpoved = document.getElementById('test-sifra-odpoved').value;
+        const uzelHotovo = document.getElementById('test-uzel-check').checked;
+
+        if (!odpoved) {
+            alert("Musíš alespoň zkusit vyluštit šifru!");
+            return;
+        }
+
+        const dataKodeslani = {
+            zadani: aktualniSifraZadani,
+            spravne_reseni: aktualniSifraSpravne,
+            odpoved: odpoved,
+            uzel_nazev: aktualniUzelNazev,
+            uzel_hotovo: uzelHotovo
+        };
+
+        try {
+            const response = await fetch('/ulozit-test/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(dataKodeslani)
+            });
+
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                alert(`Skvěle! Test uložen. Získal jsi ${result.body} bod(ů).`);
+                // Přepneme zpět na hlavní stránku
+                document.getElementById('btn-o-mne').click();
+            } else {
+                alert("Chyba při ukládání: " + result.message);
+            }
+        } catch (error) {
+            console.error("Chyba AJAXu:", error);
+            alert("Nepodařilo se spojit se serverem.");
+        }
+    }
+
+    // Funkce pro získání CSRF tokenu
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    document.getElementById('btn-odeslat-test').onclick = odeslatTest;
 
     // --- 5. EVENT LISTENERY PRO HLAVNÍ MENU ---
     btnSifry.onclick = () => {
@@ -345,6 +438,20 @@ document.addEventListener('DOMContentLoaded', function () {
         /* if(submenu) submenu.style.display = 'block'; */
         nastavAktivniTlacitko('btn-uzly');
     };
+    if (btnTest) {
+    btnTest.onclick = () => {
+        secUvod.style.display = 'none';
+        secSifry.style.display = 'none';
+        secUzly.style.display = 'none';
+        if (submenu) submenu.style.display = 'none';
+        
+        secTest.style.display = 'block';
+        nastavAktivniTlacitko('btn-test');
+        
+        // Tady můžeš zavolat funkci, která náhodně vybere šifru a uzel
+        // pripravNahodnyTest();
+    };
+}
 
     if (cipherType) {
         cipherType.onchange = (e) => handleCipherChange(e.target.value);

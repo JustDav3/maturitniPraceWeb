@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from main.views import home, login_view, logout_view
+from main.views import home, login_view, logout_view, ulozit_vysledek_testu
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -25,4 +25,5 @@ urlpatterns = [
     path('', home, name='home'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
+    path('ulozit-test/', views.ulozit_vysledek_testu, name='ulozit_test')
 ]

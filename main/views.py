@@ -6,6 +6,8 @@ from .morse import logic as morse_logic, constants as morse_consts
 from .number_code import logic as number_logic, constants as number_consts
 from .matrix import logic as matrix_logic
 from .binary import logic as binary_logic
+from django.http import JsonResponse
+import json
 
 def login_view(request):
     if request.method == "POST":
@@ -148,3 +150,32 @@ def home(request):
             context['vysledek_prepis_matrix'] = "\n".join(radky_prepis)
 
     return render(request, "main/index.html", context)
+
+def ulozit_vysledek_testu(request):
+    if request.method == "POST" and request.user.is_authenticated:
+        try:
+            data = json.loads(request.body)
+            
+            # Tady proběhne logika vyhodnocení
+            je_sifra_spravne = data.get('odpoved').strip().upper() == data.get('spravne_reseni').upper()
+            body = 1 if je_sifra_spravne else 0
+            if data.get('uzel_hotovo'):
+                body += 1
+
+            # Uložení do modelu, který jsme vytvořili minule
+            vysledek = VysledekTestu.objects.create(
+                uzivatel=request.user,
+                sifra_zadani=data.get('zadani'),
+                sifra_spravne=data.get('spravne_reseni'),
+                sifra_odpoved=data.get('odpoved'),
+                sifra_bod=je_sifra_spravne,
+                uzel_nazev=data.get('uzel_nazev'),
+                uzel_hotovo=data.get('uzel_hotovo'),
+                body_celkem=body
+            )
+            
+            return JsonResponse({'status': 'success', 'body': body})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    
+    return JsonResponse({'status': 'invalid'}, status=400)
