@@ -150,17 +150,19 @@ def home(request):
     return render(request, "main/index.html", context)
 
 def ulozit_vysledek_testu(request):
-    if request.method == "POST" and request.user.is_authenticated:
+    if request.method == "POST":
         try:
+            # Načteme JSON data z AJAX požadavku
             data = json.loads(request.body)
             
-            # Tady proběhne logika vyhodnocení
+            # Jednoduché vyhodnocení bodů na straně serveru
             je_sifra_spravne = data.get('odpoved').strip().upper() == data.get('spravne_reseni').upper()
             body = 1 if je_sifra_spravne else 0
             if data.get('uzel_hotovo'):
                 body += 1
 
-            vysledek = VysledekTestu.objects.create(
+            # Vytvoření záznamu v databázi
+            VysledekTestu.objects.create(
                 uzivatel=request.user,
                 sifra_zadani=data.get('zadani'),
                 sifra_spravne=data.get('spravne_reseni'),

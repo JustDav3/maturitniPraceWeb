@@ -399,6 +399,15 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error("Chyba AJAXu:", error);
             alert("Nepodařilo se spojit se serverem.");
         }
+
+        const response = await fetch('/ulozit-test/', { // Tato URL musí odpovídat té v urls.py
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify(dataKodeslani)
+        });
     }
 
     // Funkce pro získání CSRF tokenu
@@ -451,9 +460,8 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     if (btnSubmitTest) {
-        btnOdeslat.onclick = odeslatTest;
+    btnSubmitTest.onclick = odeslatTest;
     }
-
     if (cipherType) {
         cipherType.onchange = (e) => handleCipherChange(e.target.value);
         handleCipherChange(cipherType.value);
