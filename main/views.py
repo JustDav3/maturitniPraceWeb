@@ -7,7 +7,7 @@ from .number_code import logic as number_logic, constants as number_consts
 from .matrix import logic as matrix_logic
 from .binary import logic as binary_logic
 from django.http import JsonResponse
-from models import VysledekTestu
+from .models import VysledekTestu
 import json
 
 def login_view(request):
