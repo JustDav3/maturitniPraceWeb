@@ -115,9 +115,24 @@ const DATA_UZLU = {
     ]
 };
 
+// Funkce pro získání CSRF tokenu
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 let aktualniSifraZadani = "";
 let aktualniSifraSpravne = "";
-let aktualniUzelId = "";
 let aktualniUzelNazev = "";
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -188,20 +203,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }).join('');
     }
 
-    function nastavAktivniTlacitko(idTlacitka) {
-        // Seznam všech tvých ID tlačítek
-        const tlacitka = ['btn-o-mne', 'btn-sifry', 'btn-uzly', 'btn-test'];
-
-        tlacitka.forEach(id => {
-            const btn = document.getElementById(id);
-            if (btn) {
-                if (id === idTlacitka) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            }
+    function nastavAktivniTlacitko(id) {
+        [btnOMne, btnSifry, btnUzly, btnTest].forEach(btn => {
+            if (btn) btn.classList.remove('active');
         });
+        const aktivni = document.getElementById(id);
+        if (aktivni) aktivni.classList.add('active');
     }
 
     function handleCipherChange(val) {
@@ -334,45 +341,36 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     // Testovaní uživatele na uzly/šifry
-    function pripravNahodnyTest() {
-    const kategorie = Object.keys(KATEGORIE_UZLU);
-    const nahodnaKat = kategorie[Math.floor(Math.random() * kategorie.length)];
-    const uzlyVKategorii = KATEGORIE_UZLU[nahodnaKat];
-    const uzel = uzlyVKategorii[Math.floor(Math.random() * uzlyVKategorii.length)];
+    function generujNahodnyTest() {
+        const vsechnyUzly = Object.values(KATEGORIE_UZLU).flat();
+        const nahodnyUzel = vsechnyUzly[Math.floor(Math.random() * vsechnyUzly.length)];
+        
+        aktualniUzelNazev = nahodnyUzel.nazev;
+        document.getElementById('test-uzel-nazev').innerText = aktualniUzelNazev;
 
-    aktualUzelId = uzel.id;
-    aktualniUzelNazev = uzel.nazev;
-
-    // 2. Nastavení šifry (Příklad: slovo ROZRAZIL v morseovce)
-    // Později sem můžeš dát fetch na Django, aby ti poslalo fakt náhodné slovo
-    aktualniSifraZadani = ".-. --- --.. .-. .- --.. .. .-..";
-    aktualniSifraSpravne = "ROZRAZIL";
-
-    document.getElementById('test-sifra-display').innerText = aktualniSifraZadani;
-    document.getElementById('test-uzel-nazev').innerText = `Uvaž: ${uzel.nazev}`;
-    
-    // Zobrazení prvního obrázku uzlu (předpokládáme strukturu static/uzly/id/1.png)
-    const imgContainer = document.getElementById('test-uzel-img-container');
-    imgContainer.innerHTML = `<img src="/static/uzly/${uzel.id}/1.png" style="max-width: 250px; border: 2px solid #b5e48c; border-radius: 10px;">`;
-    
-    document.getElementById('test-sifra-odpoved').value = "";
-    document.getElementById('test-uzel-check').checked = false;
+        const mozneSifry = [
+            { zadani: ".. -.-. ....", spravne: "ICH" },
+            { zadani: ".- -... -.-.", spravne: "ABC" },
+            { zadani: ".... --- .---", spravne: "HOJ" }
+        ];
+        const nahodnaSifra = mozneSifry[Math.floor(Math.random() * mozneSifry.length)];
+        
+        aktualniSifraZadani = nahodnaSifra.zadani;
+        aktualniSifraSpravne = nahodnaSifra.spravne;
+        
+        document.getElementById('test-sifra-zadani').innerText = aktualniSifraZadani;
+        document.getElementById('test-sifra-odpoved').value = "";
+        document.getElementById('test-uzel-check').checked = false;
     }
 
     async function odeslatTest() {
-        const btn = document.getElementById('btn-odeslat-test');
         const odpoved = document.getElementById('test-sifra-odpoved').value;
         const uzelHotovo = document.getElementById('test-uzel-check').checked;
 
         if (!odpoved) {
-            alert("Musíš alespoň zkusit vyluštit šifru!");
+            alert("Zadej odpověď šifry!");
             return;
         }
-
-        // 1. VYPNOUT TLAČÍTKO: Aby na něj nešlo kliknout znovu
-        btn.disabled = true;
-        btn.innerText = "Odesílám...";
-        btn.style.opacity = "0.6";
 
         const dataKodeslani = {
             zadani: aktualniSifraZadani,
@@ -391,40 +389,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: JSON.stringify(dataKodeslani)
             });
-
             const result = await response.json();
-
             if (result.status === 'success') {
-                alert(`Skvěle! Test uložen. Získal jsi ${result.body} bod(ů).`);
-                document.getElementById('btn-o-mne').click();
+                alert(`Uloženo! Body: ${result.body}`);
+                btnOMne.click();
             } else {
-                alert("Chyba při ukládání: " + result.message);
+                alert("Chyba: " + result.message);
             }
         } catch (error) {
-            console.error("Chyba AJAXu:", error);
-            alert("Nepodařilo se spojit se serverem.");
-        } finally {
-            // 2. ZAPNOUT TLAČÍTKO: Ať už to dopadlo jakkoliv, vrátíme ho do původního stavu
-            btn.disabled = false;
-            btn.innerText = "Uložit výsledek";
-            btn.style.opacity = "1";
+            console.error(error);
+            alert("Chyba spojení.");
         }
-    }
-
-    // Funkce pro získání CSRF tokenu
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
     }
 
     document.getElementById('btn-odeslat-test').onclick = odeslatTest;
@@ -449,20 +424,19 @@ document.addEventListener('DOMContentLoaded', function () {
         /* if(submenu) submenu.style.display = 'block'; */
         nastavAktivniTlacitko('btn-uzly');
     };
-    btnTest.onclick = () => {
-        secUvod.style.display = 'none'; 
-        secSifry.style.display = 'none'; 
-        secUzly.style.display = 'none';
-        secTest.style.display = 'block'; // Zobrazíme sekci testu
-        if (submenu) submenu.style.display = 'none';
-        
-        window.pripravNahodnyTest(); // Vygenerujeme nové zadání
-        nastavAktivniTlacitko('btn-test');
-    };
-
-    if (btnSubmitTest) {
-    btnSubmitTest.onclick = odeslatTest;
+    if (btnTest) {
+        btnTest.onclick = () => {
+            secUvod.style.display = 'none'; secSifry.style.display = 'none'; secUzly.style.display = 'none';
+            secTest.style.display = 'block';
+            if (submenu) submenu.style.display = 'none';
+            nastavAktivniTlacitko('btn-test');
+            generujNahodnyTest();
+        };
     }
+
+    const btnOdeslat = document.getElementById('btn-odeslat-test');
+    if (btnOdeslat) btnOdeslat.onclick = odeslatTest;
+
     if (cipherType) {
         cipherType.onchange = (e) => handleCipherChange(e.target.value);
         handleCipherChange(cipherType.value);
