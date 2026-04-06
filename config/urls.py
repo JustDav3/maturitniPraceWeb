@@ -25,5 +25,5 @@ urlpatterns = [
     path('', home, name='home'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
-    path('ulozit-test/', views.ulozit_vysledek_testu, name='ulozit_test')
+    path('ulozit-test/', ulozit_vysledek_testu, name='ulozit_test')
 ]
