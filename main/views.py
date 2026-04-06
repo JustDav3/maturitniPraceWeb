@@ -7,6 +7,7 @@ from .number_code import logic as number_logic, constants as number_consts
 from .matrix import logic as matrix_logic
 from .binary import logic as binary_logic
 from django.http import JsonResponse
+from models import VysledekTestu
 import json
 
 def login_view(request):
@@ -46,7 +47,6 @@ def home(request):
         in2 = request.POST.get("input_2", "-")
         in3 = request.POST.get("input_3", "|")
 
-        # Uložení do kontextu (aby formulář po odeslání nezmizel)
         context.update({
             'projekt': project, 
             'vstup': user_input, 
@@ -56,7 +56,6 @@ def home(request):
             'dynamic_select_val': dynamic_select_val
         })
 
-        # Vynucení šifrování pro maticové šifry
         if project in ["spirala", "snek", "had"]:
             action = "sifrovat"
 
@@ -109,7 +108,6 @@ def home(request):
         # 3. BINÁRNÍ ŠIFRA
         elif project == "binary":
             separator = in3 or " "
-            # Doporučuji isalnum(), aby to neignorovalo čísla
             clean_input = "".join([c for c in user_input if c.isalnum()])
             
             if not clean_input and action == "sifrovat":
@@ -162,7 +160,6 @@ def ulozit_vysledek_testu(request):
             if data.get('uzel_hotovo'):
                 body += 1
 
-            # Uložení do modelu, který jsme vytvořili minule
             vysledek = VysledekTestu.objects.create(
                 uzivatel=request.user,
                 sifra_zadani=data.get('zadani'),
