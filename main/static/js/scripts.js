@@ -131,6 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const dInp1 = document.getElementById('container-input-1');
     const dInp2 = document.getElementById('container-input-2');
     const dInp3 = document.getElementById('container-input-3');
+    const btnSubmitTest = document.getElementById('btn-odeslat-test');
 
     const btnSifry = document.getElementById('btn-sifry');
     const btnOMne = document.getElementById('btn-o-mne');
@@ -438,20 +439,20 @@ document.addEventListener('DOMContentLoaded', function () {
         /* if(submenu) submenu.style.display = 'block'; */
         nastavAktivniTlacitko('btn-uzly');
     };
-    if (btnTest) {
     btnTest.onclick = () => {
-        secUvod.style.display = 'none';
-        secSifry.style.display = 'none';
+        secUvod.style.display = 'none'; 
+        secSifry.style.display = 'none'; 
         secUzly.style.display = 'none';
+        secTest.style.display = 'block'; // Zobrazíme sekci testu
         if (submenu) submenu.style.display = 'none';
         
-        secTest.style.display = 'block';
+        window.pripravNahodnyTest(); // Vygenerujeme nové zadání
         nastavAktivniTlacitko('btn-test');
-        
-        // Tady můžeš zavolat funkci, která náhodně vybere šifru a uzel
-        // pripravNahodnyTest();
     };
-}
+
+    if (btnSubmitTest) {
+        btnOdeslat.onclick = odeslatTest;
+    }
 
     if (cipherType) {
         cipherType.onchange = (e) => handleCipherChange(e.target.value);
