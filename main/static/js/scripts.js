@@ -360,56 +360,56 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     async function odeslatTest() {
-    const btn = document.getElementById('btn-odeslat-test');
-    const odpoved = document.getElementById('test-sifra-odpoved').value;
-    const uzelHotovo = document.getElementById('test-uzel-check').checked;
+        const btn = document.getElementById('btn-odeslat-test');
+        const odpoved = document.getElementById('test-sifra-odpoved').value;
+        const uzelHotovo = document.getElementById('test-uzel-check').checked;
 
-    if (!odpoved) {
-        alert("Musíš alespoň zkusit vyluštit šifru!");
-        return;
-    }
-
-    // 1. VYPNOUT TLAČÍTKO: Aby na něj nešlo kliknout znovu
-    btn.disabled = true;
-    btn.innerText = "Odesílám...";
-    btn.style.opacity = "0.6";
-
-    const dataKodeslani = {
-        zadani: aktualniSifraZadani,
-        spravne_reseni: aktualniSifraSpravne,
-        odpoved: odpoved,
-        uzel_nazev: aktualniUzelNazev,
-        uzel_hotovo: uzelHotovo
-    };
-
-    try {
-        const response = await fetch('/ulozit-test/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')
-            },
-            body: JSON.stringify(dataKodeslani)
-        });
-
-        const result = await response.json();
-
-        if (result.status === 'success') {
-            alert(`Skvěle! Test uložen. Získal jsi ${result.body} bod(ů).`);
-            document.getElementById('btn-o-mne').click();
-        } else {
-            alert("Chyba při ukládání: " + result.message);
+        if (!odpoved) {
+            alert("Musíš alespoň zkusit vyluštit šifru!");
+            return;
         }
-    } catch (error) {
-        console.error("Chyba AJAXu:", error);
-        alert("Nepodařilo se spojit se serverem.");
-    } finally {
-        // 2. ZAPNOUT TLAČÍTKO: Ať už to dopadlo jakkoliv, vrátíme ho do původního stavu
-        btn.disabled = false;
-        btn.innerText = "Uložit výsledek";
-        btn.style.opacity = "1";
+
+        // 1. VYPNOUT TLAČÍTKO: Aby na něj nešlo kliknout znovu
+        btn.disabled = true;
+        btn.innerText = "Odesílám...";
+        btn.style.opacity = "0.6";
+
+        const dataKodeslani = {
+            zadani: aktualniSifraZadani,
+            spravne_reseni: aktualniSifraSpravne,
+            odpoved: odpoved,
+            uzel_nazev: aktualniUzelNazev,
+            uzel_hotovo: uzelHotovo
+        };
+
+        try {
+            const response = await fetch('/ulozit-test/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(dataKodeslani)
+            });
+
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                alert(`Skvěle! Test uložen. Získal jsi ${result.body} bod(ů).`);
+                document.getElementById('btn-o-mne').click();
+            } else {
+                alert("Chyba při ukládání: " + result.message);
+            }
+        } catch (error) {
+            console.error("Chyba AJAXu:", error);
+            alert("Nepodařilo se spojit se serverem.");
+        } finally {
+            // 2. ZAPNOUT TLAČÍTKO: Ať už to dopadlo jakkoliv, vrátíme ho do původního stavu
+            btn.disabled = false;
+            btn.innerText = "Uložit výsledek";
+            btn.style.opacity = "1";
+        }
     }
-}
 
     // Funkce pro získání CSRF tokenu
     function getCookie(name) {
