@@ -403,8 +403,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const data = {
             sifra_typ: window.posledniTypSifry || "neuvedeno",
             sifra_zadani: window.aktualniSifraZadani || "",
-            spravne_reseni: window.aktualniSifraSpravne || "",
+            sifra_spravne_reseni: window.aktualniSifraSpravne || "",
             sifra_odpoved: document.getElementById('test-sifra-odpoved').value,
+            sifra_spravne: document.getElementById('test-sifra-odpoved').value.trim().toLowerCase() === window.aktualniSifraSpravne.trim().toLowerCase(),
             uzel_nazev: window.aktualniUzelNazev || "neuvedeno",
             uzel_hotovo: document.getElementById('test-uzel-check').checked,
             body_celkem: 0
