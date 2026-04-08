@@ -354,26 +354,46 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const data = await response.json();
-
-            // Uložíme si správné řešení do globálních proměnných pro pozdější kontrolu
-            window.aktualniSifraSpravne = data.spravne;
-            window.posledniTypSifry = data.typ;
-            window.aktualniSifraZadani = data.zadani;
-
-            // Vložíme zadání do HTML
             const zadaniElement = document.getElementById('test-sifra-zadani');
             const typElement = document.getElementById('test-sifra-typ');
-            
-            if (zadaniElement) zadaniElement.innerText = data.zadani;
+            const uzelNazevElement = document.getElementById('test-uzel-nazev');
+
+            // 1. ZOBRAZENÍ ŠIFRY
+            if (zadaniElement) {
+                if (Array.isArray(data.zadani)) {
+                    let tabulka = '<table class="test-matrix">';
+                    data.zadani.forEach(radek => {
+                        tabulka += '<tr>';
+                        radek.forEach(pismeno => {
+                            tabulka += `<td>${pismeno}</td>`;
+                        });
+                        tabulka += '</tr>';
+                    });
+                    tabulka += '</table>';
+                    zadaniElement.innerHTML = tabulka;
+                } else {
+                    zadaniElement.innerText = data.zadani;
+                }
+            }
+
+            // 2. ZOBRAZENÍ TYPU A UZLU
             if (typElement) typElement.innerText = data.typ;
 
+            // Výběr náhodného uzlu z tvých konstant v JS
             const kategorie = Object.keys(KATEGORIE_UZLU);
             const nahodnaKat = kategorie[Math.floor(Math.random() * kategorie.length)];
             const uzly = KATEGORIE_UZLU[nahodnaKat];
             const nahodnyUzel = uzly[Math.floor(Math.random() * uzly.length)];
 
+            if (uzelNazevElement) uzelNazevElement.innerText = nahodnyUzel.nazev;
+
+            // 3. ULOŽENÍ DAT PRO KONTROLU (window = globální přístup)
+            window.aktualniSifraSpravne = data.spravne;
+            window.posledniTypSifry = data.typ;
+            window.aktualniSifraZadani = data.zadani;
             window.aktualniUzelNazev = nahodnyUzel.nazev;
 
+            // 4. RESET FORMULÁŘE
             document.getElementById('test-sifra-odpoved').value = "";
             document.getElementById('test-uzel-check').checked = false;
 

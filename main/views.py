@@ -164,7 +164,6 @@ def home(request):
 
     return render(request, "main/index.html", context)
 
-
 def ulozit_vysledek_testu(request):
     if request.method == "POST":
         try:
