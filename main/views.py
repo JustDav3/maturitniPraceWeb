@@ -177,11 +177,11 @@ def ulozit_vysledek_testu(request):
             uzel_hotovo = data.get('uzel_hotovo', False)
 
             sifra_spravne = odpoved_uzivatele.upper() == spravne_reseni.upper() if spravne_reseni else False
-            body = 0
+            body_celkem = 0
             if sifra_spravne:
-                body += 1
+                body_celkem += 1
             if uzel_hotovo is True: # Explicitní kontrola na Boolean
-                body += 1
+                body_celkem += 1
 
             VysledekTestu.objects.create(
                 uzivatel=request.user,
@@ -190,9 +190,9 @@ def ulozit_vysledek_testu(request):
                 sifra_spravne=sifra_spravne,
                 uzel_nazev=uzel_nazev,
                 uzel_hotovo=uzel_hotovo,
-                body=body
+                body_celkem=body_celkem
             )
-            return JsonResponse({'status': 'success', 'body': body})
+            return JsonResponse({'status': 'success', 'body': body_celkem})
         except Exception as e:
             # Tady uvidíš v konzoli, co přesně Pythonu vadí
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
