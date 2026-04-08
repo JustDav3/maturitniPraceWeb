@@ -401,12 +401,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function ulozitVysledekTestu() {
         const data = {
-            sifra_typ: window.posledniTypSifry,
-            // Pokud je zadání matice (pole), převedeme na text pro DB
-            zadani: Array.isArray(window.aktualniSifraZadani) ? JSON.stringify(window.aktualniSifraZadani) : window.aktualniSifraZadani,
-            spravne_reseni: window.aktualniSifraSpravne,
+            sifra_typ: window.posledniTypSifry || "neuvedeno",
+            zadani: window.aktualniSifraZadani || "",
+            spravne_reseni: window.aktualniSifraSpravne || "",
             odpoved: document.getElementById('test-sifra-odpoved').value,
-            uzel_nazev: window.aktualniUzelNazev, // OPRAVA: musí odpovídat tomu, co plníš v generujNahodnyTest
+            uzel_nazev: window.aktualniUzelNazev || "neuvedeno",
             uzel_hotovo: document.getElementById('test-uzel-check').checked
         };
 
