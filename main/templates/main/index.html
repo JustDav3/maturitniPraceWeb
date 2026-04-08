@@ -205,34 +205,47 @@
                         <table class="vysledky-tabulka">
                             <thead>
                                 <tr>
-                                    <th>Datum</th>
+                                    <th>Datum a čas</th>
                                     {% if is_vedouci %}<th>Uživatel</th>{% endif %}
                                     <th>Uzel</th>
-                                    <th>Uvázáno?</th>
-                                    <th>Šifra (Typ a Zadání)</th> <th>Body</th>
+                                    <th>Uvázal</th>
+                                    <th>Šifra zadání</th>
+                                    <th>Typ šifry</th>
+                                    <th>Rozšifroval</th> 
+                                    <th>Body</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for v in vysledky %}
-                                <tr>
-                                    <td>{{ v.datum|date:"d.m.Y H:i" }}</td>
-                                    {% if is_vedouci %}<td>{{ v.uzivatel.username }}</td>{% endif %}
-                                    <td>{{ v.uzel_nazev }}</td>
-                                    <td>{% if v.uzel_hotovo %}✅{% else %}❌{% endif %}</td>
-                                    
-                                    <td>
-                                        <strong>{{ v.sifra_typ }}</strong><br>
-                                        <small style="font-family: monospace;">{{ v.sifra_zadani }}</small>
-                                    </td>
+                            {% for v in vysledky %}
+                            <tr>
+                                <td>{{ v.datum|date:"d.m.Y H:i" }}</td>
+                                {% if is_vedouci %}<td>{{ v.uzivatel.username }}</td>{% endif %}
+                                
+                                <td>{{ v.uzel_nazev }}</td>
+                                <td>{% if v.uzel_hotovo %}✅{% else %}❌{% endif %}</td>
+                                
+                                <td style="font-family: monospace; font-size: 0.85rem;">{{ v.sifra_zadani }}</td>
+                                
+                                <td><strong>{{ v.sifra_typ }}</strong></td>
+                                
+                                <td>
+                                    {{ v.sifra_odpoved }}
+                                    {% if v.sifra_bod %}
+                                        <span style="color: #b5e48c;">✅</span>
+                                    {% else %}
+                                        <span style="color: #ff8a8a;">❌</span> 
+                                        <small>(správně: {{ v.sifra_spravne }})</small>
+                                    {% endif %}
+                                </td>
 
-                                    <td><strong>{{ v.body_celkem }}</strong></td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="{% if is_vedouci %}6{% else %}5{% endif %}">Zatím žádné výsledky.</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
+                                <td><strong>{{ v.body_celkem }}</strong></td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="{% if is_vedouci %}8{% else %}7{% endif %}">Zatím žádné výsledky.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
                         </table>
                     </div>
                 </section>
