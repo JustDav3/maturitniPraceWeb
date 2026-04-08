@@ -406,7 +406,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    document.getElementById('btn-odeslat-test').onclick = odeslatTest;
+    
 
     // 5. EVENT LISTENERY
     function prepniSekci(idTlacitka, sekceKeZobrazeni, extraFunkce = null) {
@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btnVysledky.onclick = () => prepniSekci('btn-vysledky', secVysledky);
     }
     if (btnOdeslat) btnOdeslat.onclick = odeslatTest;
-
+    if (btnSubmitTest) btnSubmitTest.onclick = odeslatTest;
     if (cipherType) {
         cipherType.onchange = (e) => handleCipherChange(e.target.value);
         handleCipherChange(cipherType.value);
