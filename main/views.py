@@ -171,24 +171,24 @@ def ulozit_vysledek_testu(request):
             
             sifra_typ = data.get('sifra_typ', 'Neznámý')
             sifra_zadani = data.get('sifra_zadani', '')
-            sifra_odpoved = str(data.get('sifra_odpoved', '')).strip()
-            spravne_reseni = str(data.get('spravne_reseni', '')).strip()
+            sifra_odpoved_uzivatele = str(data.get('sifra_odpoved_uzivatele', '')).strip()
+            sifra_spravne_zadani = str(data.get('sifra_spravne_zadani', '')).strip()
+            sifra_spravne = sifra_odpoved_uzivatele.upper() == sifra_spravne_zadani.upper() if sifra_spravne_zadani else False
             uzel_nazev = data.get('uzel_nazev', 'Neznámý')
             uzel_hotovo = data.get('uzel_hotovo', False)
 
-            sifra_spravne = sifra_odpoved.upper() == spravne_reseni.upper() if spravne_reseni else False
             body_celkem = 0
             if sifra_spravne:
                 body_celkem += 1
-            if uzel_hotovo is True: # Explicitní kontrola na Boolean
+            if uzel_hotovo is True:
                 body_celkem += 1
 
             VysledekTestu.objects.create(
                 uzivatel=request.user,
                 sifra_typ=sifra_typ,
                 sifra_zadani=sifra_zadani,
-                sifra_spravne=sifra_spravne,
-                sifra_odpoved=sifra_odpoved,
+                sifra_spravne_zadani=sifra_spravne_zadani,
+                sifra_odpoved_uzivatele=sifra_odpoved_uzivatele,
                 uzel_nazev=uzel_nazev,
                 uzel_hotovo=uzel_hotovo,
                 body_celkem=body_celkem
