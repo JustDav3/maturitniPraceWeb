@@ -406,7 +406,8 @@ document.addEventListener('DOMContentLoaded', function () {
             spravne_reseni: window.aktualniSifraSpravne || "",
             odpoved: document.getElementById('test-sifra-odpoved').value,
             uzel_nazev: window.aktualniUzelNazev || "neuvedeno",
-            uzel_hotovo: document.getElementById('test-uzel-check').checked
+            uzel_hotovo: document.getElementById('test-uzel-check').checked,
+            body: 0
         };
 
         console.log("Odesílám data:", data); // Pro tvou kontrolu v konzoli
