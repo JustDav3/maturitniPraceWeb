@@ -424,14 +424,23 @@ document.addEventListener('DOMContentLoaded', function () {
     btnOMne.onclick    = () => prepniSekci('btn-o-mne', secUvod);
     btnSifry.onclick   = () => prepniSekci('btn-sifry', secSifry);
     btnUzly.onclick    = () => prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
+
     if (btnTest) {
         btnTest.onclick = () => prepniSekci('btn-test', secTest, generujNahodnyTest);
     }
+
     if (btnVysledky) {
         btnVysledky.onclick = () => prepniSekci('btn-vysledky', secVysledky);
     }
-    if (btnOdeslat) btnOdeslat.onclick = odeslatTest;
-    if (btnSubmitTest) btnSubmitTest.onclick = odeslatTest;
+
+    if (btnOdeslat) {
+        btnOdeslat.onclick = odeslatTest;
+    }
+
+    if (btnSubmitTest) {
+        btnSubmitTest.onclick = odeslatTest;
+    }
+
     if (cipherType) {
         cipherType.onchange = (e) => handleCipherChange(e.target.value);
         handleCipherChange(cipherType.value);
