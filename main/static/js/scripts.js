@@ -402,18 +402,18 @@ document.addEventListener('DOMContentLoaded', function () {
     async function ulozitVysledekTestu() {
         const data = {
             sifra_typ: window.posledniTypSifry || "neuvedeno",
-            zadani: window.aktualniSifraZadani || "",
+            sifra_zadani: window.aktualniSifraZadani || "",
             spravne_reseni: window.aktualniSifraSpravne || "",
-            odpoved: document.getElementById('test-sifra-odpoved').value,
+            sifra_odpoved: document.getElementById('test-sifra-odpoved').value,
             uzel_nazev: window.aktualniUzelNazev || "neuvedeno",
             uzel_hotovo: document.getElementById('test-uzel-check').checked,
             body_celkem: 0
         };
 
-        console.log("Odesílám data:", data); // Pro tvou kontrolu v konzoli
+        console.log("Odesílám data:", data);
 
         try {
-            const response = await fetch('/ulozit-test/', { // Zkontroluj, zda máš v urls.py tuto adresu
+            const response = await fetch('/ulozit-test/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

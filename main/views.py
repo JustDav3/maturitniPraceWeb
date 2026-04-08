@@ -170,7 +170,7 @@ def ulozit_vysledek_testu(request):
             data = json.loads(request.body)
             
             sifra_typ = data.get('sifra_typ', 'Neznámý')
-            sifra_zadani = data.get('zadani', '')
+            sifra_zadani = data.get('sifra_zadani', '')
             sifra_odpoved = str(data.get('sifra_odpoved', '')).strip()
             spravne_reseni = str(data.get('spravne_reseni', '')).strip()
             uzel_nazev = data.get('uzel_nazev', 'Neznámý')
@@ -186,9 +186,9 @@ def ulozit_vysledek_testu(request):
             VysledekTestu.objects.create(
                 uzivatel=request.user,
                 sifra_typ=sifra_typ,
-                sifra_zadani=str(sifra_zadani),
+                sifra_zadani=sifra_zadani,
                 sifra_spravne=sifra_spravne,
-                sifra_odpoved=str(sifra_odpoved),
+                sifra_odpoved=sifra_odpoved,
                 uzel_nazev=uzel_nazev,
                 uzel_hotovo=uzel_hotovo,
                 body_celkem=body_celkem
