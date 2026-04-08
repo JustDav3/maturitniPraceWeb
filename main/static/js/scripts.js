@@ -160,6 +160,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const secUzly = document.getElementById('section-uzly');
     const secTest = document.getElementById('section-test');
     const secVysledky = document.getElementById('section-vysledky');
+
+    const vsechnySekce = [secUvod, secSifry, secUzly, secTest, secVysledky];
+
     const djangoData = document.getElementById('django-data');
 
     // 2. POČÁTEČNÍ STAV
@@ -405,9 +408,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('btn-odeslat-test').onclick = odeslatTest;
 
-    //5. EVENT LISTENERY
+    // 5. EVENT LISTENERY
     function prepniSekci(idTlacitka, sekceKeZobrazeni, extraFunkce = null) {
-        const vsechnySekce = [secUvod, secSifry, secUzly, secTest, secVysledky];
         vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
         if (submenu) submenu.style.display = 'none';
 
