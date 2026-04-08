@@ -171,12 +171,12 @@ def ulozit_vysledek_testu(request):
             
             sifra_typ = data.get('sifra_typ', 'Neznámý')
             sifra_zadani = data.get('zadani', '')
-            odpoved_uzivatele = str(data.get('odpoved', '')).strip()
+            sifra_odpoved = str(data.get('sifra_odpoved', '')).strip()
             spravne_reseni = str(data.get('spravne_reseni', '')).strip()
             uzel_nazev = data.get('uzel_nazev', 'Neznámý')
             uzel_hotovo = data.get('uzel_hotovo', False)
 
-            sifra_spravne = odpoved_uzivatele.upper() == spravne_reseni.upper() if spravne_reseni else False
+            sifra_spravne = sifra_odpoved.upper() == spravne_reseni.upper() if spravne_reseni else False
             body_celkem = 0
             if sifra_spravne:
                 body_celkem += 1
@@ -186,15 +186,15 @@ def ulozit_vysledek_testu(request):
             VysledekTestu.objects.create(
                 uzivatel=request.user,
                 sifra_typ=sifra_typ,
-                sifra_zadani=str(sifra_zadani), # Převod na text pro DB
+                sifra_zadani=str(sifra_zadani),
                 sifra_spravne=sifra_spravne,
+                sifra_odpoved=str(sifra_odpoved),
                 uzel_nazev=uzel_nazev,
                 uzel_hotovo=uzel_hotovo,
                 body_celkem=body_celkem
             )
             return JsonResponse({'status': 'success', 'body': body_celkem})
         except Exception as e:
-            # Tady uvidíš v konzoli, co přesně Pythonu vadí
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
 def generuj_zadani_api(request):
