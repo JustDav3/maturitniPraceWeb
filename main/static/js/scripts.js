@@ -425,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const result = await response.json();
             if (result.status === 'success') {
                 alert("Uloženo do databáze!");
-                location.reload(); // Obnoví stránku, aby se výsledek ukázal v tabulce
+                location.reload();
             } else {
                 alert("Chyba: " + result.message);
             }
