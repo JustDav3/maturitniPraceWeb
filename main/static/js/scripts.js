@@ -346,28 +346,40 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     async function generujNahodnyTest() {
-        // 1. Náhodný uzel (ponecháme v JS pro rychlost)
-        const vsechnyUzly = Object.values(KATEGORIE_UZLU).flat();
-        const nahodnyUzel = vsechnyUzly[Math.floor(Math.random() * vsechnyUzly.length)];
-        aktualniUzelNazev = nahodnyUzel.nazev;
-        document.getElementById('test-uzel-nazev').innerText = aktualniUzelNazev;
-
-        // 2. Získání zadání ze serveru (použije tvůj Python kód!)
         try {
-            const response = await fetch('/api/generuj-test/');
+            const response = await fetch('/generuj-zadani/');
+            
+            if (!response.ok) {
+                throw new Error(`Server vrátil chybu: ${response.status}`);
+            }
+
             const data = await response.json();
 
-            aktualniSifraZadani = data.zadani;
-            aktualniSifraSpravne = data.spravne;
+            // Uložíme si správné řešení do globálních proměnných pro pozdější kontrolu
+            window.aktualniSifraSpravne = data.spravne;
             window.posledniTypSifry = data.typ;
+            window.aktualniSifraZadani = data.zadani;
 
-            // Zobrazení v HTML
-            document.getElementById('test-sifra-zadani').innerText = data.zadani;
+            // Vložíme zadání do HTML
+            const zadaniElement = document.getElementById('test-sifra-zadani');
+            const typElement = document.getElementById('test-sifra-typ');
+            
+            if (zadaniElement) zadaniElement.innerText = data.zadani;
+            if (typElement) typElement.innerText = data.typ;
+
+            const kategorie = Object.keys(KATEGORIE_UZLU);
+            const nahodnaKat = kategorie[Math.floor(Math.random() * kategorie.length)];
+            const uzly = KATEGORIE_UZLU[nahodnaKat];
+            const nahodnyUzel = uzly[Math.floor(Math.random() * uzly.length)];
+
+            window.aktualniUzelNazev = nahodnyUzel.nazev;
+
             document.getElementById('test-sifra-odpoved').value = "";
             document.getElementById('test-uzel-check').checked = false;
 
         } catch (error) {
-            console.error("Chyba při komunikaci s Python logikou:", error);
+            console.error("Chyba při generování testu:", error);
+            alert("Nepodařilo se načíst zadání ze serveru.");
         }
     }
 
