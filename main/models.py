@@ -7,9 +7,11 @@ class VysledekTestu(models.Model):
     
     # Šifry
     sifra_zadani = models.TextField(verbose_name="Zašifrovaný text")
+    sifra_typ = models.CharField(max_length=50, verbose_name="Druh šifry", blank=True)
     sifra_spravne = models.TextField(verbose_name="Správné řešení")
     sifra_odpoved = models.TextField(verbose_name="Odpověď uživatele", blank=True)
     sifra_bod = models.BooleanField(default=False, verbose_name="Šifra správně?")
+    
     
     # Uzly
     uzel_nazev = models.CharField(max_length=100, verbose_name="Název uzlu")

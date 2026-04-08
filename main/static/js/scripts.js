@@ -377,7 +377,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const dataKodeslani = {
-            zadani: aktualniSifraZadani,
+            sifra_typ: window.posledniTypSifry,
+            zadani: document.getElementById('test-sifra-zadani').innerText,
             spravne_reseni: aktualniSifraSpravne,
             odpoved: odpoved,
             uzel_nazev: aktualniUzelNazev,

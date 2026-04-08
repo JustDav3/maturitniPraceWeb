@@ -154,7 +154,7 @@ def home(request):
         if is_admin:
             vysledky = VysledekTestu.objects.all().order_by('-datum')
         elif is_vedouci:
-            vysledky = VysledekTestu.objects.all().order_by('-datum')
+            vysledky = VysledekTestu.objects.exclude(uzivatel__is_superuser=True).order_by('-datum')
         else:
             vysledky = VysledekTestu.objects.filter(uzivatel=request.user).order_by('-datum')
             
@@ -174,6 +174,7 @@ def ulozit_vysledek_testu(request):
 
             VysledekTestu.objects.create(
                 uzivatel=request.user,
+                sifra_typ=data.get('sifra_typ'),
                 sifra_zadani=data.get('zadani'),
                 sifra_spravne=data.get('spravne_reseni'),
                 sifra_odpoved=data.get('odpoved'),

@@ -209,8 +209,7 @@
                                     {% if is_vedouci %}<th>Uživatel</th>{% endif %}
                                     <th>Uzel</th>
                                     <th>Uvázáno?</th>
-                                    <th>Šifra</th>
-                                    <th>Body</th>
+                                    <th>Šifra (Typ a Zadání)</th> <th>Body</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -220,12 +219,17 @@
                                     {% if is_vedouci %}<td>{{ v.uzivatel.username }}</td>{% endif %}
                                     <td>{{ v.uzel_nazev }}</td>
                                     <td>{% if v.uzel_hotovo %}✅{% else %}❌{% endif %}</td>
-                                    <td>{% if v.sifra_bod %}✅{% else %}❌{% endif %}</td>
+                                    
+                                    <td>
+                                        <strong>{{ v.sifra_typ }}</strong><br>
+                                        <small style="font-family: monospace;">{{ v.sifra_zadani }}</small>
+                                    </td>
+
                                     <td><strong>{{ v.body_celkem }}</strong></td>
                                 </tr>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="6">Zatím žádné výsledky.</td>
+                                    <td colspan="{% if is_vedouci %}6{% else %}5{% endif %}">Zatím žádné výsledky.</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
