@@ -25,6 +25,6 @@ urlpatterns = [
     path('', home, name='home'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
-    path('ulozit-test/', ulozit_vysledek_testu, name='ulozit_test'),
-    path('api/generuj-zadani/', generuj_zadani_api, name='api_generuj_zadani'),
+    path('ulozit-test/', ulozit_vysledek_testu, name='api_ulozit_test'),
+    path('generuj-zadani/', generuj_zadani_api, name='api_generuj_zadani'),
 ]
