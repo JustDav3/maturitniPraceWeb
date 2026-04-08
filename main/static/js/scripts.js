@@ -406,19 +406,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- 5. EVENT LISTENERY PRO HLAVNÍ MENU ---
     btnSifry.onclick = () => {
-        secUvod.style.display = 'none'; secUzly.style.display = 'none';
+        secUvod.style.display = 'none'; secUzly.style.display = 'none'; secTest.style.display = 'none'; 
         secSifry.style.display = 'block';
         if (submenu) submenu.style.display = 'none';
         nastavAktivniTlacitko('btn-sifry');
     };
     btnOMne.onclick = () => {
-        secSifry.style.display = 'none'; secUzly.style.display = 'none';
+        secSifry.style.display = 'none'; secUzly.style.display = 'none'; secTest.style.display = 'none'; 
         secUvod.style.display = 'block';
         if (submenu) submenu.style.display = 'none';
         nastavAktivniTlacitko('btn-o-mne');
     };
     btnUzly.onclick = () => {
-        secUvod.style.display = 'none'; secSifry.style.display = 'none';
+        secUvod.style.display = 'none'; secSifry.style.display = 'none'; secTest.style.display = 'none'; 
         secUzly.style.display = 'block';
         window.generujMenuUzlu();
         /* if(submenu) submenu.style.display = 'block'; */
