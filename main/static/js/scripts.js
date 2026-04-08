@@ -345,26 +345,30 @@ document.addEventListener('DOMContentLoaded', function () {
     detail.scrollIntoView({ behavior: 'smooth' });
     };
 
-    function generujNahodnyTest() {
+    async function generujNahodnyTest() {
+        // 1. Náhodný uzel (ponecháme v JS pro rychlost)
         const vsechnyUzly = Object.values(KATEGORIE_UZLU).flat();
         const nahodnyUzel = vsechnyUzly[Math.floor(Math.random() * vsechnyUzly.length)];
-        
         aktualniUzelNazev = nahodnyUzel.nazev;
         document.getElementById('test-uzel-nazev').innerText = aktualniUzelNazev;
 
-        const mozneSifry = [
-            { zadani: ".. -.-. ....", spravne: "ICH" },
-            { zadani: ".- -... -.-.", spravne: "ABC" },
-            { zadani: ".... --- .---", spravne: "HOJ" }
-        ];
-        const nahodnaSifra = mozneSifry[Math.floor(Math.random() * mozneSifry.length)];
-        
-        aktualniSifraZadani = nahodnaSifra.zadani;
-        aktualniSifraSpravne = nahodnaSifra.spravne;
-        
-        document.getElementById('test-sifra-zadani').innerText = aktualniSifraZadani;
-        document.getElementById('test-sifra-odpoved').value = "";
-        document.getElementById('test-uzel-check').checked = false;
+        // 2. Získání zadání ze serveru (použije tvůj Python kód!)
+        try {
+            const response = await fetch('/api/generuj-test/');
+            const data = await response.json();
+
+            aktualniSifraZadani = data.zadani;
+            aktualniSifraSpravne = data.spravne;
+            window.posledniTypSifry = data.typ;
+
+            // Zobrazení v HTML
+            document.getElementById('test-sifra-zadani').innerText = data.zadani;
+            document.getElementById('test-sifra-odpoved').value = "";
+            document.getElementById('test-uzel-check').checked = false;
+
+        } catch (error) {
+            console.error("Chyba při komunikaci s Python logikou:", error);
+        }
     }
 
     async function odeslatTest() {

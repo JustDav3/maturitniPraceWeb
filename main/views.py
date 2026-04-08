@@ -9,6 +9,7 @@ from .binary import logic as binary_logic
 from django.http import JsonResponse
 from .models import VysledekTestu
 import json
+import random, math
 
 def login_view(request):
     if request.method == "POST":
@@ -163,6 +164,7 @@ def home(request):
 
     return render(request, "main/index.html", context)
 
+
 def ulozit_vysledek_testu(request):
     if request.method == "POST":
         try:
@@ -189,3 +191,68 @@ def ulozit_vysledek_testu(request):
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     
     return JsonResponse({'status': 'invalid'}, status=400)
+
+def generuj_zadani_api(request):
+    # Seznamy slov pro generování
+    SLOVA = ["LES", "STROM", "VODA", "OHEŇ", "UZEL", "MAPA", "STAN", "POTOK", "CESTA"]
+    MATICE_VETY = ["ROZRAZIL", "TABORAK", "VYPRAVA"]
+    
+    # Náhodný výběr typu šifry
+    typy = ['morse', 'number_code', 'binary', 'spirala', 'snek', 'had']
+    vybrany_typ = random.choice(typy)
+    
+    zadani = ""
+    spravne = ""
+    typ_display = ""
+
+    # 1. MORSEOVKA (využívá morse_logic a morse_consts)
+    if vybrany_typ == 'morse':
+        spravne = random.choice(SLOVA)
+        # encrypt(message, active_dict, separator)
+        zadani = morse_logic.encrypt(spravne, morse_consts.morse_dict, morse_consts.separator)
+        typ_display = "Morseovka"
+        
+        # Bonus: Náhodná inverze teček a čárek (používá logiku make_reverse)
+        if random.random() > 0.7:
+            zadani = zadani.replace('.', 'x').replace('-', '.').replace('x', '-')
+            typ_display += " (Inverzní)"
+
+    # 2. ČÍSELNÝ KÓD (využívá number_logic a number_consts)
+    elif vybrany_typ == 'number_code':
+        spravne = random.choice(SLOVA)
+        # encrypt(message, current_dict)
+        zadani = number_logic.encrypt(spravne, number_consts.alphabet_dict)
+        typ_display = "Číselný kód"
+        
+        # Bonus: Náhodný posun abecedy (shift_alphabet)
+        if random.random() > 0.5:
+            posun = random.randint(1, 10)
+            posunuta_abeceda = number_logic.shift_alphabet(number_consts.alphabet_dict, posun)
+            zadani = number_logic.encrypt(spravne, posunuta_abeceda)
+            typ_display += f" (Posun +{posun})"
+
+    # 3. BINÁRNÍ KÓD (využívá binary_logic)
+    elif vybrany_typ == 'binary':
+        spravne = random.choice(SLOVA)
+        # encrypt(text, separator)
+        zadani = binary_logic.encrypt(spravne, "|")
+        typ_display = "Binární kód"
+
+    # 4. MATICE - Spirála, Šnek, Had (využívá matrix_logic)
+    elif vybrany_typ in ['spirala', 'snek', 'had']:
+        spravne = random.choice(MATICE_VETY)
+        map_typ = {"spirala": "1", "snek": "2", "had": "3"}
+        
+        # vytvor_matice_sifry(vstupni_text, typ_sifry, start_bod)
+        # Pro maturitu fixujeme startovní bod na "1", aby to nebylo až moc nereálné
+        matice, strana = matrix_logic.vytvor_matice_sifry(spravne, map_typ[vybrany_typ], "1")
+        
+        # Převedeme matici na řetězec pro zobrazení (všechna písmena v řadě)
+        zadani = "".join(["".join(r) for r in matice]).strip()
+        typ_display = f"Mřížka ({vybrany_typ.capitalize()})"
+
+    return JsonResponse({
+        'zadani': zadani,
+        'spravne': spravne.upper(),
+        'typ': typ_display
+    })
