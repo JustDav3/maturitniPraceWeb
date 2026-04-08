@@ -185,10 +185,11 @@ def ulozit_vysledek_testu(request):
 
             VysledekTestu.objects.create(
                 uzivatel=request.user,
-                sifra_typ=sifra_typ,
                 sifra_zadani=sifra_zadani,
+                sifra_typ=sifra_typ,                
                 sifra_spravne_zadani=sifra_spravne_zadani,
                 sifra_odpoved_uzivatele=sifra_odpoved_uzivatele,
+                sifra_spravne=sifra_spravne,
                 uzel_nazev=uzel_nazev,
                 uzel_hotovo=uzel_hotovo,
                 body_celkem=body_celkem
