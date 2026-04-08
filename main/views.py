@@ -169,16 +169,19 @@ def ulozit_vysledek_testu(request):
         try:
             data = json.loads(request.body)
             
-            # Používej .get() s výchozí hodnotou, aby kód nespadl
             sifra_typ = data.get('sifra_typ', 'Neznámý')
-            sifra_zadani = data.get('zadani', '')  # V JS posíláš 'zadani'
-            odpoved = data.get('odpoved', '').strip()
-            spravne = data.get('spravne_reseni', '').strip()
+            sifra_zadani = data.get('zadani', '')
+            odpoved_uzivatele = str(data.get('odpoved', '')).strip()
+            spravne_reseni = str(data.get('spravne_reseni', '')).strip()
             uzel_nazev = data.get('uzel_nazev', 'Neznámý')
             uzel_hotovo = data.get('uzel_hotovo', False)
 
-            je_spravne = odpoved.upper() == spravne.upper()
-            body = (1 if je_spravne else 0) + (1 if uzel_hotovo else 0)
+            je_sifra_spravne = odpoved_uzivatele.upper() == spravne_reseni.upper() if spravne_reseni else False
+            body = 0
+            if je_sifra_spravne:
+                body += 1
+            if uzel_hotovo is True: # Explicitní kontrola na Boolean
+                body += 1
 
             VysledekTestu.objects.create(
                 uzivatel=request.user,
