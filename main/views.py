@@ -168,28 +168,36 @@ def ulozit_vysledek_testu(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
-            je_sifra_spravne = data.get('odpoved').strip().upper() == data.get('spravne_reseni').upper()
-            body = 1 if je_sifra_spravne else 0
-            if data.get('uzel_hotovo'):
-                body += 1
+            
+            # Sjednocení názvů: v JS máš 'zadani', tady musí být taky 'zadani'
+            sifra_zadani = data.get('zadani') 
+            sifra_typ = data.get('sifra_typ')
+            odpoved_uzivatele = data.get('odpoved', '').strip()
+            spravne_reseni = data.get('spravne_reseni', '').strip()
+            uzel_nazev = data.get('uzel_nazev')
+            uzel_hotovo = data.get('uzel_hotovo', False)
 
+            # Kontrola správnosti
+            je_sifra_spravne = odpoved_uzivatele.upper() == spravne_reseni.upper()
+            
+            # Výpočet bodů
+            body = 0
+            if je_sifra_spravne: body += 1
+            if uzel_hotovo: body += 1
+
+            # Uložení
             VysledekTestu.objects.create(
                 uzivatel=request.user,
-                sifra_typ=data.get('sifra_typ'),
-                sifra_zadani=data.get('zadani'),
-                sifra_spravne=data.get('spravne_reseni'),
-                sifra_odpoved=data.get('odpoved'),
-                sifra_bod=je_sifra_spravne,
-                uzel_nazev=data.get('uzel_nazev'),
-                uzel_hotovo=data.get('uzel_hotovo'),
-                body_celkem=body
+                sifra_typ=sifra_typ,
+                sifra_zadani=sifra_zadani,
+                sifra_spravne=je_sifra_spravne,
+                uzel_nazev=uzel_nazev,
+                uzel_hotovo=uzel_hotovo,
+                body=body
             )
-            
             return JsonResponse({'status': 'success', 'body': body})
         except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-    
-    return JsonResponse({'status': 'invalid'}, status=400)
+            return JsonResponse({'status': 'error', 'message': str(e)})
 
 def generuj_zadani_api(request):
     # Seznamy slov pro generování

@@ -352,7 +352,6 @@ document.addEventListener('DOMContentLoaded', function () {
             
             const zadaniElement = document.getElementById('test-sifra-zadani');
             const typElement = document.getElementById('test-sifra-typ');
-            // PŘIDÁNO: Reference na prvek pro název uzlu
             const uzelNazevElement = document.getElementById('test-uzel-nazev'); 
 
             if (zadaniElement) {
@@ -400,43 +399,38 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    async function odeslatTest() {
-        const odpoved = document.getElementById('test-sifra-odpoved').value;
-        const uzelHotovo = document.getElementById('test-uzel-check').checked;
-
-        if (!odpoved) {
-            alert("Zadej odpověď šifry!");
-            return;
-        }
-
-        const dataKodeslani = {
+    async function ulozitVysledekTestu() {
+        const data = {
             sifra_typ: window.posledniTypSifry,
-            zadani: document.getElementById('test-sifra-zadani').innerText,
-            spravne_reseni: aktualniSifraSpravne,
-            odpoved: odpoved,
-            uzel_nazev: aktualniUzelNazev,
-            uzel_hotovo: uzelHotovo
+            // Pokud je zadání matice (pole), převedeme na text pro DB
+            zadani: Array.isArray(window.aktualniSifraZadani) ? JSON.stringify(window.aktualniSifraZadani) : window.aktualniSifraZadani,
+            spravne_reseni: window.aktualniSifraSpravne,
+            odpoved: document.getElementById('test-sifra-odpoved').value,
+            uzel_nazev: window.aktualniUzelNazev, // OPRAVA: musí odpovídat tomu, co plníš v generujNahodnyTest
+            uzel_hotovo: document.getElementById('test-uzel-check').checked
         };
 
+        console.log("Odesílám data:", data); // Pro tvou kontrolu v konzoli
+
         try {
-            const response = await fetch('/ulozit-test/', {
+            const response = await fetch('/ulozit-test/', { // Zkontroluj, zda máš v urls.py tuto adresu
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': getCookie('csrftoken')
                 },
-                body: JSON.stringify(dataKodeslani)
+                body: JSON.stringify(data)
             });
+            
             const result = await response.json();
             if (result.status === 'success') {
-                alert(`Uloženo! Body: ${result.body}`);
-                btnOMne.click();
+                alert("Uloženo do databáze!");
+                location.reload(); // Obnoví stránku, aby se výsledek ukázal v tabulce
             } else {
                 alert("Chyba: " + result.message);
             }
         } catch (error) {
-            console.error(error);
-            alert("Chyba spojení.");
+            console.error("Chyba spojení:", error);
         }
     }
 
@@ -467,11 +461,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (btnOdeslat) {
-        btnOdeslat.onclick = odeslatTest;
-    }
-
-    if (btnSubmitTest) {
-        btnSubmitTest.onclick = odeslatTest;
+        btnOdeslat.onclick = ulozitVysledekTestu;
     }
 
     if (cipherType) {
