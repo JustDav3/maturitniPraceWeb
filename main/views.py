@@ -176,9 +176,9 @@ def ulozit_vysledek_testu(request):
             uzel_nazev = data.get('uzel_nazev', 'Neznámý')
             uzel_hotovo = data.get('uzel_hotovo', False)
 
-            je_sifra_spravne = odpoved_uzivatele.upper() == spravne_reseni.upper() if spravne_reseni else False
+            sifra_spravne = odpoved_uzivatele.upper() == spravne_reseni.upper() if spravne_reseni else False
             body = 0
-            if je_sifra_spravne:
+            if sifra_spravne:
                 body += 1
             if uzel_hotovo is True: # Explicitní kontrola na Boolean
                 body += 1
@@ -187,7 +187,7 @@ def ulozit_vysledek_testu(request):
                 uzivatel=request.user,
                 sifra_typ=sifra_typ,
                 sifra_zadani=str(sifra_zadani), # Převod na text pro DB
-                sifra_spravne=je_spravne,
+                sifra_spravne=sifra_spravne,
                 uzel_nazev=uzel_nazev,
                 uzel_hotovo=uzel_hotovo,
                 body=body
