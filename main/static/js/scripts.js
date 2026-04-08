@@ -348,18 +348,15 @@ document.addEventListener('DOMContentLoaded', function () {
     async function generujNahodnyTest() {
         try {
             const response = await fetch('/generuj-zadani/');
-            
-            if (!response.ok) {
-                throw new Error(`Server vrátil chybu: ${response.status}`);
-            }
-
             const data = await response.json();
+            
             const zadaniElement = document.getElementById('test-sifra-zadani');
             const typElement = document.getElementById('test-sifra-typ');
-            const uzelNazevElement = document.getElementById('test-uzel-nazev');
+            // PŘIDÁNO: Reference na prvek pro název uzlu
+            const uzelNazevElement = document.getElementById('test-uzel-nazev'); 
 
-            // 1. ZOBRAZENÍ ŠIFRY
             if (zadaniElement) {
+                zadaniElement.innerHTML = ""; 
                 if (Array.isArray(data.zadani)) {
                     let tabulka = '<table class="test-matrix">';
                     data.zadani.forEach(radek => {
@@ -376,30 +373,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
-            // 2. ZOBRAZENÍ TYPU A UZLU
             if (typElement) typElement.innerText = data.typ;
 
-            // Výběr náhodného uzlu z tvých konstant v JS
+            // LOGIKA PRO UZLY
             const kategorie = Object.keys(KATEGORIE_UZLU);
             const nahodnaKat = kategorie[Math.floor(Math.random() * kategorie.length)];
             const uzly = KATEGORIE_UZLU[nahodnaKat];
             const nahodnyUzel = uzly[Math.floor(Math.random() * uzly.length)];
 
-            if (uzelNazevElement) uzelNazevElement.innerText = nahodnyUzel.nazev;
+            // ZÁPIS UZLU DO HTML
+            if (uzelNazevElement) {
+                uzelNazevElement.innerText = nahodnyUzel.nazev;
+            }
 
-            // 3. ULOŽENÍ DAT PRO KONTROLU (window = globální přístup)
+            // Uložení pro odeslání do DB
             window.aktualniSifraSpravne = data.spravne;
             window.posledniTypSifry = data.typ;
-            window.aktualniSifraZadani = data.zadani;
+            window.aktualniSifraZadani = Array.isArray(data.zadani) ? JSON.stringify(data.zadani) : data.zadani;
             window.aktualniUzelNazev = nahodnyUzel.nazev;
 
-            // 4. RESET FORMULÁŘE
             document.getElementById('test-sifra-odpoved').value = "";
             document.getElementById('test-uzel-check').checked = false;
 
         } catch (error) {
-            console.error("Chyba při generování testu:", error);
-            alert("Nepodařilo se načíst zadání ze serveru.");
+            console.error("Chyba:", error);
         }
     }
 
