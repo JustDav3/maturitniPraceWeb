@@ -115,7 +115,6 @@ const DATA_UZLU = {
     ]
 };
 
-// Funkce pro získání CSRF tokenu
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -136,7 +135,7 @@ let aktualniSifraSpravne = "";
 let aktualniUzelNazev = "";
 
 document.addEventListener('DOMContentLoaded', function () {
-    // --- 1. SELEKTORY ---
+    // 1. SELEKTORY
     const cipherType = document.getElementById('cipher-type');
     const shiftBox = document.getElementById('shared-shift-container');
     const dSelect = document.getElementById('dynamic-select');
@@ -152,6 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnOMne = document.getElementById('btn-o-mne');
     const btnUzly = document.getElementById('btn-uzly');
     const btnTest = document.getElementById('btn-test');
+    const btnOdeslat = document.getElementById('btn-odeslat-test');
     const btnVysledky = document.getElementById('btn-vysledky');
     const submenu = document.getElementById('uzly-submenu');
 
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const secVysledky = document.getElementById('section-vysledky');
     const djangoData = document.getElementById('django-data');
 
-    // --- 2. POČÁTEČNÍ STAV ---
+    // 2. POČÁTEČNÍ STAV
     const showSifry = djangoData && djangoData.getAttribute('data-show-sifry') === 'true';
     const hasMessages = document.querySelector('.alert') !== null;
 
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
         secSifry.style.display = 'block';
     }
 
-    // --- 3. LOGIKA ŠIFER ---
+    // 3. LOGIKA ŠIFER
     function updateCipherUI(cipherName) {
         const modeContainer = document.querySelector('.cipher-mode-container');
         if (!modeContainer) return;
@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function nastavAktivniTlacitko(id) {
-        [btnOMne, btnSifry, btnUzly, btnTest].forEach(btn => {
+        [btnOMne, btnSifry, btnUzly, btnTest, btnVysledky].forEach(btn => {
             if (btn) btn.classList.remove('active');
         });
         const aktivni = document.getElementById(id);
@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // --- 4. LOGIKA UZLŮ ---
+    // 4. LOGIKA UZLŮ
     window.generujMenuUzlu = function () {
         const submenu = document.getElementById('uzly-submenu');
         if (!submenu) return;
@@ -342,7 +342,6 @@ document.addEventListener('DOMContentLoaded', function () {
     detail.scrollIntoView({ behavior: 'smooth' });
     };
 
-    // Testovaní uživatele na uzly/šifry
     function generujNahodnyTest() {
         const vsechnyUzly = Object.values(KATEGORIE_UZLU).flat();
         const nahodnyUzel = vsechnyUzly[Math.floor(Math.random() * vsechnyUzly.length)];
@@ -406,47 +405,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('btn-odeslat-test').onclick = odeslatTest;
 
-    // --- 5. EVENT LISTENERY PRO HLAVNÍ MENU ---
-    btnSifry.onclick = () => {
-        secUvod.style.display = 'none'; secUzly.style.display = 'none'; secTest.style.display = 'none'; 
-        secSifry.style.display = 'block';
+    //5. EVENT LISTENERY
+    function prepniSekci(idTlacitka, sekceKeZobrazeni, extraFunkce = null) {
+        const vsechnySekce = [secUvod, secSifry, secUzly, secTest, secVysledky];
+        vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
         if (submenu) submenu.style.display = 'none';
-        nastavAktivniTlacitko('btn-sifry');
-    };
-    btnOMne.onclick = () => {
-        secSifry.style.display = 'none'; secUzly.style.display = 'none'; secTest.style.display = 'none'; 
-        secUvod.style.display = 'block';
-        if (submenu) submenu.style.display = 'none';
-        nastavAktivniTlacitko('btn-o-mne');
-    };
-    btnUzly.onclick = () => {
-        secUvod.style.display = 'none'; secSifry.style.display = 'none'; secTest.style.display = 'none'; 
-        secUzly.style.display = 'block';
-        window.generujMenuUzlu();
-        /* if(submenu) submenu.style.display = 'block'; */
-        nastavAktivniTlacitko('btn-uzly');
-    };
+
+        if (sekceKeZobrazeni) sekceKeZobrazeni.style.display = 'block';
+
+        nastavAktivniTlacitko(idTlacitka);
+
+        if (extraFunkce) extraFunkce();
+    }
+
+    btnOMne.onclick    = () => prepniSekci('btn-o-mne', secUvod);
+    btnSifry.onclick   = () => prepniSekci('btn-sifry', secSifry);
+    btnUzly.onclick    = () => prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
     if (btnTest) {
-        btnTest.onclick = () => {
-            secUvod.style.display = 'none'; secSifry.style.display = 'none'; secUzly.style.display = 'none';
-            secTest.style.display = 'block';
-            if (submenu) submenu.style.display = 'none';
-            nastavAktivniTlacitko('btn-test');
-            generujNahodnyTest();
-        };
+        btnTest.onclick = () => prepniSekci('btn-test', secTest, generujNahodnyTest);
     }
-
     if (btnVysledky) {
-        btnVysledky.onclick = () => {
-            // Skryj vše ostatní
-            [secUvod, secSifry, secUzly, secTest].forEach(s => { if(s) s.style.display = 'none'; });
-            // Ukaž výsledky
-            secVysledky.style.display = 'block';
-            nastavAktivniTlacitko('btn-vysledky');
-        };
+        btnVysledky.onclick = () => prepniSekci('btn-vysledky', secVysledky);
     }
-
-    const btnOdeslat = document.getElementById('btn-odeslat-test');
     if (btnOdeslat) btnOdeslat.onclick = odeslatTest;
 
     if (cipherType) {
