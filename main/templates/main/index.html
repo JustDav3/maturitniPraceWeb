@@ -198,6 +198,40 @@
                         </div>
                     </div>
                 </div>
+                <section id="section-vysledky" class="content-section" style="display: none;">
+                    <h2 class="section-title">Historie výsledků</h2>
+                    
+                    <div class="table-container">
+                        <table class="vysledky-tabulka">
+                            <thead>
+                                <tr>
+                                    <th>Datum</th>
+                                    {% if is_vedouci %}<th>Uživatel</th>{% endif %}
+                                    <th>Uzel</th>
+                                    <th>Uvázáno?</th>
+                                    <th>Šifra</th>
+                                    <th>Body</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for v in vysledky %}
+                                <tr>
+                                    <td>{{ v.datum|date:"d.m.Y H:i" }}</td>
+                                    {% if is_vedouci %}<td>{{ v.uzivatel.username }}</td>{% endif %}
+                                    <td>{{ v.uzel_nazev }}</td>
+                                    <td>{% if v.uzel_hotovo %}✅{% else %}❌{% endif %}</td>
+                                    <td>{% if v.sifra_bod %}✅{% else %}❌{% endif %}</td>
+                                    <td><strong>{{ v.body_celkem }}</strong></td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6">Zatím žádné výsledky.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
             </div>
         </main>
 

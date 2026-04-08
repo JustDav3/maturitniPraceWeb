@@ -147,21 +147,31 @@ def home(request):
             radky_prepis = [f"| {' '.join(radek)} |" for radek in matrix_clean]
             context['vysledek_prepis_matrix'] = "\n".join(radky_prepis)
 
+    if request.user.is_authenticated:
+        is_admin = request.user.is_superuser
+        is_vedouci = request.user.groups.filter(name='Skupina_Vedoucí').exists() or is_admin
+        
+        if is_admin:
+            vysledky = VysledekTestu.objects.all().order_by('-datum')
+        elif is_vedouci:
+            vysledky = VysledekTestu.objects.all().order_by('-datum')
+        else:
+            vysledky = VysledekTestu.objects.filter(uzivatel=request.user).order_by('-datum')
+            
+        context['vysledky'] = vysledky
+        context['is_vedouci'] = is_vedouci
+
     return render(request, "main/index.html", context)
 
 def ulozit_vysledek_testu(request):
     if request.method == "POST":
         try:
-            # Načteme JSON data z AJAX požadavku
             data = json.loads(request.body)
-            
-            # Jednoduché vyhodnocení bodů na straně serveru
             je_sifra_spravne = data.get('odpoved').strip().upper() == data.get('spravne_reseni').upper()
             body = 1 if je_sifra_spravne else 0
             if data.get('uzel_hotovo'):
                 body += 1
 
-            # Vytvoření záznamu v databázi
             VysledekTestu.objects.create(
                 uzivatel=request.user,
                 sifra_zadani=data.get('zadani'),

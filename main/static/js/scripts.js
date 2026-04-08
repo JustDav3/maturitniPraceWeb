@@ -152,12 +152,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnOMne = document.getElementById('btn-o-mne');
     const btnUzly = document.getElementById('btn-uzly');
     const btnTest = document.getElementById('btn-test');
+    const btnVysledky = document.getElementById('btn-vysledky');
     const submenu = document.getElementById('uzly-submenu');
 
     const secUvod = document.getElementById('section-uvod');
     const secSifry = document.getElementById('section-sifry');
     const secUzly = document.getElementById('section-uzly');
     const secTest = document.getElementById('section-test');
+    const secVysledky = document.getElementById('section-vysledky');
     const djangoData = document.getElementById('django-data');
 
     // --- 2. POČÁTEČNÍ STAV ---
@@ -431,6 +433,16 @@ document.addEventListener('DOMContentLoaded', function () {
             if (submenu) submenu.style.display = 'none';
             nastavAktivniTlacitko('btn-test');
             generujNahodnyTest();
+        };
+    }
+
+    if (btnVysledky) {
+        btnVysledky.onclick = () => {
+            // Skryj vše ostatní
+            [secUvod, secSifry, secUzly, secTest].forEach(s => { if(s) s.style.display = 'none'; });
+            // Ukaž výsledky
+            secVysledky.style.display = 'block';
+            nastavAktivniTlacitko('btn-vysledky');
         };
     }
 
