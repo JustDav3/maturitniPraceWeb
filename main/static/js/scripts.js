@@ -405,7 +405,7 @@ document.addEventListener('DOMContentLoaded', function () {
             data_sifra_zadani: window.aktualniSifraZadani || "",
             data_sifra_spravne_reseni: window.aktualniSifraSpravne || "",
             data_sifra_odpoved: document.getElementById('test-sifra-odpoved').value,
-            data_sifra_spravne: window.aktualniSifraSpravne.trim().toLowerCase() == data_sifra_odpoved.trim().toLowerCase() || false,
+            data_sifra_spravne: window.aktualniSifraSpravne.trim().toLowerCase() == document.getElementById('test-sifra-odpoved').value.trim().toLowerCase() || false,
             data_uzel_nazev: window.aktualniUzelNazev || "neuvedeno",
             data_uzel_hotovo: document.getElementById('test-uzel-check').checked,
             data_body_celkem: 0,
