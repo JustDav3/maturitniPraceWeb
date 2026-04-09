@@ -175,13 +175,14 @@ def ulozit_vysledek_testu(request):
             sifra_spravne_zadani=data.get('data_sifra_spravne_reseni'), 
             sifra_odpoved_uzivatele=data.get('data_sifra_odpoved_uzivatele'),
 
-            sifra_spravne=data.get('data_sifra_spravne'),
+            sifra_spravne=data.get('data_sifra_spravne', False),
             uzel_nazev = data.get('data_uzel_nazev', 'Neznámý')
             uzel_hotovo = data.get('data_uzel_hotovo', False)
 
             body_celkem = 0
-            if sifra_spravne:
+            if sifra_spravne is True:
                 body_celkem += 1
+
             if uzel_hotovo is True:
                 body_celkem += 1
 

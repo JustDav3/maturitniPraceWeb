@@ -374,18 +374,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (typElement) typElement.innerText = data.typ;
 
-            // LOGIKA PRO UZLY
             const kategorie = Object.keys(KATEGORIE_UZLU);
             const nahodnaKat = kategorie[Math.floor(Math.random() * kategorie.length)];
             const uzly = KATEGORIE_UZLU[nahodnaKat];
             const nahodnyUzel = uzly[Math.floor(Math.random() * uzly.length)];
 
-            // ZÁPIS UZLU DO HTML
             if (uzelNazevElement) {
                 uzelNazevElement.innerText = nahodnyUzel.nazev;
             }
 
-            // Uložení pro odeslání do DB
             window.aktualniSifraSpravne = data.spravne;
             window.posledniTypSifry = data.typ;
             window.aktualniSifraZadani = Array.isArray(data.zadani) ? JSON.stringify(data.zadani) : data.zadani;
