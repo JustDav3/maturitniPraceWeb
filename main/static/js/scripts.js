@@ -401,17 +401,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function ulozitVysledekTestu() {
         const data = {
-            sifra_typ: window.posledniTypSifry || "neuvedeno",
-            sifra_zadani: window.aktualniSifraZadani || "",
-            sifra_spravne_reseni: window.aktualniSifraSpravne || "",
-            sifra_odpoved: document.getElementById('test-sifra-odpoved').value,
-            sifra_spravne: document.getElementById('test-sifra-odpoved').value.trim().toLowerCase() === window.aktualniSifraSpravne.trim().toLowerCase(),
-            uzel_nazev: window.aktualniUzelNazev || "neuvedeno",
-            uzel_hotovo: document.getElementById('test-uzel-check').checked,
-            body_celkem: 0
+            data_sifra_typ: window.posledniTypSifry || "neuvedeno",
+            data_sifra_zadani: window.aktualniSifraZadani || "",
+            data_sifra_spravne_reseni: window.aktualniSifraSpravne || "",
+            data_sifra_odpoved: document.getElementById('test-sifra-odpoved').value,
+            // data_sifra_spravne: document.getElementById('test-sifra-odpoved').value.trim().toLowerCase() === window.aktualniSifraSpravne.trim().toLowerCase(),
+            data_uzel_nazev: window.aktualniUzelNazev || "neuvedeno",
+            data_uzel_hotovo: document.getElementById('test-uzel-check').checked,
+            // data_body_celkem: 0
         };
-
-        console.log("Odesílám data:", data);
 
         try {
             const response = await fetch('/ulozit-test/', {
@@ -425,7 +423,6 @@ document.addEventListener('DOMContentLoaded', function () {
             
             const result = await response.json();
             if (result.status === 'success') {
-                alert("Uloženo do databáze!");
                 location.reload();
             } else {
                 alert("Chyba: " + result.message);
