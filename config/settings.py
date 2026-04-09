@@ -26,7 +26,10 @@ SECRET_KEY = "django-insecure-hbg1=cl$@*jb0%d*j)fc#6cfv1_wvkw75k!x$onfhca)0v2-$m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+# Povolení domény Renderu pro CSRF
+CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 
 
 # Application definition
@@ -51,9 +54,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
-# Povolení domény Renderu pro CSRF
-CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 
 ROOT_URLCONF = "config.urls"
 
