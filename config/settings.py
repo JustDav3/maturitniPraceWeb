@@ -52,6 +52,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+# Povolení domény Renderu pro CSRF
+CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
+
 ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
