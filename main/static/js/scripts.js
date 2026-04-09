@@ -400,12 +400,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     async function ulozitVysledekTestu() {
+        const odpovedUzivatele = document.getElementById('test-sifra-odpoved').value.trim();
+        const sifra_spravne = odpovedUzivatele.toLowerCase() === window.aktualniSifraSpravne.toLowerCase();
+
         const data = {
             data_sifra_typ: window.posledniTypSifry || "neuvedeno",
             data_sifra_zadani: window.aktualniSifraZadani || "",
             data_sifra_spravne_reseni: window.aktualniSifraSpravne || "",
-            data_sifra_odpoved: document.getElementById('test-sifra-odpoved').value,
-            data_sifra_spravne: window.aktualniSifraSpravne == document.getElementById('test-sifra-odpoved').value.trim().toLowerCase() || false,
+            data_sifra_odpoved: odpovedUzivatele,
+            data_sifra_spravne: sifra_spravne,
             data_uzel_nazev: window.aktualniUzelNazev || "neuvedeno",
             data_uzel_hotovo: document.getElementById('test-uzel-check').checked,
             data_body_celkem: 0,
