@@ -7,6 +7,7 @@ from .number_code import logic as number_logic, constants as number_consts
 from .matrix import logic as matrix_logic
 from .binary import logic as binary_logic
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 from .models import VysledekTestu
 import json
 import random, math
@@ -164,6 +165,7 @@ def home(request):
 
     return render(request, "main/index.html", context)
 
+@login_required
 def ulozit_vysledek_testu(request):
     if request.method == "POST":
         try:
@@ -173,9 +175,9 @@ def ulozit_vysledek_testu(request):
             sifra_zadani = data.get('data_sifra_zadani', '')
 
             sifra_spravne_zadani=data.get('data_sifra_spravne_reseni'), 
-            sifra_odpoved_uzivatele=data.get('data_sifra_odpoved_uzivatele'),
+            sifra_odpoved_uzivatele=data.get('data_sifra_odpoved_uzivatele')
+            sifra_spravne=data.get('data_sifra_spravne', False)
 
-            sifra_spravne=data.get('data_sifra_spravne', False),
             uzel_nazev = data.get('data_uzel_nazev', 'Neznámý')
             uzel_hotovo = data.get('data_uzel_hotovo', False)
 
@@ -201,6 +203,7 @@ def ulozit_vysledek_testu(request):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
+@login_required
 def generuj_zadani_api(request):
     # Seznamy slov pro generování
     SLOVA = ["LES", "STROM", "VODA", "OHEŇ", "UZEL", "MAPA", "STAN", "POTOK", "CESTA"]
