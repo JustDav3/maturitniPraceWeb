@@ -229,7 +229,9 @@
                                 <td>{{ v.sifra_typ }}</td>
                                 
                                 <td>
-                                    {{ v.sifra_odpoved_uzivatele }}
+                                    <span style="font-style: italic; margin-right: 5px;">
+                                        {{ v.sifra_odpoved_uzivatele|default:"---" }}
+                                    </span>
                                     {% if v.sifra_spravne %}
                                         <span style="color: #b5e48c;">✅</span>
                                     {% else %}
