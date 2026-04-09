@@ -405,10 +405,10 @@ document.addEventListener('DOMContentLoaded', function () {
             data_sifra_zadani: window.aktualniSifraZadani || "",
             data_sifra_spravne_reseni: window.aktualniSifraSpravne || "",
             data_sifra_odpoved: document.getElementById('test-sifra-odpoved').value,
-            data_sifra_spravne: window.aktualniSifraSpravne || false,
+            // data_sifra_spravne: window.aktualniSifraSpravne || false,
             data_uzel_nazev: window.aktualniUzelNazev || "neuvedeno",
             data_uzel_hotovo: document.getElementById('test-uzel-check').checked,
-             data_body_celkem: 0,
+            data_body_celkem: 0,
         };
 
         try {
