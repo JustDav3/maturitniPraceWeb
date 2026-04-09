@@ -160,6 +160,7 @@
                     {% endif %}
                 </div>
 
+
                 <div id="section-uzly" style="display: none;">
                     <h2>Uzlů</h2>
                     <div id="uzel-detail" style="display: none; margin-top: 20px;">
@@ -172,6 +173,8 @@
                         <div id="uzel-obrazky" style="margin-top: 20px; text-align: left;"></div>
                     </div>
                 </div>
+
+
                 <div id="section-test" style="display: none;">
                     <h2>Zkouška dovedností</h2>
                     <div class="test-container">
@@ -185,8 +188,7 @@
                         <div class="test-card mt-4">
                             <h3>2. Uvaž uzel</h3>
                             <p id="test-uzel-nazev" style="color: #b5e48c; font-weight: bold;"></p>
-                            <div id="test-uzel-img-container">
-                                </div>
+                            <div id="test-uzel-img-container"></div>
                             <div class="form-check mt-2">
                                 <input type="checkbox" id="test-uzel-check" class="form-check-input">
                                 <label class="form-check-label">Mám hotovo a uzel drží!</label>
@@ -198,6 +200,8 @@
                         </div>
                     </div>
                 </div>
+
+
                 <section id="section-vysledky" class="content-section" style="display: none;">
                     <h2 class="section-title">Historie výsledků</h2>
                     
@@ -230,7 +234,7 @@
                                 
                                 <td>
                                     <span style="font-style: italic; margin-right: 5px;">
-                                        {{ v.sifra_odpoved_uzivatele|default:"---" }}
+                                        {{ v.sifra_odpoved_uzivatele}}
                                     </span>
                                     {% if v.sifra_spravne %}
                                         <span style="color: #b5e48c;">✅</span>

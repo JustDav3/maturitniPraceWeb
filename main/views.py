@@ -171,9 +171,11 @@ def ulozit_vysledek_testu(request):
             
             sifra_typ = data.get('data_sifra_typ', 'Neznámý')
             sifra_zadani = data.get('data_sifra_zadani', '')
-            sifra_odpoved_uzivatele = str(data.get('data_sifra_odpoved_uzivatele', '')).strip()
-            sifra_spravne_zadani = str(data.get('data_sifra_spravne_zadani', '')).strip()
-            sifra_spravne = sifra_odpoved_uzivatele.upper() == sifra_spravne_zadani.upper() if sifra_spravne_zadani else False
+
+            sifra_spravne_zadani=data.get('data_sifra_spravne_reseni'), 
+            sifra_odpoved_uzivatele=data.get('data_sifra_odpoved_uzivatele'),
+
+            sifra_spravne=data.get('data_sifra_spravne'),
             uzel_nazev = data.get('data_uzel_nazev', 'Neznámý')
             uzel_hotovo = data.get('data_uzel_hotovo', False)
 
