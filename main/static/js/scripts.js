@@ -305,58 +305,58 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     window.zobrazUzel = function (folderName, nazev, ytUrl) {
-    const detail = document.getElementById('uzel-detail');
-    const iframe = document.getElementById('uzel-video-frame');
-    const obrazkyContainer = document.getElementById('uzel-obrazky');
+        const detail = document.getElementById('uzel-detail');
+        const iframe = document.getElementById('uzel-video-frame');
+        const obrazkyContainer = document.getElementById('uzel-obrazky');
 
-    if (!detail || !obrazkyContainer) return;
+        if (!detail || !obrazkyContainer) return;
 
-    document.getElementById('uzel-nazev').innerText = nazev;
+        document.getElementById('uzel-nazev').innerText = nazev;
 
-    if (iframe) {
-        iframe.src = ytUrl;
-    }
+        if (iframe) {
+            iframe.src = ytUrl;
+        }
 
-    let textHtml = '';
-    const data = DATA_UZLU[folderName];
+        let textHtml = '';
+        const data = DATA_UZLU[folderName];
 
-    if (data) {
-        textHtml += `
+        if (data) {
+            textHtml += `
             <div class="uzel-zajimavost" style="padding: 15px; margin-bottom: 20px;">
                 <p style="font-style: italic; color: #ffffff; margin-bottom: 0;">${data[0]}</p>
             </div>
         `;
 
-        textHtml += `<div class="uzel-navod-text" style="color: white; font-family: Comic Sans MS; line-height: 1.6;">`;
-        for (let i = 1; i < data.length; i++) {
-            if (data[i] === "NÁVOD:") {
-                textHtml += `<h4 style="color: #d4f0c7; margin-top: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">${data[i]}</h4>`;
-            } else {
-                textHtml += `<p style="margin-bottom: 8px;">${data[i]}</p>`;
+            textHtml += `<div class="uzel-navod-text" style="color: white; font-family: Comic Sans MS; line-height: 1.6;">`;
+            for (let i = 1; i < data.length; i++) {
+                if (data[i] === "NÁVOD:") {
+                    textHtml += `<h4 style="color: #d4f0c7; margin-top: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">${data[i]}</h4>`;
+                } else {
+                    textHtml += `<p style="margin-bottom: 8px;">${data[i]}</p>`;
+                }
             }
+            textHtml += `</div>`;
+        } else {
+            textHtml = '<p style="color: white;">Návod pro tento uzel připravujeme.</p>';
         }
-        textHtml += `</div>`;
-    } else {
-        textHtml = '<p style="color: white;">Návod pro tento uzel připravujeme.</p>';
-    }
 
-    obrazkyContainer.innerHTML = textHtml;
-    detail.style.display = 'block';
-    detail.scrollIntoView({ behavior: 'smooth' });
+        obrazkyContainer.innerHTML = textHtml;
+        detail.style.display = 'block';
+        detail.scrollIntoView({ behavior: 'smooth' });
     };
 
     async function generujNahodnyTest() {
         try {
             const response = await fetch('/generuj-zadani/');
             const data = await response.json();
-            
+
             const zadaniText = document.getElementById('test-sifra-zadani-text');
             const zadaniTabulka = document.getElementById('test-sifra-zadani-tabulka');
             const sifraTyp = document.getElementById('test-sifra-typ');
-            const uzelNazevElement = document.getElementById('test-uzel-nazev'); 
+            const uzelNazevElement = document.getElementById('test-uzel-nazev');
 
             if (data.zadani) {
-                zadaniText.innerText = ""; 
+                zadaniText.innerText = "";
                 while (zadaniTabulka.rows.length > 0) {
                     zadaniTabulka.deleteRow(0);
                 }
@@ -365,115 +365,117 @@ document.addEventListener('DOMContentLoaded', function () {
                 zadaniTabulka.style.display = 'none';
 
                 if (data.zadani.includes(';')) {
-                    const radky = data.zadani.split(';');                    
+                    const radky = data.zadani.split(';');
+                    let htmlObsah = ''; // Pomocná proměnná pro stavbu HTML
+
                     radky.forEach(radek => {
-                        zadaniTabulka.innerHTML += '<tr>';
-                        radek.split('').forEach(znak => {
-                            const obsah = (znak === '_') ? '&nbsp;' : znak;
-                            zadaniTabulka.innerHTML += `<td>${obsah}</td>`;
-                        });
-                        zadaniTabulka.innerHTML += '</tr>';
+                        if (radek.trim().length > 0) {
+                            htmlObsah += '<tr>';
+                            const znaky = radek.split('');
+                            znaky.forEach(znak => {
+                                // Podtržítko z views.py nahradíme mezerou
+                                const obsah = (znak === '_') ? '&nbsp;' : znak;
+                                htmlObsah += `<td>${obsah}</td>`;
+                            });
+                            htmlObsah += '</tr>';
+                        }
                     });
-                    zadaniTabulka.style.display = 'table';
-                } else {
-                    zadaniText.innerText = data.zadani;
-                    zadaniText.style.display = 'block';
 
+                    zadaniTabulka.innerHTML = htmlObsah;
                 }
+
+                if (sifraTyp) sifraTyp.innerText = data.typ;
+
+                const kategorie = Object.keys(KATEGORIE_UZLU);
+                const nahodnaKat = kategorie[Math.floor(Math.random() * kategorie.length)];
+                const uzly = KATEGORIE_UZLU[nahodnaKat];
+                const nahodnyUzel = uzly[Math.floor(Math.random() * uzly.length)];
+
+                if (uzelNazevElement) {
+                    uzelNazevElement.innerText = nahodnyUzel.nazev;
+                }
+
+                window.aktualniSifraSpravne = data.spravne;
+                window.posledniTypSifry = data.typ;
+                window.aktualniSifraZadani = Array.isArray(data.zadani) ? JSON.stringify(data.zadani) : data.zadani;
+                window.aktualniUzelNazev = nahodnyUzel.nazev;
+
+                document.getElementById('test-sifra-odpoved').value = "";
+                document.getElementById('test-uzel-check').checked = false;
+
+            } catch (error) {
+                console.error("Chyba:", error);
             }
-
-            if (sifraTyp) sifraTyp.innerText = data.typ;
-
-            const kategorie = Object.keys(KATEGORIE_UZLU);
-            const nahodnaKat = kategorie[Math.floor(Math.random() * kategorie.length)];
-            const uzly = KATEGORIE_UZLU[nahodnaKat];
-            const nahodnyUzel = uzly[Math.floor(Math.random() * uzly.length)];
-
-            if (uzelNazevElement) {
-                uzelNazevElement.innerText = nahodnyUzel.nazev;
-            }
-
-            window.aktualniSifraSpravne = data.spravne;
-            window.posledniTypSifry = data.typ;
-            window.aktualniSifraZadani = Array.isArray(data.zadani) ? JSON.stringify(data.zadani) : data.zadani;
-            window.aktualniUzelNazev = nahodnyUzel.nazev;
-
-            document.getElementById('test-sifra-odpoved').value = "";
-            document.getElementById('test-uzel-check').checked = false;
-
-        } catch (error) {
-            console.error("Chyba:", error);
         }
-    }
 
     async function ulozitVysledekTestu() {
-        const odpovedUzivatele = document.getElementById('test-sifra-odpoved').value.trim();
-        const sifra_spravne = odpovedUzivatele.toLowerCase() === window.aktualniSifraSpravne.toLowerCase();
+            const odpovedUzivatele = document.getElementById('test-sifra-odpoved').value.trim();
+            const sifra_spravne = odpovedUzivatele.toLowerCase() === window.aktualniSifraSpravne.toLowerCase();
 
-        const data = {
-            data_sifra_typ: window.posledniTypSifry || "neuvedeno",
-            data_sifra_zadani: window.aktualniSifraZadani || "",
-            data_sifra_spravne_reseni: window.aktualniSifraSpravne || "",
-            data_sifra_odpoved: odpovedUzivatele,
-            data_sifra_spravne: sifra_spravne,
-            data_uzel_nazev: window.aktualniUzelNazev || "neuvedeno",
-            data_uzel_hotovo: document.getElementById('test-uzel-check').checked,
-            data_body_celkem: 0,
-        };
+            const data = {
+                data_sifra_typ: window.posledniTypSifry || "neuvedeno",
+                data_sifra_zadani: window.aktualniSifraZadani || "",
+                data_sifra_spravne_reseni: window.aktualniSifraSpravne || "",
+                data_sifra_odpoved: odpovedUzivatele,
+                data_sifra_spravne: sifra_spravne,
+                data_uzel_nazev: window.aktualniUzelNazev || "neuvedeno",
+                data_uzel_hotovo: document.getElementById('test-uzel-check').checked,
+                data_body_celkem: 0,
+            };
 
-        try {
-            const response = await fetch('/ulozit-test/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken')
-                },
-                body: JSON.stringify(data)
-            });
-            
-            const result = await response.json();
-            if (result.status === 'success') {
-                location.reload();
-            } else {
-                alert("Chyba: " + result.message + " data: " + JSON.stringify(data));
+            try {
+                const response = await fetch('/ulozit-test/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                if (result.status === 'success') {
+                    location.reload();
+                } else {
+                    alert("Chyba: " + result.message + " data: " + JSON.stringify(data));
+                }
+            } catch (error) {
+                console.error("Chyba spojení:", error);
             }
-        } catch (error) {
-            console.error("Chyba spojení:", error);
         }
-    }
 
-    
 
-    // 5. EVENT LISTENERY
-    function prepniSekci(idTlacitka, sekceKeZobrazeni, extraFunkce = null) {
-        vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
-        if (submenu) submenu.style.display = 'none';
 
-        if (sekceKeZobrazeni) sekceKeZobrazeni.style.display = 'block';
+        // 5. EVENT LISTENERY
+        function prepniSekci(idTlacitka, sekceKeZobrazeni, extraFunkce = null) {
+            vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
+            if (submenu) submenu.style.display = 'none';
 
-        nastavAktivniTlacitko(idTlacitka);
+            if (sekceKeZobrazeni) sekceKeZobrazeni.style.display = 'block';
 
-        if (extraFunkce) extraFunkce();
-    }
+            nastavAktivniTlacitko(idTlacitka);
 
-    btnOMne.onclick    = () => prepniSekci('btn-o-mne', secUvod);
-    btnSifry.onclick   = () => prepniSekci('btn-sifry', secSifry);
-    btnUzly.onclick    = () => prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
+            if (extraFunkce) extraFunkce();
+        }
 
-    if (btnTest) {
-        btnTest.onclick = () => prepniSekci('btn-test', secTest, generujNahodnyTest);
-    }
+        btnOMne.onclick = () => prepniSekci('btn-o-mne', secUvod);
+        btnSifry.onclick = () => prepniSekci('btn-sifry', secSifry);
+        btnUzly.onclick = () => prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
 
-    if (btnVysledky) {
-        btnVysledky.onclick = () => prepniSekci('btn-vysledky', secVysledky);
-    }
+        if (btnTest) {
+            btnTest.onclick = () => prepniSekci('btn-test', secTest, generujNahodnyTest);
+        }
 
-    if (btnOdeslat) {
-        btnOdeslat.onclick = ulozitVysledekTestu;
-    }
+        if (btnVysledky) {
+            btnVysledky.onclick = () => prepniSekci('btn-vysledky', secVysledky);
+        }
 
-    if (cipherType) {
-        cipherType.onchange = (e) => handleCipherChange(e.target.value);
-        handleCipherChange(cipherType.value);
-    }
+        if (btnOdeslat) {
+            btnOdeslat.onclick = ulozitVysledekTestu;
+        }
+
+        if (cipherType) {
+            cipherType.onchange = (e) => handleCipherChange(e.target.value);
+            handleCipherChange(cipherType.value);
+        }
 });
