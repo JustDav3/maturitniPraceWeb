@@ -360,7 +360,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.zadani.includes(';')) {
                     console.log("3")
                     const radky = data.zadani.split(';');
-                    let tabulka = '<table class="test-matrix">';
+                    let tabulka = '<table class="tabulka-zadani">';
                     
                     radky.forEach(radek => {
                         tabulka += '<tr>';
@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                     console.log("4")
                     tabulka += '</table>';
-                    zadaniElement.innerHTML = tabulka;
+                    zadaniElement.innerHTML = generujTabulku(data.zadani);
                 } else {
                     zadaniElement.innerText = data.zadani;
                 }

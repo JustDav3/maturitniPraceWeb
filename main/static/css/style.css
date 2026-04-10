@@ -284,6 +284,22 @@ body {
 
 .uzel-img-div:hover { transform: scale(1.1); }
 
+.test-matrix {
+    border-collapse: collapse;
+    font-family: monospace;
+    margin: 10px auto;
+}
+
+.test-matrix td {
+    border: 1px solid #333;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #fff;
+    color: #000;
+}
+
 .vysledky-tabulka {
     width: 100%;
     border-collapse: collapse;
