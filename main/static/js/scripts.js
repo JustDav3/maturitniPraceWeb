@@ -357,16 +357,25 @@ document.addEventListener('DOMContentLoaded', function () {
             if (zadaniElement) {
                 zadaniElement.innerHTML = ""; 
                 if (Array.isArray(data.zadani)) {
-                    let tabulka = '<table class="test-matrix">';
-                    data.zadani.forEach(radek => {
-                        tabulka += '<tr>';
-                        radek.forEach(pismeno => {
-                            tabulka += `<td>${pismeno}</td>`;
+                    if (data.zadani.includes(';')) {
+                        const radky = data.zadani.split(';');
+                        let tabulka = '<table class="test-matrix">';
+                        
+                        radky.forEach(radek => {
+                            tabulka += '<tr>';
+                            radek.split('').forEach(znak => {
+                                // Podtržítko zobrazíme jako prázdné místo v tabulce
+                                const obsah = (znak === '_') ? '&nbsp;' : znak;
+                                tabulka += `<td>${obsah}</td>`;
+                            });
+                            tabulka += '</tr>';
                         });
-                        tabulka += '</tr>';
-                    });
-                    tabulka += '</table>';
-                    zadaniElement.innerHTML = tabulka;
+                        
+                        tabulka += '</table>';
+                        zadaniElement.innerHTML = tabulka;
+                    } else {
+                        zadaniElement.innerText = data.zadani;
+                    }
                 } else {
                     zadaniElement.innerText = data.zadani;
                 }
