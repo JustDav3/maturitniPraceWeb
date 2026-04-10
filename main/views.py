@@ -263,8 +263,6 @@ def generuj_zadani_api(request):
         zadani = "".join(["".join(r) for r in matice]).strip()
         typ_display = f"Mřížka ({vybrany_typ.capitalize()})"
 
-    print(f"Generované zadání: {zadani} | Správné řešení: {spravne} | Typ: {typ_display}")
-
     return JsonResponse({
         'zadani': zadani,
         'spravne': spravne.upper(),

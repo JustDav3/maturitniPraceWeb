@@ -391,8 +391,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('test-sifra-odpoved').value = "";
             document.getElementById('test-uzel-check').checked = false;
 
-            print(`Nový test - Typ: ${data.typ}, Zadání: ${window.aktualniSifraZadani}, Správné řešení: ${data.spravne}, Uzel: ${nahodnyUzel.nazev}`);
-
         } catch (error) {
             console.error("Chyba:", error);
         }
@@ -427,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (result.status === 'success') {
                 location.reload();
             } else {
-                alert("Chyba: " + result.message);
+                alert("Chyba: " + result.message + " data: " + JSON.stringify(data));
             }
         } catch (error) {
             console.error("Chyba spojení:", error);
