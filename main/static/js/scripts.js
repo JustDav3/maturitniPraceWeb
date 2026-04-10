@@ -356,8 +356,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (zadaniElement) {
                 zadaniElement.innerHTML = ""; 
+                console.log("1")
                 if (Array.isArray(data.zadani)) {
+                    console.log("2")
                     if (data.zadani.includes(';')) {
+                        console.log("3")
                         const radky = data.zadani.split(';');
                         let tabulka = '<table class="test-matrix">';
                         
@@ -370,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             });
                             tabulka += '</tr>';
                         });
-                        
+                        console.log("4")
                         tabulka += '</table>';
                         zadaniElement.innerHTML = tabulka;
                     } else {
