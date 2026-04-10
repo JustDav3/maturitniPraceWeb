@@ -403,7 +403,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('test-sifra-odpoved').value = "";
                 document.getElementById('test-uzel-check').checked = false;
 
-            } catch (error) {
+            } 
+        }
+        catch (error) {
                 console.error("Chyba:", error);
             }
         }
@@ -444,8 +446,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-
-
         // 5. EVENT LISTENERY
         function prepniSekci(idTlacitka, sekceKeZobrazeni, extraFunkce = null) {
             vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
@@ -478,4 +478,4 @@ document.addEventListener('DOMContentLoaded', function () {
             cipherType.onchange = (e) => handleCipherChange(e.target.value);
             handleCipherChange(cipherType.value);
         }
-});
+    });
