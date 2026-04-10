@@ -363,26 +363,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 zadaniText.style.display = 'none';
                 zadaniTabulka.style.display = 'none';
-                
+
                 if (data.zadani.includes(';')) {
-                    const radky = data.zadani.split(';');
+                    const radky = data.zadani.split(';');                    
                     radky.forEach(radek => {
-                        if (radek.length > 0) {
-                            zadaniTabulka += '<tr>';
-                            const znaky = radek.split(''); 
-                            znaky.forEach(znak => {
-                                const obsah = (znak === '_') ? '&nbsp;' : znak;
-                                zadaniTabulka += `<td>${obsah}</td>`;
-                            });
-                            zadaniTabulka += '</tr>';
-                        }
-                });
-                tabulkaHtml += '</table>';
-                zadaniTabulka.innerHTML = tabulkaHtml;
-                zadaniTabulka.style.display = 'block';
-            } else {
-                zadaniElement.innerText = data.zadani;
-                zadaniText.style.display = 'block';
+                        zadaniTabulka.innerHTML += '<tr>';
+                        radek.split('').forEach(znak => {
+                            const obsah = (znak === '_') ? '&nbsp;' : znak;
+                            zadaniTabulka.innerHTML += `<td>${obsah}</td>`;
+                        });
+                        zadaniTabulka.innerHTML += '</tr>';
+                    });
+                    zadaniTabulka.style.display = 'table';
+                } else {
+                    zadaniText.innerText = data.zadani;
+                    zadaniText.style.display = 'block';
+
+                }
             }
 
             if (sifraTyp) sifraTyp.innerText = data.typ;
