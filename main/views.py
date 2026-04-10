@@ -34,14 +34,11 @@ def home(request):
     context = {}
     
     if request.method == "POST":
-        # 1. ZÁKLADNÍ NAČTENÍ DAT
         project = request.POST.get("projekt")
         user_input = request.POST.get("vstup", "")
         action = request.POST.get("akce")
         shift = int(request.POST.get("shift") or 0)
         
-        # 2. DYNAMICKÁ DATA (Sjednocené názvy)
-        # _val = textová hodnota ze selectu, _bool = pravdivostní hodnota z checkboxu
         dynamic_select_val = request.POST.get("dynamic_select", "1")
         dynamic_check_bool = request.POST.get("dynamic_checkbox") == "on"
         
@@ -60,8 +57,6 @@ def home(request):
 
         if project in ["spirala", "snek", "had"]:
             action = "sifrovat"
-
-        # --- LOGIKA JEDNOTLIVÝCH ŠIFER ---
 
         # 1. MORSEOVKA 
         if project == "morse":
@@ -205,11 +200,9 @@ def ulozit_vysledek_testu(request):
 
 @login_required
 def generuj_zadani_api(request):
-    # Seznamy slov pro generování
     SLOVA = ["LES", "STROM", "VODA", "OHEŇ", "UZEL", "MAPA", "STAN", "POTOK", "CESTA"]
     MATICE_VETY = ["ROZRAZIL", "TABORAK", "VYPRAVA"]
     
-    # Náhodný výběr typu šifry
     typy = ['morse', 'number_code', 'binary', 'spirala', 'snek', 'had']
     vybrany_typ = random.choice(typy)
     
@@ -217,51 +210,51 @@ def generuj_zadani_api(request):
     spravne = ""
     typ_display = ""
 
-    # 1. MORSEOVKA (využívá morse_logic a morse_consts)
+    # 1. MORSEOVKA
     if vybrany_typ == 'morse':
         spravne = random.choice(SLOVA)
-        # encrypt(message, active_dict, separator)
         zadani = morse_logic.encrypt(spravne, morse_consts.morse_dict, morse_consts.separator)
         typ_display = "Morseovka"
         
-        # Bonus: Náhodná inverze teček a čárek (používá logiku make_reverse)
         if random.random() > 0.7:
             zadani = zadani.replace('.', 'x').replace('-', '.').replace('x', '-')
             typ_display += " (Inverzní)"
 
-    # 2. ČÍSELNÝ KÓD (využívá number_logic a number_consts)
+    # 2. ČÍSELNÝ KÓD
     elif vybrany_typ == 'number_code':
         spravne = random.choice(SLOVA)
-        # encrypt(message, current_dict)
         zadani = number_logic.encrypt(spravne, number_consts.alphabet_dict)
         typ_display = "Číselný kód"
         
-        # Bonus: Náhodný posun abecedy (shift_alphabet)
         if random.random() > 0.5:
             posun = random.randint(1, 10)
             posunuta_abeceda = number_logic.shift_alphabet(number_consts.alphabet_dict, posun)
             zadani = number_logic.encrypt(spravne, posunuta_abeceda)
             typ_display += f" (Posun +{posun})"
 
-    # 3. BINÁRNÍ KÓD (využívá binary_logic)
+    # 3. BINÁRNÍ KÓD
     elif vybrany_typ == 'binary':
         spravne = random.choice(SLOVA)
-        # encrypt(text, separator)
         zadani = binary_logic.encrypt(spravne, "|")
         typ_display = "Binární kód"
 
-    # 4. MATICE - Spirála, Šnek, Had (využívá matrix_logic)
+    # 4. MATICE - Spirála, Šnek, Had
     elif vybrany_typ in ['spirala', 'snek', 'had']:
         spravne = random.choice(MATICE_VETY)
         map_typ = {"spirala": "1", "snek": "2", "had": "3"}
         
-        # vytvor_matice_sifry(vstupni_text, typ_sifry, start_bod)
-        # Pro maturitu fixujeme startovní bod na "1", aby to nebylo až moc nereálné
-        matice, strana = matrix_logic.vytvor_matice_sifry(spravne, map_typ[vybrany_typ], "1")
+        matice, rozmer = matrix_logic.vytvor_matice_sifry(spravne, map_typ[vybrany_typ], "1")        
+
+        radky_text = []
+        for r in range(rozmer):
+            radek_znaku = ""
+            for s in range(rozmer):
+                znak = matice[r][s]
+                radek_znaku += znak if znak and znak.strip() else "_"
+            radky_text.append(radek_znaku)
         
-        # Převedeme matici na řetězec pro zobrazení (všechna písmena v řadě)
-        zadani = "".join(["".join(r) for r in matice]).strip()
-        typ_display = f"Mřížka ({vybrany_typ.capitalize()})"
+        zadani = ";".join(radky_text)
+        typ_display = f"Matice ({vybrany_typ.capitalize()})"
 
     return JsonResponse({
         'zadani': zadani,

@@ -53,12 +53,12 @@ def vytvor_matice_sifry(vstupni_text, typ_sifry, start_bod):
     pismena = [char for char in vstupni_text if char.isalnum()]
     if not pismena: return None, 0
     pocet = len(pismena)
-    strana = math.ceil(math.sqrt(pocet))
+    rozmer = math.ceil(math.sqrt(pocet))
 
-    matice = [[" " for _ in range(strana)] for _ in range(strana)]
-    indices = get_indices(strana, typ_sifry, start_bod, pocet)
+    matice = [[" " for _ in range(rozmer)] for _ in range(rozmer)]
+    indices = get_indices(rozmer, typ_sifry, start_bod, pocet)
 
     for i, (r, s) in enumerate(indices):
         if i < pocet:
             matice[r][s] = pismena[i]
-    return matice, strana
+    return matice, rozmer
