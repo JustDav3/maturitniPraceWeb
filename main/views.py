@@ -175,7 +175,7 @@ def ulozit_vysledek_testu(request):
             sifra_zadani = data.get('data_sifra_zadani', '')
 
             sifra_spravne_zadani=data.get('data_sifra_spravne_reseni'), 
-            sifra_odpoved_uzivatele=data.get('data_sifra_odpoved_uzivatele')
+            sifra_odpoved_uzivatele=data.get('data_sifra_odpoved')
             sifra_spravne=data.get('data_sifra_spravne', False)
 
             uzel_nazev = data.get('data_uzel_nazev', 'Neznámý')
