@@ -29,7 +29,7 @@ DEBUG = True
 # Povolení domény Renderu pro CSRF
 CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com', '*.cron-job.org']
 
 
 # Application definition
