@@ -357,28 +357,23 @@ document.addEventListener('DOMContentLoaded', function () {
             if (zadaniElement) {
                 zadaniElement.innerHTML = ""; 
                 console.log("1")
-                if (Array.isArray(data.zadani)) {
-                    console.log("2")
-                    if (data.zadani.includes(';')) {
-                        console.log("3")
-                        const radky = data.zadani.split(';');
-                        let tabulka = '<table class="test-matrix">';
-                        
-                        radky.forEach(radek => {
-                            tabulka += '<tr>';
-                            radek.split('').forEach(znak => {
-                                // Podtržítko zobrazíme jako prázdné místo v tabulce
-                                const obsah = (znak === '_') ? '&nbsp;' : znak;
-                                tabulka += `<td>${obsah}</td>`;
-                            });
-                            tabulka += '</tr>';
+                if (data.zadani.includes(';')) {
+                    console.log("3")
+                    const radky = data.zadani.split(';');
+                    let tabulka = '<table class="test-matrix">';
+                    
+                    radky.forEach(radek => {
+                        tabulka += '<tr>';
+                        radek.split('').forEach(znak => {
+                            // Podtržítko zobrazíme jako prázdné místo v tabulce
+                            const obsah = (znak === '_') ? '&nbsp;' : znak;
+                            tabulka += `<td>${obsah}</td>`;
                         });
-                        console.log("4")
-                        tabulka += '</table>';
-                        zadaniElement.innerHTML = tabulka;
-                    } else {
-                        zadaniElement.innerText = data.zadani;
-                    }
+                        tabulka += '</tr>';
+                    });
+                    console.log("4")
+                    tabulka += '</table>';
+                    zadaniElement.innerHTML = tabulka;
                 } else {
                     zadaniElement.innerText = data.zadani;
                 }
