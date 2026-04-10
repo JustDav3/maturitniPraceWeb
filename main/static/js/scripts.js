@@ -391,6 +391,8 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('test-sifra-odpoved').value = "";
             document.getElementById('test-uzel-check').checked = false;
 
+            print(`Nový test - Typ: ${data.typ}, Zadání: ${window.aktualniSifraZadani}, Správné řešení: ${data.spravne}, Uzel: ${nahodnyUzel.nazev}`);
+
         } catch (error) {
             console.error("Chyba:", error);
         }
