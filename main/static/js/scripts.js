@@ -350,36 +350,39 @@ document.addEventListener('DOMContentLoaded', function () {
             const response = await fetch('/generuj-zadani/');
             const data = await response.json();
             
-            const zadaniElement = document.getElementById('test-sifra-zadani');
-            const typElement = document.getElementById('test-sifra-typ');
+            const zadaniText = document.getElementById('test-sifra-zadani-text');
+            const zadaniTabulka = document.getElementById('test-sifra-zadani-tabulka');
+            const sifraTyp = document.getElementById('test-sifra-typ');
             const uzelNazevElement = document.getElementById('test-uzel-nazev'); 
 
-            if (zadaniElement) {
-                zadaniElement.innerHTML = ""; 
-                console.log("1")
+            if (data.zadani) {
+                zadaniText.innerText = ""; 
+                while (zadaniTabulka.rows.length > 0) {
+                    zadaniTabulka.deleteRow(0);
+                }
+
+                zadaniText.style.display = 'none';
+                zadaniTabulka.style.display = 'none';
+                
                 if (data.zadani.includes(';')) {
-                    console.log("3")
-                    const radky = data.zadani.split(';');
-                    let tabulka = '<table class="tabulka-zadani">';
-                    
+                    const radky = data.zadani.split(';');                    
                     radky.forEach(radek => {
-                        tabulka += '<tr>';
+                        zadaniTabulka.innerHTML += '<tr>';
                         radek.split('').forEach(znak => {
-                            // Podtržítko zobrazíme jako prázdné místo v tabulce
                             const obsah = (znak === '_') ? '&nbsp;' : znak;
-                            tabulka += `<td>${obsah}</td>`;
+                            zadaniTabulka.innerHTML += `<td>${obsah}</td>`;
                         });
-                        tabulka += '</tr>';
+                        zadaniTabulka.innerHTML += '</tr>';
                     });
-                    console.log("4")
-                    tabulka += '</table>';
-                    zadaniElement.innerHTML = generujTabulku(data.zadani);
+                    zadaniTabulka.style.display = 'block';
                 } else {
-                    zadaniElement.innerText = data.zadani;
+                    zadaniText.innerText = data.zadani;
+                    zadaniText.style.display = 'block';
+
                 }
             }
 
-            if (typElement) typElement.innerText = data.typ;
+            if (sifraTyp) sifraTyp.innerText = data.typ;
 
             const kategorie = Object.keys(KATEGORIE_UZLU);
             const nahodnaKat = kategorie[Math.floor(Math.random() * kategorie.length)];
