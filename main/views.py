@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
+from django.contrib.auth.models import User
 from .morse import logic as morse_logic, constants as morse_consts
 from .number_code import logic as number_logic, constants as number_consts
 from .matrix import logic as matrix_logic
@@ -157,6 +158,16 @@ def home(request):
             
         context['vysledky'] = vysledky
         context['is_vedouci'] = is_vedouci
+    seznam_clenu = []
+    if request.user.is_authenticated and getattr(request.user, 'is_staff', False):
+        # Vytáhne jména všech uživatelů a seřadí je podle abecedy
+        seznam_clenu = User.objects.values_list('username', flat=True).order_by('username')
+
+    context = {
+        'seznam_clenu': seznam_clenu,
+        'is_vedouci': getattr(request.user, 'is_staff', False),
+        }
+    
 
     return render(request, "main/index.html", context)
 

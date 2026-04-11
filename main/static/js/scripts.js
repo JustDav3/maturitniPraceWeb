@@ -162,7 +162,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const secVysledky = document.getElementById('section-vysledky');
 
     const filterSelect = document.getElementById('filter-uzivatel');
-    const tableBody = document.querySelector('.vysledky-table tbody');
 
     const vsechnySekce = [secUvod, secSifry, secUzly, secTest, secVysledky];
 
@@ -349,46 +348,25 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     // --- DYNAMICKÉ FILTROVÁNÍ UŽIVATELŮ ---
-    if (filterSelect && tableBody) {
-        const rows = tableBody.getElementsByTagName('tr');
-        const names = new Set();
-
-        // 1. Projdeme tabulku a sesbíráme jména z DRUHÉHO sloupce (index 1)
-        for (let i = 0; i < rows.length; i++) {
-            const cells = rows[i].getElementsByTagName('td');
-            // Kontrola, zda má řádek dostatek buněk (vedoucí jich má víc)
-            if (cells.length > 1) {
-                const name = cells[1].textContent.trim(); // Index 1 je druhý sloupec
-                if (name && name !== "" && name !== "Zatím žádné výsledky.") {
-                    names.add(name);
-                }
-            }
-        }
-
-        // 2. Naplníme Select box unikátními jmény
-        Array.from(names).sort().forEach(name => {
-            const option = document.createElement('option');
-            option.value = name;
-            option.textContent = name;
-            filterSelect.appendChild(option);
-        });
-
-        // 3. Akce při změně výběru
+    if (filterSelect) {
         filterSelect.addEventListener('change', function() {
             const selectedName = this.value;
-            
-            for (let i = 0; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName('td');
+            // Najde všechny řádky v těle tabulky výsledků
+            const rows = document.querySelectorAll('.vysledky-table tbody tr');
+
+            rows.forEach(row => {
+                const cells = row.getElementsByTagName('td');
+                // Pokud řádek obsahuje data (není to "Zatím žádné výsledky")
                 if (cells.length > 1) {
-                    const rowName = cells[1].textContent.trim();
-                    
+                    const rowName = cells[1].textContent.trim(); // Index 1 je Jméno
+
                     if (selectedName === "all" || rowName === selectedName) {
-                        rows[i].style.display = ""; // Zobrazit řádek
+                        row.style.display = ""; // Zobrazit
                     } else {
-                        rows[i].style.display = "none"; // Skrýt řádek
+                        row.style.display = "none"; // Skrýt
                     }
                 }
-            }
+            });
         });
     }
 
