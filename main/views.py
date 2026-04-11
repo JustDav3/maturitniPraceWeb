@@ -169,7 +169,7 @@ def home(request):
         'seznam_clenu': seznam_clenu,
         'is_vedouci': is_vedouci_nebo_admin,
     }
-    return render(request, 'index.html', context)
+    return render(request, '/index.html', context)
 
 @login_required
 def ulozit_vysledek_testu(request):
