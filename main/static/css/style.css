@@ -14,7 +14,7 @@ body {
     padding: 0;
     padding-top: 80px;
     color: var(--bila);
-    background: linear-gradient(180deg, var(--bila) 0%, var(--seda) 100%);
+    background: var(--bila);
     background-attachment: fixed;
     font-family: 'Comic Sans MS', cursive;
 }
