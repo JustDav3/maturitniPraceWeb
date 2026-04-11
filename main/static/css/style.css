@@ -219,10 +219,9 @@ body {
     align-items: center;
     justify-content: center;
     padding: 0 25px;
-    background-color: #4a7c59;
+    background-color: #1a2a16;
     color: white;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid #b5e48c;
+    border: 1px solid #4a6d3f;
     padding: 8px 16px;
     cursor: pointer;
     transition: background 0.3s;
