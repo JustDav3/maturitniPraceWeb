@@ -163,12 +163,12 @@ def home(request):
         else:
             vysledky = VysledekTestu.objects.filter(uzivatel=request.user.username).order_by('-datum')
 
-    context = {
-        'vysledky': vysledky,
-        'seznam_clenu': seznam_clenu,
-        'is_vedouci': is_vedouci_nebo_admin,
-    }
-    return render(request, 'main/index.html', context)
+        context = {
+            'vysledky': vysledky,
+            'seznam_clenu': seznam_clenu,
+            'is_vedouci': is_vedouci_nebo_admin,
+        }
+        return render(request, 'main/index.html', context)
 
 @login_required
 def ulozit_vysledek_testu(request):
