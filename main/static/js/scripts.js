@@ -354,13 +354,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const rows = document.querySelectorAll('.vysledky-tabulka tbody tr');
 
             console.log("Filtruji pro uživatele:", selectedUser);
+            console.log("Počet nalezených řádků:", rows.length);
             
             rows.forEach(row => {
                 const usernameCell = row.cells[1];
                 
                 if (usernameCell) {
                     const rowUsername = usernameCell.textContent.trim();
-                    console.log("Filtruji:", rowUsername);
+                    console.log(`Řádek ${index} patří uživateli: ${rowUsername}`);
 
                     if (selectedUser === 'all' || rowUsername === selectedUser) {
                         row.style.display = "";
