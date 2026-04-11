@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const secTest = document.getElementById('section-test');
     const secVysledky = document.getElementById('section-vysledky');
 
-    const filterSelect = document.getElementById('filter-uzivatel');
+    const userFilter = document.getElementById('filter-uzivatel');
 
     const vsechnySekce = [secUvod, secSifry, secUzly, secTest, secVysledky];
 
@@ -348,22 +348,21 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     // --- DYNAMICKÉ FILTROVÁNÍ UŽIVATELŮ ---
-    if (filterSelect) {
-        filterSelect.addEventListener('change', function() {
-            const selectedName = this.value;
-            // Najde všechny řádky v těle tabulky výsledků
+    if (userFilter) {
+        userFilter.addEventListener('change', function() {
+            const selectedUser = this.value.toLowerCase();
             const rows = document.querySelectorAll('.vysledky-table tbody tr');
 
             rows.forEach(row => {
-                const cells = row.getElementsByTagName('td');
-                // Pokud řádek obsahuje data (není to "Zatím žádné výsledky")
-                if (cells.length > 1) {
-                    const rowName = cells[1].textContent.trim(); // Index 1 je Jméno
+                const usernameCell = row.querySelector('.cell-username');
+                
+                if (usernameCell) {
+                    const rowUsername = usernameCell.textContent.trim().toLowerCase();
 
-                    if (selectedName === "all" || rowName === selectedName) {
-                        row.style.display = ""; // Zobrazit
+                    if (selectedUser === 'all' || rowUsername === selectedUser) {
+                        row.style.display = "";
                     } else {
-                        row.style.display = "none"; // Skrýt
+                        row.style.display = "none";
                     }
                 }
             });

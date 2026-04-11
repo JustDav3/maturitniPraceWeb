@@ -146,30 +146,34 @@ def home(request):
             context['vysledek_prepis_matrix'] = "\n".join(radky_prepis)
 
     if request.user.is_authenticated:
+        # 1. Rozhodneme o roli
         is_admin = request.user.is_superuser
-        is_vedouci = request.user.groups.filter(name='Skupina_Vedoucí').exists() or is_admin
-        
+        is_staff = request.user.is_staff
+        is_vedouci_nebo_admin = is_admin or is_staff
+
+        # 2. Načteme výsledky podle hierarchie
         if is_admin:
             vysledky = VysledekTestu.objects.all().order_by('-datum')
-        elif is_vedouci:
-            vysledky = VysledekTestu.objects.exclude(uzivatel__is_superuser=True).order_by('-datum')
-        else:
-            vysledky = VysledekTestu.objects.filter(uzivatel=request.user).order_by('-datum')
+            seznam_clenu = User.objects.all().order_by('username')
+        elif is_staff:
+            # Vedoucí vidí výsledky dětí a svoje vlastní
+            vysledky = VysledekTestu.objects.filter(
+                uzivatel__in=User.objects.filter(groups__name='deti')
+            ) | VysledekTestu.objects.filter(uzivatel=request.user.username)
+            vysledky = vysledky.distinct().order_by('-datum')
             
-        context['vysledky'] = vysledky
-        context['is_vedouci'] = is_vedouci
-    seznam_clenu = []
-    if request.user.is_authenticated and getattr(request.user, 'is_staff', False):
-        # Vytáhne jména všech uživatelů a seřadí je podle abecedy
-        seznam_clenu = User.objects.values_list('username', flat=True).order_by('username')
+            # V seznamu pro filtr uvidí jen děti
+            seznam_clenu = User.objects.filter(groups__name='deti').order_by('username')
+        else:
+            # Dítě vidí jen své výsledky
+            vysledky = VysledekTestu.objects.filter(uzivatel=request.user.username).order_by('-datum')
 
     context = {
+        'vysledky': vysledky,
         'seznam_clenu': seznam_clenu,
-        'is_vedouci': getattr(request.user, 'is_staff', False),
-        }
-    
-
-    return render(request, "main/index.html", context)
+        'is_vedouci': is_vedouci_nebo_admin,
+    }
+    return render(request, 'index.html', context)
 
 @login_required
 def ulozit_vysledek_testu(request):

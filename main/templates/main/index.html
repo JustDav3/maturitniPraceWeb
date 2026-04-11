@@ -208,11 +208,11 @@
 
                     {% if is_vedouci %}
                     <div class="filter-container" style="margin-bottom: 20px; text-align: center;">
-                        <label for="filter-uzivatel">Filtr podle člena:</label>
+                        <label for="filter-uzivatel">Filtr podle:</label>
                         <select id="filter-uzivatel" style="padding: 5px; border-radius: 5px;">
                             <option value="all">-- Všichni členové --</option>
-                            {% for jmeno in seznam_clenu %}
-                                <option value="{{ jmeno }}">{{ jmeno }}</option>
+                            {% for clen in seznam_clenu %}
+                                <option value="{{ clen.username }}">{{ clen.username }}</option>
                             {% endfor %}
                         </select>
                     </div>
