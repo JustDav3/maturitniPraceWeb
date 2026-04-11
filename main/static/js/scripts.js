@@ -347,7 +347,7 @@ document.addEventListener('DOMContentLoaded', function () {
         detail.scrollIntoView({ behavior: 'smooth' });
     };
 
-    // --- DYNAMICKÉ FILTROVÁNÍ UŽIVATELŮ ---
+    // DYNAMICKÉ FILTROVÁNÍ UŽIVATELŮ
     if (userFilter) {
         userFilter.addEventListener('change', function() {
             const selectedUser = this.value.toLowerCase();

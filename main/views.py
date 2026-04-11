@@ -146,26 +146,22 @@ def home(request):
             context['vysledek_prepis_matrix'] = "\n".join(radky_prepis)
 
     if request.user.is_authenticated:
-        # 1. Rozhodneme o roli
         is_admin = request.user.is_superuser
         is_staff = request.user.is_staff
         is_vedouci_nebo_admin = is_admin or is_staff
 
-        # 2. Načteme výsledky podle hierarchie
         if is_admin:
             vysledky = VysledekTestu.objects.all().order_by('-datum')
             seznam_clenu = User.objects.all().order_by('username')
         elif is_staff:
-            # Vedoucí vidí výsledky dětí a svoje vlastní
             vysledky = VysledekTestu.objects.filter(
-                uzivatel__in=User.objects.filter(groups__name='deti')
+                uzivatel__in=User.objects.filter(groups__name='Skupina_Děti')
             ) | VysledekTestu.objects.filter(uzivatel=request.user.username)
             vysledky = vysledky.distinct().order_by('-datum')
             
             # V seznamu pro filtr uvidí jen děti
-            seznam_clenu = User.objects.filter(groups__name='deti').order_by('username')
+            seznam_clenu = User.objects.filter(groups__name='Skupina_Děti').order_by('username')
         else:
-            # Dítě vidí jen své výsledky
             vysledky = VysledekTestu.objects.filter(uzivatel=request.user.username).order_by('-datum')
 
     context = {
