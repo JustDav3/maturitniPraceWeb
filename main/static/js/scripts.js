@@ -167,6 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const userFilter = document.getElementById('filter-uzivatel');
 
     const vsechnySekce = [secUvod, secSifry, secUzly, secTest, secVysledky, secNastaveniTestu];
+    const vsechnaTlacitka = [btnOMne, btnSifry, btnUzly, btnTest, btnVysledky, btnNastaveniTestu];
 
     const djangoData = document.getElementById('django-data');
 
@@ -214,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function nastavAktivniTlacitko(id) {
-        [btnOMne, btnSifry, btnUzly, btnTest, btnVysledky].forEach(btn => {
+        vsechnaTlacitka.forEach(btn => {
             if (btn) btn.classList.remove('active');
         });
         const aktivni = document.getElementById(id);
