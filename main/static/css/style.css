@@ -6,6 +6,16 @@
     --bila: #F1EDD0;
     --seda: #3C3D36;
     --red: #64181A;
+
+    /* TYPY PÍSMA*/
+    --font: 'Comic Sans MS', cursive; /* Opraveno na cursive pro správné renderování */
+    --font-mono: monospace;
+
+    /* VELIKOSTI PÍSMA */
+    --size-nadpis: clamp(1.6406rem, 1.4915rem + 0.5966vi, 1.9688rem);    
+    --size-podnadpis: clamp(1.3125rem, 1.1932rem + 0.4773vi, 1.575rem); 
+    --size-text: clamp(0.9844rem, 0.8949rem + 0.358vi, 1.1813rem);       
+    --size-maly-text: clamp(0.7292rem, 0.6629rem + 0.2652vi, 0.875rem); 
 }
 
 body {
@@ -16,7 +26,7 @@ body {
     color: var(--bila);
     background: var(--bila);
     background-attachment: fixed;
-    font-family: 'Comic Sans MS', cursive;
+    font-family: var(--font);
 }
 
 /* 2. LAYOUT STRÁNKY */
@@ -41,7 +51,6 @@ body {
     align-items: center;
     justify-content: center;
     background: linear-gradient(180deg, var(--hlavni-zelena) 0%, var(--svetla-zelena) 100%);
-    background-color: linear-gradient(180deg, var(--hlavni-zelena) 0%, var(--svetla-zelena) 100%);
     gap: 15px;
     max-width: 1200px;
     margin: 0 auto;
@@ -55,7 +64,7 @@ body {
 
 .web-title {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: var(--size-nadpis);
     color: var(--bila);
 }
 
@@ -100,7 +109,7 @@ body {
     border-radius: 6px;
     cursor: pointer;
     text-align: left;
-    font-family: 'Comic Sans MS', cursive;
+    font-family: var(--font);
     transition: all 0.2s ease;
 }
 
@@ -127,7 +136,7 @@ body {
 
 .menu-title, .right-container-title {
     text-align: center;
-    font-size: 1.1rem;
+    font-size: var(--size-text);
     color: var(--bila);
     margin: 0 0 20px 0;
     padding-bottom: 10px;
@@ -149,7 +158,7 @@ body {
     border: none;
     border-radius: 4px;
     color: var(--cerna);
-    font-family: 'Comic Sans MS', cursive;
+    font-family: var(--font);
     box-sizing: border-box;
 }
 
@@ -163,7 +172,8 @@ body {
     border: none;
     border-radius: 2px;
     resize: vertical;
-    font-family: 'Comic Sans MS';
+    font-family: var(--font);
+    font-size: var(--size-text);
 }
 
 .menu-items button.active {
@@ -186,6 +196,7 @@ body {
     gap: 10px;
     margin-top: 10px;
     cursor: pointer;
+    font-size: var(--size-text);
 }
 
 /* 5. TLAČÍTKA */
@@ -196,7 +207,8 @@ body {
     border: 1px solid var(--svetla-zelena);
     border-radius: 4px;
     cursor: pointer;
-    font-family: 'Comic Sans MS';
+    font-family: var(--font);
+    font-size: var(--size-text);
     font-weight: bold;
     transition: 0.3s ease;
 }
@@ -213,6 +225,7 @@ body {
     padding: 8px 16px;
     border-radius: 8px;
     cursor: pointer;
+    font-size: var(--size-text);
     transition: all 0.3s ease;
 }
 
@@ -233,7 +246,8 @@ body {
     background-color: var(--hlavni-zelena);
     color: var(--bila);
     border: 1px solid var(--svetla-zelena);
-    padding: 8px 16px;
+    font-family: var(--font);
+    font-size: var(--size-text);
     cursor: pointer;
     transition: background 0.3s;
 }
@@ -246,12 +260,9 @@ body {
 .submenu-container {
     display: none;
     background: rgba(0, 0, 0, 0.15);
-    margin: 0;
     margin-top: -15px;
     padding: 5px 0;
     border-left: 3px solid var(--bila);
-    border-right: 2px;
-    border-bottom: 2px;
     width: 97%; 
     position: relative;
     left: 3px;
@@ -261,7 +272,7 @@ body {
 .submenu-category {
     padding: 10px 15px;
     color: var(--bila);
-    font-size: 0.75rem;
+    font-size: var(--size-maly-text);
     font-weight: bold;
     cursor: pointer;
     border-bottom: 1px solid var(--hlavni-zelena);
@@ -269,8 +280,8 @@ body {
 
 .submenu-item-link {
     padding: 6px 15px;
-    font-size: 0.8rem;
-    color: white;
+    font-size: var(--size-maly-text);
+    color: var(--bila);
     cursor: pointer;
     transition: 0.2s;
     margin-left: 14px;
@@ -317,7 +328,7 @@ body {
 
 .test-matrix {
     border-collapse: collapse;
-    font-family: monospace;
+    font-family: var(--font-mono);
     margin: 10px auto;
 }
 
@@ -328,7 +339,7 @@ body {
     text-align: center;
     vertical-align: middle;
     background-color: var(--bila);
-    color: #000;
+    color: var(--cerna);
 }
 
 .vysledky-tabulka {
@@ -337,6 +348,7 @@ body {
     margin-top: 20px;
     background: var(--cerna);
     color: var(--bila);
+    font-size: var(--size-text);
 }
 .vysledky-tabulka th, .vysledky-tabulka td {
     padding: 12px;
@@ -345,7 +357,7 @@ body {
 }
 .vysledky-tabulka th {
     background: var(--seda);
-    color: var(--svetla-zelena);
+    color: var(--bila); /* Upraveno pro lepší čitelnost na šedé */
 }
 
 .add-text-container {
@@ -371,6 +383,7 @@ body {
 .add-text-label {
     display: block;
     margin-bottom: 5px;
+    font-size: var(--size-text);
 }
 
 .add-text-input {
@@ -379,6 +392,8 @@ body {
     border-radius: 5px;
     border: none;
     color: var(--cerna);
+    font-family: var(--font);
+    font-size: var(--size-text);
 }
 
 .add-text-select {
@@ -387,17 +402,20 @@ body {
     color: var(--cerna);
     border: none;
     cursor: pointer;
+    font-family: var(--font);
+    font-size: var(--size-text);
 }
 
 .table-text-mono {
-    font-family: monospace;
+    font-family: var(--font-mono);
     letter-spacing: 1px;
-    font-size: 1.1rem;
+    font-size: var(--size-text);
 }
 
 .table-type-hint {
     font-style: italic;
     opacity: 0.8;
+    font-size: var(--size-maly-text);
 }
 
 .alert {
@@ -407,4 +425,5 @@ body {
     color: var(--bila);
     border: 1px solid var(--svetla-zelena);
     margin-bottom: 20px;
+    font-size: var(--size-text);
 }
