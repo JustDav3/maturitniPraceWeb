@@ -161,6 +161,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const secTest = document.getElementById('section-test');
     const secVysledky = document.getElementById('section-vysledky');
 
+    const filterSelect = document.getElementById('filter-uzivatel');
+    const tableBody = document.querySelector('.vysledky-table tbody');
+
     const vsechnySekce = [secUvod, secSifry, secUzly, secTest, secVysledky];
 
     const djangoData = document.getElementById('django-data');
@@ -346,23 +349,23 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     // --- DYNAMICKÉ FILTROVÁNÍ UŽIVATELŮ ---
-    const filterSelect = document.getElementById('filter-uzivatel');
-    const tableBody = document.querySelector('.vysledky-table tbody');
-
     if (filterSelect && tableBody) {
         const rows = tableBody.getElementsByTagName('tr');
         const names = new Set();
 
+        // 1. Projdeme tabulku a sesbíráme jména z DRUHÉHO sloupce (index 1)
         for (let i = 0; i < rows.length; i++) {
-            const nameCell = rows[i].getElementsByTagName('td')[0];
-            if (nameCell) {
-                const name = nameCell.textContent.trim();
-                if (name && name !== "Zatím žádné výsledky.") {
+            const cells = rows[i].getElementsByTagName('td');
+            // Kontrola, zda má řádek dostatek buněk (vedoucí jich má víc)
+            if (cells.length > 1) {
+                const name = cells[1].textContent.trim(); // Index 1 je druhý sloupec
+                if (name && name !== "" && name !== "Zatím žádné výsledky.") {
                     names.add(name);
                 }
             }
         }
 
+        // 2. Naplníme Select box unikátními jmény
         Array.from(names).sort().forEach(name => {
             const option = document.createElement('option');
             option.value = name;
@@ -370,18 +373,19 @@ document.addEventListener('DOMContentLoaded', function () {
             filterSelect.appendChild(option);
         });
 
+        // 3. Akce při změně výběru
         filterSelect.addEventListener('change', function() {
             const selectedName = this.value;
             
             for (let i = 0; i < rows.length; i++) {
-                const nameCell = rows[i].getElementsByTagName('td')[0];
-                if (nameCell) {
-                    const rowName = nameCell.textContent.trim();
+                const cells = rows[i].getElementsByTagName('td');
+                if (cells.length > 1) {
+                    const rowName = cells[1].textContent.trim();
                     
                     if (selectedName === "all" || rowName === selectedName) {
-                        rows[i].style.display = "";
+                        rows[i].style.display = ""; // Zobrazit řádek
                     } else {
-                        rows[i].style.display = "none";
+                        rows[i].style.display = "none"; // Skrýt řádek
                     }
                 }
             }
