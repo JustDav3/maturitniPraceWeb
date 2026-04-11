@@ -221,8 +221,9 @@ body {
     padding: 0 25px;
     background-color: #4a7c59;
     color: white;
-    border: none;
-    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid #b5e48c;
+    padding: 8px 16px;
     cursor: pointer;
     transition: background 0.3s;
 }
