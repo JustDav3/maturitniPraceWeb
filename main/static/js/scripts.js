@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // DYNAMICKÉ FILTROVÁNÍ UŽIVATELŮ
     if (userFilter) {
         userFilter.addEventListener('change', function() {
-            const selectedUser = this.value.toLowerCase();
+            const selectedUser = this.value;
             const rows = document.querySelectorAll('.vysledky-table tbody tr');
 
             console.log("Filtruji pro uživatele:", selectedUser);
@@ -359,7 +359,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const usernameCell = row.querySelector('.cell-username');
                 
                 if (usernameCell) {
-                    const rowUsername = usernameCell.textContent.trim().toLowerCase();
+                    const rowUsername = usernameCell.textContent.trim();
 
                     if (selectedUser === 'all' || rowUsername === selectedUser) {
                         row.style.display = "";
