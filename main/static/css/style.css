@@ -1,11 +1,20 @@
 /* 1. GLOBÁLNÍ NASTAVENÍ */
+:root {
+    --hlavni-zelena: #093F1C;
+    --svetla-zelena: #016429;
+    --cerna: #030D05;
+    --bila: #F1EDD0;
+    --seda: #3C3D36;
+    --red: #64181A;
+}
+
 body {
     display: flex;
     margin: 0;
     padding: 0;
     padding-top: 80px;
-    color: white;
-    background: linear-gradient(180deg, #707571 0%, #8c8c89 100%);
+    color: var(--bila);
+    background: linear-gradient(180deg, var(--bila) 0%, var(--seda) 100%);
     background-attachment: fixed;
     font-family: 'Comic Sans MS', cursive;
 }
@@ -14,8 +23,7 @@ body {
 .main-header {
     width: 100%;
     height: 80px;
-    background: linear-gradient(180deg, #2d4526 0%, #1a2a16 100%);
-    border-bottom: 2px solid #b5e48c;
+    border-bottom: 2px solid var(--svetla-zelena);
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     position: fixed;
     top: 0;
@@ -45,7 +53,7 @@ body {
 .web-title {
     margin: 0;
     font-size: 1.5rem;
-    color: #ffffff;
+    color: var(--bila);
 }
 
 .container {
@@ -62,7 +70,7 @@ body {
     width: 100%;
     min-height: 450px;
     padding: 25px 20px;
-    background: linear-gradient(180deg, #5b8a4d 0%, #2d4526 100%);
+    background: linear-gradient(180deg, var(--hlavni-zelena) 0%, var(--svetla-zelena) 100%);
     box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
     border-radius: 4px;
     overflow: hidden;
@@ -84,7 +92,7 @@ body {
     width: 100%;
     background: rgba(255, 255, 255, 0.05);
     border: none;
-    color: white;
+    color: var(--bila);
     padding: 12px 15px;
     border-radius: 6px;
     cursor: pointer;
@@ -102,7 +110,7 @@ body {
     top: 95px;
     width: 240px;
     height: calc(100vh - 110px);
-    background: linear-gradient(180deg, #5b8a4d 0%, #2d4526 100%);
+    background: linear-gradient(180deg, var(--hlavni-zelena) 0%, var(--svetla-zelena) 100%);
     box-shadow: inset 0 0 30px rgba(0,0,0,0.5), 5px 5px 15px rgba(0,0,0,0.3);
     border-radius: 8px;
     padding: 20px 10px;
@@ -117,7 +125,7 @@ body {
 .menu-title, .right-container-title {
     text-align: center;
     font-size: 1.1rem;
-    color: #ffffff;
+    color: var(--bila);
     margin: 0 0 20px 0;
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(181, 228, 140, 0.2);
@@ -137,7 +145,7 @@ body {
     background: rgba(255, 255, 255, 0.9);
     border: none;
     border-radius: 4px;
-    color: #333;
+    color: var(--cerna);
     font-family: 'Comic Sans MS', cursive;
     box-sizing: border-box;
 }
@@ -148,24 +156,24 @@ body {
     padding: 10px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, 0.9);
-    color: #333;
+    color: var(--cerna);
     border: none;
     border-radius: 2px;
-    resize: vertical; /* Povolí pouze svislé zvětšování textarey */
+    resize: vertical;
     font-family: 'Comic Sans MS';
 }
 
 .menu-items button.active {
-    background-color: #b5e48c !important; /* Ta svěží mechová */
-    color: #1a2a16 !important;
+    background-color: #b5e48c !important;
+    color: var(--hlavni-zelena);
     font-weight: bold;
-    transform: scale(0.98); /* Efekt promáčknutí */
+    transform: scale(0.98);
     box-shadow: inset 0 4px 8px rgba(0,0,0,0.3);
 }
 
 .small-select {
     display: block;
-    width: 160px !important; /* Fixní šířka pro menší výběry u šifer */
+    width: 160px !important;
     margin: 5px 0;
 }
 
@@ -180,9 +188,9 @@ body {
 /* 5. TLAČÍTKA */
 .btn-login, .btn-submit {
     padding: 10px 20px;
-    background-color: #1a2a16;
-    color: white;
-    border: 1px solid #4a6d3f;
+    background-color: var(--hlavni-zelena);
+    color: var(--bila);
+    border: 1px solid var(--svetla-zelena);
     border-radius: 4px;
     cursor: pointer;
     font-family: 'Comic Sans MS';
@@ -191,14 +199,14 @@ body {
 }
 
 .btn-submit { display: block; padding: 12px 54px; }
-.btn-login:hover, .btn-submit:hover { background-color: #2d4526; }
+.btn-login:hover, .btn-submit:hover { background-color: var(--svetla-zelena); }
 
 .btn-uzel-text {
     display: inline-block;
     margin: 5px;
     background-color: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    border: 1px solid #b5e48c;
+    color: var(--bila);
+    border: 1px solid var(--svetla-zelena);
     padding: 8px 16px;
     border-radius: 8px;
     cursor: pointer;
@@ -207,7 +215,7 @@ body {
 
 .btn-uzel-text:hover {
     background-color: rgba(181, 228, 140, 0.4);
-    color: #1a2a16;
+    color: var(--hlavni-zelena);
     transform: scale(1.05);
 }
 
@@ -219,16 +227,16 @@ body {
     align-items: center;
     justify-content: center;
     padding: 0 25px;
-    background-color: #1a2a16;
-    color: white;
-    border: 1px solid #4a6d3f;
+    background-color: var(--hlavni-zelena);
+    color: var(--bila);
+    border: 1px solid var(--svetla-zelena);
     padding: 8px 16px;
     cursor: pointer;
     transition: background 0.3s;
 }
 
 .btn-add-text:hover {
-    background-color: #5a8c69;
+    background-color: var(--svetla-zelena);
 }
 
 /* 6. SUBMENU PRO UZLY */
@@ -238,9 +246,9 @@ body {
     margin: 0;
     margin-top: -15px;
     padding: 5px 0;
-    border-left: 3px solid #b5e48c;
-    border-right: 1px solid rgba(181, 228, 140, 0.2);
-    border-bottom: 1px solid rgba(181, 228, 140, 0.2);
+    border-left: 3px solid var(--hlavni-zelena);
+    border-right: 1px solid var(--hlavni-zelena);
+    border-bottom: 1px solid var(--hlavni-zelena);
     width: 97%; 
     position: relative;
     left: 3px;
@@ -249,11 +257,11 @@ body {
 
 .submenu-category {
     padding: 10px 15px;
-    color: #d4f0c7;
+    color: var(--bila);
     font-size: 0.75rem;
     font-weight: bold;
     cursor: pointer;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid var(--hlavni-zelena);
 }
 
 .submenu-item-link {
@@ -265,14 +273,14 @@ body {
     margin-left: 14px;
 }
 
-.submenu-item-link:hover { background: rgba(181, 228, 140, 0.2); }
+.submenu-item-link:hover { background: var(--svetla-zelena); }
 
-/* 7. DETAIL UZLU (VIDEO A OBRÁZKY) */
+/* 7. DETAIL UZLU */
 .uzly-video-div {
     position: relative;
-    width: 80%; /* Video zabere 80% panelu */
+    width: 80%;
     margin: 20px auto;
-    padding-bottom: 45%; /* Poměr stran 16:9 přepočtený na šířku */
+    padding-bottom: 45%;
     height: 0;
 }
 
@@ -295,7 +303,7 @@ body {
 }
 
 .uzel-img-div {
-    max-width: 160px; /* Kompaktní velikost obrázků */
+    max-width: 160px;
     height: auto;
     border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -311,12 +319,12 @@ body {
 }
 
 .test-matrix td {
-    border: 1px solid #333;
+    border: 1px solid var(--seda);
     width: 30px;
     height: 30px;
     text-align: center;
     vertical-align: middle;
-    background-color: #fff;
+    background-color: var(--bila);
     color: #000;
 }
 
@@ -325,7 +333,7 @@ body {
     border-collapse: collapse;
     margin-top: 20px;
     background: rgba(0, 0, 0, 0.3);
-    color: white;
+    color: var(--bila);
 }
 .vysledky-tabulka th, .vysledky-tabulka td {
     padding: 12px;
@@ -334,7 +342,7 @@ body {
 }
 .vysledky-tabulka th {
     background: rgba(45, 69, 38, 0.8);
-    color: #b5e48c;
+    color: var(--svetla-zelena);
 }
 
 .add-text-container {
@@ -367,13 +375,13 @@ body {
     padding: 10px;
     border-radius: 5px;
     border: none;
-    color: black;
+    color: var(--cerna);
 }
 
 .add-text-select {
     padding: 10px;
     border-radius: 5px;
-    color: black;
+    color: var(--cerna);
     border: none;
     cursor: pointer;
 }
@@ -392,8 +400,8 @@ body {
 .alert {
     padding: 12px;
     border-radius: 8px;
-    background-color: rgba(255, 0, 23, 0.35);
-    color: #ffeeba;
-    border: 1px solid #ffeeba;
+    background-color: var(--red);
+    color: var(--bila);
+    border: 1px solid var(--svetla-zelena);
     margin-bottom: 20px;
 }
