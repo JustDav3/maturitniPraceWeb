@@ -356,10 +356,11 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("Filtruji pro uživatele:", selectedUser);
             
             rows.forEach(row => {
-                const usernameCell = row[1];
+                const usernameCell = row.cells[1];
                 
                 if (usernameCell) {
                     const rowUsername = usernameCell.textContent.trim();
+                    console.log("Filtruji pro uživatele:", rowUsername);
 
                     if (selectedUser === 'all' || rowUsername === selectedUser) {
                         row.style.display = "";
