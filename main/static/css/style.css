@@ -211,8 +211,9 @@ body {
     transform: scale(1.05);
 }
 
-.btn-admin-save {
-    margin: 0 !important;
+.btn-add-text {
+    margin: 0;
+    margin-left: 12px;
     height: 40px;
     display: flex;
     align-items: center;
@@ -226,7 +227,7 @@ body {
     transition: background 0.3s;
 }
 
-.btn-admin-save:hover {
+.btn-add-text:hover {
     background-color: #5a8c69;
 }
 
