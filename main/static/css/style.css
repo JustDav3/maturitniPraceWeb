@@ -23,6 +23,7 @@ body {
 .main-header {
     width: 100%;
     height: 80px;
+    background-color: linear-gradient(180deg, var(--hlavni-zelena) 0%, var(--svetla-zelena) 100%);
     border-bottom: 2px solid var(--svetla-zelena);
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     position: fixed;
@@ -164,8 +165,8 @@ body {
 }
 
 .menu-items button.active {
-    background-color: #b5e48c !important;
-    color: var(--hlavni-zelena);
+    background-color: var(--svetla-zelena) !important;
+    color: var(--bila);
     font-weight: bold;
     transform: scale(0.98);
     box-shadow: inset 0 4px 8px rgba(0,0,0,0.3);
@@ -246,9 +247,9 @@ body {
     margin: 0;
     margin-top: -15px;
     padding: 5px 0;
-    border-left: 3px solid var(--hlavni-zelena);
-    border-right: 1px solid var(--hlavni-zelena);
-    border-bottom: 1px solid var(--hlavni-zelena);
+    border-left: 3px solid var(--bila);
+    border-right: 2px;
+    border-bottom: 2px;
     width: 97%; 
     position: relative;
     left: 3px;
