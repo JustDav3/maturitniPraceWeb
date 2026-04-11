@@ -335,16 +335,16 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background: rgba(0, 0, 0, 0.3);
+    background: var(--cerna);
     color: var(--bila);
 }
 .vysledky-tabulka th, .vysledky-tabulka td {
     padding: 12px;
-    border: 1px solid rgba(181, 228, 140, 0.3);
+    border: 1px solid var(--bila);
     text-align: left;
 }
 .vysledky-tabulka th {
-    background: rgba(45, 69, 38, 0.8);
+    background: var(--seda);
     color: var(--svetla-zelena);
 }
 
