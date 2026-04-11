@@ -345,6 +345,49 @@ document.addEventListener('DOMContentLoaded', function () {
         detail.scrollIntoView({ behavior: 'smooth' });
     };
 
+    // --- DYNAMICKÉ FILTROVÁNÍ UŽIVATELŮ ---
+    const filterSelect = document.getElementById('filter-uzivatel');
+    const tableBody = document.querySelector('.vysledky-table tbody');
+
+    if (filterSelect && tableBody) {
+        const rows = tableBody.getElementsByTagName('tr');
+        const names = new Set();
+
+        for (let i = 0; i < rows.length; i++) {
+            const nameCell = rows[i].getElementsByTagName('td')[0];
+            if (nameCell) {
+                const name = nameCell.textContent.trim();
+                if (name && name !== "Zatím žádné výsledky.") {
+                    names.add(name);
+                }
+            }
+        }
+
+        Array.from(names).sort().forEach(name => {
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            filterSelect.appendChild(option);
+        });
+
+        filterSelect.addEventListener('change', function() {
+            const selectedName = this.value;
+            
+            for (let i = 0; i < rows.length; i++) {
+                const nameCell = rows[i].getElementsByTagName('td')[0];
+                if (nameCell) {
+                    const rowName = nameCell.textContent.trim();
+                    
+                    if (selectedName === "all" || rowName === selectedName) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+        });
+    }
+
     async function generujNahodnyTest() {
         try {
             const response = await fetch('/generuj-zadani/');
