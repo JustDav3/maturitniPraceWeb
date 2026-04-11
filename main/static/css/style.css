@@ -211,6 +211,25 @@ body {
     transform: scale(1.05);
 }
 
+.btn-admin-save {
+    margin: 0 !important;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 25px;
+    background-color: #4a7c59;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-admin-save:hover {
+    background-color: #5a8c69;
+}
+
 /* 6. SUBMENU PRO UZLY */
 .submenu-container {
     display: none;
