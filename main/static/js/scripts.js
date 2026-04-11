@@ -353,6 +353,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectedUser = this.value.toLowerCase();
             const rows = document.querySelectorAll('.vysledky-table tbody tr');
 
+            console.log("Filtruji pro uživatele:", selectedUser);
+            
             rows.forEach(row => {
                 const usernameCell = row.querySelector('.cell-username');
                 
