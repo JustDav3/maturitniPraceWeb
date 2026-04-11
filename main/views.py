@@ -159,7 +159,6 @@ def home(request):
             ) | VysledekTestu.objects.filter(uzivatel=request.user.username)
             vysledky = vysledky.distinct().order_by('-datum')
             
-            # V seznamu pro filtr uvidí jen děti
             seznam_clenu = User.objects.filter(groups__name='Skupina_Děti').order_by('username')
         else:
             vysledky = VysledekTestu.objects.filter(uzivatel=request.user.username).order_by('-datum')
@@ -169,7 +168,7 @@ def home(request):
         'seznam_clenu': seznam_clenu,
         'is_vedouci': is_vedouci_nebo_admin,
     }
-    return render(request, '/index.html', context)
+    return render(request, 'main/index.html', context)
 
 @login_required
 def ulozit_vysledek_testu(request):
