@@ -360,7 +360,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                 if (usernameCell) {
                     const rowUsername = usernameCell.textContent.trim();
-                    console.log("Filtruji pro uživatele:", rowUsername);
+                    console.log("Filtruji:", rowUsername);
 
                     if (selectedUser === 'all' || rowUsername === selectedUser) {
                         row.style.display = "";
