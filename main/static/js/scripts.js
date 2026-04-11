@@ -373,10 +373,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             htmlObsah += '<tr>';
                             const znaky = radek.split('');
                             znaky.forEach(znak => {
-                                if (znak !== " ") {
-                                    const obsah = (znak === ' _') ? '&nbsp;' : znak;
-                                    htmlObsah += `<td>${obsah}</td>`; 
-                                }
+                                const obsah = (znak === ' _') ? '&nbsp;' : znak;
+                                htmlObsah += `<td>${obsah}</td>`; 
                             });
                             htmlObsah += '</tr>';
                         }
@@ -445,7 +443,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (result.status === 'success') {
                     location.reload();
                 } else {
-                    alert("Chyba: " + result.message + " data: " + JSON.stringify(data));
+                    alert("Chyba: " + result.message);
                 }
             } catch (error) {
                 console.error("Chyba spojení:", error);

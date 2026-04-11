@@ -250,7 +250,7 @@ def generuj_zadani_api(request):
             radek_znaku = ""
             for s in range(rozmer):
                 znak = matice[r][s]
-                radek_znaku += znak if znak and znak.strip() else " _"
+                radek_znaku += znak if znak and znak.strip() else "_"
             radky_text.append(radek_znaku)
         
         zadani = ";".join(radky_text)
