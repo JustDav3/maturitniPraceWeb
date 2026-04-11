@@ -202,11 +202,11 @@
                         </div>
                     </div>
                 {% endif %}
+                </section>
 
                 {% if user.is_authenticated %}
                 <section id="section-vysledky" class="content-section" style="display: none;">
                     <h2 class="section-title">Historie výsledků</h2>
-
                     {% if is_vedouci %}
                     <div class="filter-container" style="margin-bottom: 20px; text-align: center;">
                         <label for="filter-uzivatel">Filtr podle:</label>
@@ -217,55 +217,53 @@
                             {% endfor %}
                         </select>
                     </div>
-                </section>
-                {% endif %}
-                    
-                    <div class="table-container">
-                        <table class="vysledky-tabulka">
-                            <thead>
+                    {% endif %}
+                        <div class="table-container">
+                            <table class="vysledky-tabulka">
+                                <thead>
+                                    <tr>
+                                        <th>Datum a čas</th>
+                                        {% if is_vedouci %}<th>Uživatel</th>{% endif %}
+                                        <th>Uzel</th>
+                                        <th>Uvázal</th>
+                                        <th>Šifra zadání</th>
+                                        <th>Typ šifry</th>
+                                        <th>Rozšifroval</th> 
+                                        <th>Body</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for v in vysledky %}
                                 <tr>
-                                    <th>Datum a čas</th>
-                                    {% if is_vedouci %}<th>Uživatel</th>{% endif %}
-                                    <th>Uzel</th>
-                                    <th>Uvázal</th>
-                                    <th>Šifra zadání</th>
-                                    <th>Typ šifry</th>
-                                    <th>Rozšifroval</th> 
-                                    <th>Body</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {% for v in vysledky %}
-                            <tr>
-                                <td>{{ v.datum|date:"d.m.Y H:i" }}</td>
-                                {% if is_vedouci %}<td>{{ v.uzivatel.username }}</td>{% endif %}
-                                
-                                <td>{{ v.uzel_nazev }}</td>
-                                <td>{% if v.uzel_hotovo %}✅{% else %}❌{% endif %}</td>
-                                
-                                <td style="font-family: monospace; font-size: 0.85rem;">{{ v.sifra_zadani }}</td>
-                                
-                                <td>{{ v.sifra_typ }}</td>
-                                
-                                <td>
-                                    <span style="font-style: italic; margin-right: 5px;">
-                                        {{ v.sifra_odpoved_uzivatele}}
-                                    </span>
-                                    {% if v.sifra_spravne %}
-                                        <span style="color: #b5e48c;">✅</span>
-                                    {% else %}
-                                        <span style="color: #ff8a8a;">❌</span> 
-                                    {% endif %}
-                                </td>
+                                    <td>{{ v.datum|date:"d.m.Y H:i" }}</td>
+                                    {% if is_vedouci %}<td>{{ v.uzivatel.username }}</td>{% endif %}
+                                    
+                                    <td>{{ v.uzel_nazev }}</td>
+                                    <td>{% if v.uzel_hotovo %}✅{% else %}❌{% endif %}</td>
+                                    
+                                    <td style="font-family: monospace; font-size: 0.85rem;">{{ v.sifra_zadani }}</td>
+                                    
+                                    <td>{{ v.sifra_typ }}</td>
+                                    
+                                    <td>
+                                        <span style="font-style: italic; margin-right: 5px;">
+                                            {{ v.sifra_odpoved_uzivatele}}
+                                        </span>
+                                        {% if v.sifra_spravne %}
+                                            <span style="color: #b5e48c;">✅</span>
+                                        {% else %}
+                                            <span style="color: #ff8a8a;">❌</span> 
+                                        {% endif %}
+                                    </td>
 
-                                <td>{{ v.body_celkem }}</td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="{% if is_vedouci %}8{% else %}7{% endif %}">Zatím žádné výsledky.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
+                                    <td>{{ v.body_celkem }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="{% if is_vedouci %}8{% else %}7{% endif %}">Zatím žádné výsledky.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
                         </table>
                     </div>
                 </section>
@@ -313,7 +311,7 @@
                     </div>
                 </section>
                 {% endif %}
-            </div>
+                </div>
         </main>
 
         <aside class="right-container">
