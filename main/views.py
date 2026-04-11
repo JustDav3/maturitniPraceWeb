@@ -52,12 +52,14 @@ def home(request):
             context['seznam_clenu'] = User.objects.all().order_by('username')
         elif is_staff:
             context['vysledky'] = VysledekTestu.objects.filter(
-                uzivatel__in=User.objects.filter(groups__name='deti')
+                uzivatel__in=User.objects.filter(groups__name='Skupina_Děti')
             ) | VysledekTestu.objects.filter(uzivatel=request.user)
             context['vysledky'] = context['vysledky'].distinct().order_by('-datum')
-            context['seznam_clenu'] = User.objects.filter(groups__name='deti').order_by('username')
+            context['seznam_clenu'] = User.objects.filter(groups__name='Skupina_Děti').order_by('username')
         else:
             context['vysledky'] = VysledekTestu.objects.filter(uzivatel=request.user).order_by('-datum')
+
+
 
     if request.method == "POST":
         project = request.POST.get("projekt")
