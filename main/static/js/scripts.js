@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (userFilter) {
         userFilter.addEventListener('change', function() {
             const selectedUser = this.value;
-            const rows = document.querySelectorAll('.vysledky-table tbody tr');
+            const rows = document.querySelectorAll('.vysledky-tabulka tbody tr');
 
             console.log("Filtruji pro uživatele:", selectedUser);
             
