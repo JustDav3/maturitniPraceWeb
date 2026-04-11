@@ -284,15 +284,6 @@
                                 <input type="text" id="nove_slovo" name="nove_slovo" required 
                                     placeholder="např. TAJNAZPRAVA" class="add-text-input">
                             </div>
-
-                            <div class="add-text-group">
-                                <label for="typ_sifry" class="add-text-label">Určeno pro:</label>
-                                <select name="typ_sifry" id="typ_sifry" class="add-text-select">
-                                    <option value="sifra">Klasická šifra</option>
-                                    <option value="matice">Matice (Spirála/Had)</option>
-                                </select>
-                            </div>
-
                             <button type="submit" class="btn-sifrovat" style="margin: 0; height: 40px;">Uložit text</button>
                         </form>
                     </div>
@@ -303,7 +294,6 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Text</th>
-                                    <th>Typ použití</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -311,7 +301,6 @@
                                 <tr>
                                     <td>#{{ slovo.TextId }}</td>
                                     <td class="table-text-mono">{{ slovo.text }}</td>
-                                    <td><span class="table-type-hint">{{ slovo.typ_sifry }}</span></td>
                                 </tr>
                                 {% empty %}
                                 <tr>
