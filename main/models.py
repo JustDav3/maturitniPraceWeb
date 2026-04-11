@@ -26,3 +26,18 @@ class VysledekTestu(models.Model):
     class Meta:
         verbose_name = "Výsledek testu"
         verbose_name_plural = "Výsledky testů"
+
+class TabulkaSlov(models.Model):
+    TextId = models.AutoField(primary_key=True)
+    
+    text = models.CharField(
+        max_length=255, 
+        verbose_name="Text pro šifrování"
+    )
+
+    def __str__(self):
+        return f"{self.TextId}: {self.text}"
+
+    class Meta:
+        verbose_name = "Tabulka slov"
+        verbose_name_plural = "Tabulka slov"

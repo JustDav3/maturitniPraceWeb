@@ -351,7 +351,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (userFilter) {
         userFilter.addEventListener('change', function() {
             const selectedUser = this.value;
-            const rows = document.querySelectorAll('.vysledky-tabulka tbody tr');
+            const table = document.getElementById('tabulka-vysledku');
+            if (!table) {
+                console.error("Tabulka s ID 'tabulka-vysledku' nebyla nalezena!");
+                return;
+            }
+
+            const rows = table.querySelectorAll('tbody tr');
 
             console.log("Filtruji pro uživatele:", selectedUser);
             console.log("Počet nalezených řádků:", rows.length);

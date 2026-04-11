@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from .models import VysledekTestu
+from .models import VysledekTestu, TabulkaSlov
 from .morse import logic as morse_logic, constants as morse_consts
 from .number_code import logic as number_logic, constants as number_consts
 from .matrix import logic as matrix_logic
@@ -62,6 +62,15 @@ def home(request):
 
 
     if request.method == "POST":
+        akce = request.POST.get("akce")
+        
+        # LOGIKA PRO TVOJI NOVOU SEKCI NASTAVENÍ
+        if akce == "pridat_slovo" and request.user.is_staff:
+            novy_text = request.POST.get("nove_slovo", "").strip().upper()
+            if novy_text:
+                TabulkaSlov.objects.create(text=novy_text)
+                return redirect('home')
+
         project = request.POST.get("projekt")
         user_input = request.POST.get("vstup", "")
         action = request.POST.get("akce")
@@ -172,6 +181,9 @@ def home(request):
             radky_prepis = [f"| {' '.join(radek)} |" for radek in matrix_clean]
             context['vysledek_prepis_matrix'] = "\n".join(radky_prepis)
 
+    if request.user.is_authenticated:
+        context['is_vedouci'] = request.user.is_superuser or request.user.is_staff
+        context['seznam_slov'] = TabulkaSlov.objects.all().order_by('-TextId')
     
     return render(request, 'main/index.html', context)
 
@@ -215,8 +227,15 @@ def ulozit_vysledek_testu(request):
 
 @login_required
 def generuj_zadani_api(request):
-    SLOVA = ["LES", "STROM", "VODA", "OHEŇ", "UZEL", "MAPA", "STAN", "POTOK", "CESTA"]
-    MATICE_VETY = ["ROZRAZIL", "TABORAK", "VYPRAVA"]
+    db_slova = list(TabulkaSlov.objects.values_list('text', flat=True))
+
+    ZALOHA_SLOVA = ["LES", "STROM", "VODA", "UZEL"]
+
+    if db_slova:
+        SLOVA = db_slova
+    else:
+        SLOVA = ZALOHA_SLOVA
+
     
     typy = ['morse', 'number_code', 'binary', 'spirala', 'snek', 'had']
     vybrany_typ = random.choice(typy)
@@ -255,7 +274,7 @@ def generuj_zadani_api(request):
 
     # 4. MATICE - Spirála, Šnek, Had
     elif vybrany_typ in ['spirala', 'snek', 'had']:
-        spravne = random.choice(MATICE_VETY)
+        spravne = random.choice(SLOVA)
         map_typ = {"spirala": "1", "snek": "2", "had": "3"}
         
         matice, rozmer = matrix_logic.vytvor_matice_sifry(spravne, map_typ[vybrany_typ], "1")        

@@ -317,6 +317,58 @@ body {
     color: #b5e48c;
 }
 
+.add-text-container {
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.add-text-form {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.add-text-group-main {
+    flex: 1;
+    min-width: 200px;
+}
+
+.add-text-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.add-text-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    color: black;
+}
+
+.add-text-select {
+    padding: 10px;
+    border-radius: 5px;
+    color: black;
+    border: none;
+    cursor: pointer;
+}
+
+.table-text-mono {
+    font-family: monospace;
+    letter-spacing: 1px;
+    font-size: 1.1rem;
+}
+
+.table-type-hint {
+    font-style: italic;
+    opacity: 0.8;
+}
+
 .alert {
     padding: 12px;
     border-radius: 8px;

@@ -48,7 +48,7 @@
                     <p>Vítej v aplikaci pro naučení uzlů a šifer která byla myšlena pro oddíl TK Rozrazil. Vytvoříl ji David Dvořák na maturitní práci. Některé věci ti ještě nebudou fungovat, stále na tom pracuji. Vyber sekci z menu pro pokračování.</p>
                 </div>
 
-                <div id="section-sifry" style="display: none;">
+                <section id="section-sifry" style="display: none;">
                     {% if messages %}
                         <div class="messages-container">
                             {% for message in messages %}
@@ -158,10 +158,10 @@
                         {% endif %}
                     </div>
                     {% endif %}
-                </div>
+                </section>
 
 
-                <div id="section-uzly" style="display: none;">
+                <section id="section-uzly" style="display: none;">
                     <h2>Uzlů</h2>
                     <div id="uzel-detail" style="display: none; margin-top: 20px;">
                         <h3 id="uzel-nazev" style="color: #b5e48c; border-bottom: 1px solid rgba(181, 228, 140, 0.3); padding-bottom: 10px;"></h3>
@@ -172,10 +172,10 @@
 
                         <div id="uzel-obrazky" style="margin-top: 20px; text-align: left;"></div>
                     </div>
-                </div>
+                </section>
 
                 {% if user.is_authenticated %}
-                <div id="section-test" style="display: none;">
+                <section id="section-test" style="display: none;">
                     <h2>Zkouška dovedností</h2>
                     <div class="test-container">
                         <div class="test-card">
@@ -200,7 +200,6 @@
                             <button type="button" id="btn-odeslat-test" class="btn-submit">Uložit výsledek</button>
                         </div>
                     </div>
-                </div>
                 {% endif %}
 
                 {% if user.is_authenticated %}
@@ -217,7 +216,8 @@
                             {% endfor %}
                         </select>
                     </div>
-                    {% endif %}
+                </section>
+                {% endif %}
                     
                     <div class="table-container">
                         <table class="vysledky-tabulka">
@@ -265,6 +265,60 @@
                             </tr>
                             {% endfor %}
                         </tbody>
+                        </table>
+                    </div>
+                </section>
+                {% endif %}
+
+                {% if is_vedouci %}
+                <section id="section-nastaveni-testu" class="content-section">
+                    <h2 class="section-title">Nastavení testu</h2>
+
+                    <div class="add-text-container">
+                        <form method="POST" class="add-text-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="akce" value="pridat_slovo">
+                            
+                            <div class="add-text-group-main">
+                                <label for="nove_slovo" class="add-text-label">Přidej text:</label>
+                                <input type="text" id="nove_slovo" name="nove_slovo" required 
+                                    placeholder="např. TAJNAZPRAVA" class="add-text-input">
+                            </div>
+
+                            <div class="add-text-group">
+                                <label for="typ_sifry" class="add-text-label">Určeno pro:</label>
+                                <select name="typ_sifry" id="typ_sifry" class="add-text-select">
+                                    <option value="sifra">Klasická šifra</option>
+                                    <option value="matice">Matice (Spirála/Had)</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn-sifrovat" style="margin: 0; height: 40px;">Uložit text</button>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="vysledky-tabulka" id="tabulka-nastaveni">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Text</th>
+                                    <th>Typ použití</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for slovo in seznam_slov %}
+                                <tr>
+                                    <td>#{{ slovo.TextId }}</td>
+                                    <td class="table-text-mono">{{ slovo.text }}</td>
+                                    <td><span class="table-type-hint">{{ slovo.typ_sifry }}</span></td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="3">Databáze textů je prázdná.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
                         </table>
                     </div>
                 </section>
