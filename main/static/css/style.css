@@ -6,6 +6,7 @@
     --bila: #F1EDD0;
     --seda: #3C3D36;
     --red: #64181A;
+    --green: #00DE00;
     --hover: #b5e48c;
     --table-header: #402915;
     --table-data: #736055;
@@ -182,7 +183,7 @@ body {
 
 .btn-submit:hover, .btn-login:hover { background-color: var(--svetla-zelena); }
 
-/* 5. SPECIFICKÉ KOMPONENTY (UZLY, TESTY) */
+/* 5. SPECIFICKÉ KOMPONENTY */
 .uzel-title-accent {
     color: #b5e48c;
     border-bottom: 1px solid rgba(181, 228, 140, 0.3);
@@ -209,7 +210,7 @@ body {
 }
 
 .sifra-zadani {
-    font-size: 1.5rem;
+    font-size: var(--size-text);
     letter-spacing: 5px;
 }
 
@@ -231,16 +232,16 @@ body {
     border: 1px solid var(--bila);
 }
 
-.td-mono { font-family: monospace; font-size: 0.85rem; }
+.td-mono { font-family: var(--font-mono); font-size: var(--size-text); }
 .span-italic { font-style: italic; margin-right: 5px; }
-.status-ok { color: #b5e48c; }
-.status-fail { color: #ff8a8a; }
+.status-ok { color: var(--green); }
+.status-fail { color: var(--red); }
 
 .admin-filter-box { margin-bottom: 20px; text-align: center; }
 .filter-dropdown { padding: 5px; border-radius: 5px; }
 
 .btn-add-text-custom { margin: 0; height: 40px; }
 
-/* 7. POMOCNÉ TŘÍDY (JS OVLÁDÁNÍ) */
+/* 7. POMOCNÉ TŘÍDY */
 .hidden-data { display: none; }
 .js-section-hidden { display: none; }
