@@ -366,22 +366,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (data.zadani.includes(';')) {
                     const radky = data.zadani.split(';');
-                    let htmlObsah = ''; // Pomocná proměnná pro stavbu HTML
+                    let htmlObsah = '';
 
                     radky.forEach(radek => {
                         if (radek.trim().length > 0) {
                             htmlObsah += '<tr>';
                             const znaky = radek.split('');
                             znaky.forEach(znak => {
-                                // Podtržítko z views.py nahradíme mezerou
-                                const obsah = (znak === '_') ? '&nbsp;' : znak;
-                                htmlObsah += `<td>${obsah}</td>`;
+                                const obsah = (znak === ' _') ? '&nbsp;' : znak;
+                                htmlObsah += `<td>${obsah}</td>`; 
                             });
                             htmlObsah += '</tr>';
                         }
                     });
 
                     zadaniTabulka.innerHTML = htmlObsah;
+                    zadaniTabulka.style.display = 'table';
+                }
+                else {
+                    zadaniText.innerText = data.zadani;
+                    zadaniText.style.display = 'block';
                 }
 
                 if (sifraTyp) sifraTyp.innerText = data.typ;
