@@ -153,6 +153,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnTest = document.getElementById('btn-test');
     const btnOdeslat = document.getElementById('btn-odeslat-test');
     const btnVysledky = document.getElementById('btn-vysledky');
+    const btnNastaveniTestu = document.getElementById('btn-nastaveni-testu');
+
     const submenu = document.getElementById('uzly-submenu');
 
     const secUvod = document.getElementById('section-uvod');
@@ -160,10 +162,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const secUzly = document.getElementById('section-uzly');
     const secTest = document.getElementById('section-test');
     const secVysledky = document.getElementById('section-vysledky');
+    const secNastaveniTestu = document.getElementById('section-nastaveni-testu');
 
     const userFilter = document.getElementById('filter-uzivatel');
 
-    const vsechnySekce = [secUvod, secSifry, secUzly, secTest, secVysledky];
+    const vsechnySekce = [secUvod, secSifry, secUzly, secTest, secVysledky, secNastaveniTestu];
 
     const djangoData = document.getElementById('django-data');
 
@@ -502,6 +505,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btnOMne.onclick = () => prepniSekci('btn-o-mne', secUvod);
         btnSifry.onclick = () => prepniSekci('btn-sifry', secSifry);
         btnUzly.onclick = () => prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
+        btnNastaveniTestu.onclick = () => prepniSekci('btn-nastaveni-testu', secNastaveniTestu);
 
         if (btnTest) {
             btnTest.onclick = () => prepniSekci('btn-test', secTest, generujNahodnyTest);
