@@ -367,6 +367,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         row.style.display = "none";
                     }
+                } else {
+                    console.warn(`Řádek ${index} nemá buňku s indexem 1!`);
                 }
             });
         });
