@@ -6,9 +6,10 @@
     --bila: #F1EDD0;
     --seda: #3C3D36;
     --red: #64181A;
+    --hover: #b5e48c;
 
     /* TYPY PÍSMA*/
-    --font: 'Comic Sans MS', cursive; /* Opraveno na cursive pro správné renderování */
+    --font: 'Comic Sans MS', cursive;
     --font-mono: monospace;
 
     /* VELIKOSTI PÍSMA */
@@ -93,30 +94,6 @@ body {
 .col { flex: 1; }
 
 /* 3. BOČNÍ PANELY (MENU A LOGIN) */
-.menu-items {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    position: relative;
-}
-
-.menu-items button {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    border: none;
-    color: var(--bila);
-    padding: 12px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    text-align: left;
-    font-family: var(--font);
-    transition: all 0.2s ease;
-}
-
-.menu-items button:hover {
-    background: rgba(181, 228, 140, 0.2);
-}
-
 .menu-bar, .right-container {
     position: fixed;
     top: 95px;
@@ -144,152 +121,76 @@ body {
     text-transform: uppercase;
 }
 
-.login-form {
+.menu-items {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 8px;
+    gap: 12px;
 }
 
-.login-form input {
+.menu-items button {
     width: 100%;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.05);
     border: none;
-    border-radius: 4px;
-    color: var(--cerna);
+    color: var(--bila);
+    padding: 12px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
     font-family: var(--font);
-    box-sizing: border-box;
+    transition: all 0.2s ease;
 }
 
-/* 4. KOMPONENTY FORMULÁŘE */
+.menu-items button:hover {
+    background: rgba(181, 228, 140, 0.2);
+}
+
+.menu-items button.active {
+    background-color: var(--svetla-zelena) !important;
+    font-weight: bold;
+    box-shadow: inset 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* 4. FORMULÁŘE A ELEMENTY */
 .form-control, .form-select {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, 0.9);
     color: var(--cerna);
-    border: none;
     border-radius: 2px;
-    resize: vertical;
     font-family: var(--font);
     font-size: var(--size-text);
 }
 
-.menu-items button.active {
-    background-color: var(--svetla-zelena) !important;
-    color: var(--bila);
-    font-weight: bold;
-    transform: scale(0.98);
-    box-shadow: inset 0 4px 8px rgba(0,0,0,0.3);
-}
-
-.small-select {
-    display: block;
-    width: 160px !important;
-    margin: 5px 0;
-}
+.small-select { width: 172px !important; margin: 5px 0; display: block; }
 
 .form-check {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 10px;
     cursor: pointer;
-    font-size: var(--size-text);
 }
 
-/* 5. TLAČÍTKA */
-.btn-login, .btn-submit {
+.btn-submit, .btn-login, .btn-add-text {
     padding: 10px 20px;
     background-color: var(--hlavni-zelena);
     color: var(--bila);
     border: 1px solid var(--svetla-zelena);
     border-radius: 4px;
     cursor: pointer;
-    font-family: var(--font);
-    font-size: var(--size-text);
     font-weight: bold;
     transition: 0.3s ease;
 }
 
-.btn-submit { display: block; padding: 12px 54px; }
-.btn-login:hover, .btn-submit:hover { background-color: var(--svetla-zelena); }
+.btn-submit:hover, .btn-login:hover { background-color: var(--svetla-zelena); }
 
-.btn-uzel-text {
-    display: inline-block;
-    margin: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--bila);
-    border: 1px solid var(--svetla-zelena);
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: var(--size-text);
-    transition: all 0.3s ease;
+/* 5. SPECIFICKÉ KOMPONENTY (UZLY, TESTY) */
+.uzel-title-accent {
+    color: #b5e48c;
+    border-bottom: 1px solid rgba(181, 228, 140, 0.3);
+    padding-bottom: 10px;
 }
 
-.btn-uzel-text:hover {
-    background-color: rgba(181, 228, 140, 0.4);
-    color: var(--hlavni-zelena);
-    transform: scale(1.05);
-}
-
-.btn-add-text {
-    margin: 0;
-    margin-left: 12px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 25px;
-    background-color: var(--hlavni-zelena);
-    color: var(--bila);
-    border: 1px solid var(--svetla-zelena);
-    font-family: var(--font);
-    font-size: var(--size-text);
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.btn-add-text:hover {
-    background-color: var(--svetla-zelena);
-}
-
-/* 6. SUBMENU PRO UZLY */
-.submenu-container {
-    display: none;
-    background: rgba(0, 0, 0, 0.15);
-    margin-top: -15px;
-    padding: 5px 0;
-    border-left: 3px solid var(--bila);
-    width: 97%; 
-    position: relative;
-    left: 3px;
-    box-sizing: border-box;
-}
-
-.submenu-category {
-    padding: 10px 15px;
-    color: var(--bila);
-    font-size: var(--size-maly-text);
-    font-weight: bold;
-    cursor: pointer;
-    border-bottom: 1px solid var(--hlavni-zelena);
-}
-
-.submenu-item-link {
-    padding: 6px 15px;
-    font-size: var(--size-maly-text);
-    color: var(--bila);
-    cursor: pointer;
-    transition: 0.2s;
-    margin-left: 14px;
-}
-
-.submenu-item-link:hover { background: var(--svetla-zelena); }
-
-/* 7. DETAIL UZLU */
 .uzly-video-div {
     position: relative;
     width: 80%;
@@ -300,130 +201,48 @@ body {
 
 .uzly-video-div iframe {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
+    top: 0; left: 0; width: 100%; height: 100%;
     border-radius: 8px;
 }
 
-#uzel-obrazky {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
+.uzel-images-container {
     margin-top: 20px;
+    text-align: left;
 }
 
-.uzel-img-div {
-    max-width: 160px;
-    height: auto;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.2s;
+.sifra-zadani {
+    font-size: 1.5rem;
+    letter-spacing: 5px;
 }
 
-.uzel-img-div:hover { transform: scale(1.1); }
-
-.test-matrix {
-    border-collapse: collapse;
-    font-family: var(--font-mono);
-    margin: 10px auto;
+.test-uzel-highlight {
+    color: var(--bila);
+    font-weight: bold;
 }
 
-.test-matrix td {
-    border: 1px solid var(--seda);
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    vertical-align: middle;
-    background-color: var(--bila);
-    color: var(--cerna);
-}
-
+/* 6. TABULKY A FILTRY */
 .vysledky-tabulka {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
     background: var(--cerna);
-    color: var(--bila);
-    font-size: var(--size-text);
 }
+
 .vysledky-tabulka th, .vysledky-tabulka td {
     padding: 12px;
     border: 1px solid var(--bila);
-    text-align: left;
-}
-.vysledky-tabulka th {
-    background: var(--seda);
-    color: var(--bila); /* Upraveno pro lepší čitelnost na šedé */
 }
 
-.add-text-container {
-    margin-bottom: 30px;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 20px;
-    border-radius: 10px;
-}
+.td-mono { font-family: monospace; font-size: 0.85rem; }
+.span-italic { font-style: italic; margin-right: 5px; }
+.status-ok { color: #b5e48c; }
+.status-fail { color: #ff8a8a; }
 
-.add-text-form {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    align-items: flex-end;
-    flex-wrap: wrap;
-}
+.admin-filter-box { margin-bottom: 20px; text-align: center; }
+.filter-dropdown { padding: 5px; border-radius: 5px; }
 
-.add-text-group-main {
-    flex: 1;
-    min-width: 200px;
-}
+.btn-add-text-custom { margin: 0; height: 40px; }
 
-.add-text-label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: var(--size-text);
-}
-
-.add-text-input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    color: var(--cerna);
-    font-family: var(--font);
-    font-size: var(--size-text);
-}
-
-.add-text-select {
-    padding: 10px;
-    border-radius: 5px;
-    color: var(--cerna);
-    border: none;
-    cursor: pointer;
-    font-family: var(--font);
-    font-size: var(--size-text);
-}
-
-.table-text-mono {
-    font-family: var(--font-mono);
-    letter-spacing: 1px;
-    font-size: var(--size-text);
-}
-
-.table-type-hint {
-    font-style: italic;
-    opacity: 0.8;
-    font-size: var(--size-maly-text);
-}
-
-.alert {
-    padding: 12px;
-    border-radius: 8px;
-    background-color: var(--red);
-    color: var(--bila);
-    border: 1px solid var(--svetla-zelena);
-    margin-bottom: 20px;
-    font-size: var(--size-text);
-}
+/* 7. POMOCNÉ TŘÍDY (JS OVLÁDÁNÍ) */
+.hidden-data { display: none; }
+.js-section-hidden { display: none; }
