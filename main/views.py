@@ -1,17 +1,20 @@
-from django.shortcuts import render
+import json
+import math
+import random
+
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.contrib import messages
+
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
+from .models import VysledekTestu
 from .morse import logic as morse_logic, constants as morse_consts
 from .number_code import logic as number_logic, constants as number_consts
 from .matrix import logic as matrix_logic
 from .binary import logic as binary_logic
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-from .models import VysledekTestu
-import json
-import random, math
 
 def login_view(request):
     if request.method == "POST":
@@ -54,10 +57,8 @@ def home(request):
             context['vysledky'] = context['vysledky'].distinct().order_by('-datum')
             context['seznam_clenu'] = User.objects.filter(groups__name='deti').order_by('username')
         else:
-            # Dítě vidí jen sebe
             context['vysledky'] = VysledekTestu.objects.filter(uzivatel=request.user).order_by('-datum')
 
-    
     if request.method == "POST":
         project = request.POST.get("projekt")
         user_input = request.POST.get("vstup", "")
