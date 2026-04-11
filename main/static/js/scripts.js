@@ -356,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("Filtruji pro uživatele:", selectedUser);
             
             rows.forEach(row => {
-                const usernameCell = row.querySelector('.cell-username');
+                const usernameCell = row[1];
                 
                 if (usernameCell) {
                     const rowUsername = usernameCell.textContent.trim();
