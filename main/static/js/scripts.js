@@ -373,8 +373,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             htmlObsah += '<tr>';
                             const znaky = radek.split('');
                             znaky.forEach(znak => {
-                                const obsah = (znak === ' _') ? '&nbsp;' : znak;
-                                htmlObsah += `<td>${obsah}</td>`; 
+                                if (znak !== " ") {
+                                    const obsah = (znak === ' _') ? '&nbsp;' : znak;
+                                    htmlObsah += `<td>${obsah}</td>`; 
+                                }
                             });
                             htmlObsah += '</tr>';
                         }
