@@ -32,7 +32,31 @@ def logout_view(request):
     return redirect('home')
 
 def home(request):
-    context = {}
+    context = {
+        'vysledky': [],
+        'seznam_clenu': [],
+        'is_vedouci': False,
+        'projekt': 'morse',
+    }
+
+    if request.user.is_authenticated:
+        is_admin = request.user.is_superuser
+        is_staff = request.user.is_staff
+        context['is_vedouci'] = is_admin or is_staff
+
+        if is_admin:
+            context['vysledky'] = VysledekTestu.objects.all().order_by('-datum')
+            context['seznam_clenu'] = User.objects.all().order_by('username')
+        elif is_staff:
+            context['vysledky'] = VysledekTestu.objects.filter(
+                uzivatel__in=User.objects.filter(groups__name='deti')
+            ) | VysledekTestu.objects.filter(uzivatel=request.user)
+            context['vysledky'] = context['vysledky'].distinct().order_by('-datum')
+            context['seznam_clenu'] = User.objects.filter(groups__name='deti').order_by('username')
+        else:
+            # Dítě vidí jen sebe
+            context['vysledky'] = VysledekTestu.objects.filter(uzivatel=request.user).order_by('-datum')
+
     
     if request.method == "POST":
         project = request.POST.get("projekt")
@@ -145,30 +169,8 @@ def home(request):
             radky_prepis = [f"| {' '.join(radek)} |" for radek in matrix_clean]
             context['vysledek_prepis_matrix'] = "\n".join(radky_prepis)
 
-    if request.user.is_authenticated:
-        is_admin = request.user.is_superuser
-        is_staff = request.user.is_staff
-        is_vedouci_nebo_admin = is_admin or is_staff
-
-        if is_admin:
-            vysledky = VysledekTestu.objects.all().order_by('-datum')
-            seznam_clenu = User.objects.all().order_by('username')
-        elif is_staff:
-            vysledky = VysledekTestu.objects.filter(
-                uzivatel__in=User.objects.filter(groups__name='Skupina_Děti')
-            ) | VysledekTestu.objects.filter(uzivatel=request.user.username)
-            vysledky = vysledky.distinct().order_by('-datum')
-            
-            seznam_clenu = User.objects.filter(groups__name='Skupina_Děti').order_by('username')
-        else:
-            vysledky = VysledekTestu.objects.filter(uzivatel=request.user.username).order_by('-datum')
-
-        context = {
-            'vysledky': vysledky,
-            'seznam_clenu': seznam_clenu,
-            'is_vedouci': is_vedouci_nebo_admin,
-        }
-        return render(request, 'main/index.html', context)
+    
+    return render(request, 'main/index.html', context)
 
 @login_required
 def ulozit_vysledek_testu(request):
