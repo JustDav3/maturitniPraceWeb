@@ -310,22 +310,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    window.zobrazUzel = function (folderName, nazev, ytUrl) {
+    window.zobrazUzel = function (uzel) {
         const detail = document.getElementById('uzel-detail');
         const iframe = document.getElementById('uzel-video-frame');
         const obrazkyContainer = document.getElementById('uzel-obrazky');
 
-        if (!detail || !obrazkyContainer) return;
+        if (!detail || !uzel) return;
 
         document.getElementById('uzel-nazev').style.display = 'block';
-        document.getElementById('uzel-nazev').innerText = nazev;
+        document.getElementById('uzel-nazev').innerText = uzel.nazev;
 
         if (iframe) {
-            iframe.src = ytUrl;
+            iframe.src = uzel.ytUrl;
         }
 
+        history.pushState({ uzelId: uzel.id }, '', `/${uzel.id}`);
+
         let textHtml = '';
-        const data = DATA_UZLU[folderName];
+        const data = DATA_UZLU[uzel.id];
 
         if (data) {
             textHtml += `
@@ -496,34 +498,6 @@ document.addEventListener('DOMContentLoaded', function () {
         '#sec-nastaveni-testu': { sekce: secNastaveniTestu, tlacitko: 'btn-nastaveni-testu' },
     };
 
-    function synchronizujWebPodleURL() {
-        const hash = window.location.hash || '#sec-uvod';
-        const data = mapaSekci[hash];
-
-        if (data) {
-            // 1. Schovej všechny sekce (použije tvoje pole vsechnySekce)
-            vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
-            if (submenu) submenu.style.display = 'none';
-
-            // 2. Zobraz tu správnou
-            data.sekce.style.display = 'block';
-
-            // 3. Zvýrazni tlačítko (použije tvou existující funkci)
-            nastavAktivniTlacitko(data.tlacitko);
-            
-            // 4. Pokud má sekce speciální funkci (např. u uzlů), můžeš ji tu zavolat
-            if (hash === '#sec-uzly' && window.generujMenuUzlu) window.generujMenuUzlu();
-        }
-    }
-
-    // Nasloucháme změnám v URL (kliknutí na tlačítko nebo redirect z Django)
-    window.addEventListener('hashchange', synchronizujWebPodleURL);
-
-    // Spustíme hned po načtení
-    window.addEventListener('load', synchronizujWebPodleURL);
-
-
-    /*
     function prepniSekci(idTlacitka, sekceKeZobrazeni, extraFunkce = null) {
         vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
         if (submenu) submenu.style.display = 'none';
@@ -531,60 +505,56 @@ document.addEventListener('DOMContentLoaded', function () {
         if (sekceKeZobrazeni) {
             sekceKeZobrazeni.style.display = 'block';
             
-            // PŘIDEJ TENTO ŘÁDEK: Aktualizuje URL adresu o ID sekce
-            history.pushState(null, null, `#${sekceKeZobrazeni.id}`);
+            const hashId = sekceKeZobrazeni.id.replace('section-', '');
+            history.pushState({ sekceId: hashId }, '', `/${hashId}`);
         }
-        
+
         nastavAktivniTlacitko(idTlacitka);
         if (extraFunkce) extraFunkce();
     }
-    
-    btnOMne.onclick = () => prepniSekci('btn-o-mne', secUvod);
-    btnSifry.onclick = () => prepniSekci('btn-sifry', secSifry);
-    btnUzly.onclick = () => prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
-    btnNastaveniTestu.onclick = () => prepniSekci('btn-nastaveni-testu', secNastaveniTestu);
 
-    if (btnTest) {
-        btnTest.onclick = () => prepniSekci('btn-test', secTest, generujNahodnyTest);
-    }
 
-    if (btnVysledky) {
-        btnVysledky.onclick = () => prepniSekci('btn-vysledky', secVysledky);
-    }
+    window.addEventListener('load', () => {
+        let identifikator = window.location.pathname.replace(/^\//, '');
+        
+        if (!identifikator) {
+            identifikator = window.location.hash.replace('#', '');
+        }
 
-    if (btnOdeslat) {
-        btnOdeslat.onclick = ulozitVysledekTestu;
-    }
-    
-   
+        console.log("Hledám obsah pro:", identifikator);
+
+        if (identifikator) {
+            const sekceMapa = {
+                'uvod': { sekce: secUvod, btn: 'btn-o-mne' },
+                'sifry': { sekce: secSifry, btn: 'btn-sifry' },
+                'uzly': { sekce: secUzly, btn: 'btn-uzly' , extra: window.generujMenuUzlu },
+                'test': { sekce: secTest, btn: 'btn-test' },
+                'vysledky': { sekce: secVysledky, btn: 'btn-vysledky' },
+                'nastaveni-testu': { sekce: secNastaveniTestu, btn: 'btn-nastaveni-testu' },
+            };
+
+            if (sekceMapa[identifikator]) {
+                const s = sekceMapa[identifikator];
+                prepniSekci(s.btn, s.sekce, s.extra);
+                return;
+            }
+
+            for (const kat in KATEGORIE_UZLU) {
+                const uzel = KATEGORIE_UZLU[kat].find(u => u.id === cesta);
+                if (uzel) {
+                    prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
+                    window.zobrazUzel(uzel); // Voláme sjednocenou funkci
+                    return;
+                }
+            }
+        } 
+        
+        prepniSekci('btn-o-mne', secUvod);
+    });
+
     if (cipherType) {
         cipherType.onchange = (e) => handleCipherChange(e.target.value);
         handleCipherChange(cipherType.value);
     }
-    
-    window.addEventListener('load', () => {
-        const hash = window.location.hash;
-        console.log("Aktuální hash v URL:", window.location.hash);
-        if (hash === '#section-uvod') {
-            prepniSekci('btn-o-mne', secUvod);
-        } 
-        else if (hash === '#section-sifry') {
-            prepniSekci('btn-sifry', secSifry);
-        } 
-        else if (hash === '#section-uzly') {
-            prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
-        }
-        else if (hash === '#section-nastaveni-testu') {
-            prepniSekci('btn-nastaveni-testu', secNastaveniTestu);
-        } 
-        else if (hash === '#section-vysledky') {
-            prepniSekci('btn-vysledky', secVysledky);
-        }
-        else {
-            prepniSekci('btn-o-mne', secUvod);
-        }
-    });
-
-    */
 
 });
