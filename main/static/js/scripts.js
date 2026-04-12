@@ -496,7 +496,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (extraFunkce) extraFunkce();
     }
-
+    /*
     btnOMne.onclick = () => prepniSekci('btn-o-mne', secUvod);
     btnSifry.onclick = () => prepniSekci('btn-sifry', secSifry);
     btnUzly.onclick = () => prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
@@ -513,7 +513,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (btnOdeslat) {
         btnOdeslat.onclick = ulozitVysledekTestu;
     }
-
+    */
+   
     if (cipherType) {
         cipherType.onchange = (e) => handleCipherChange(e.target.value);
         handleCipherChange(cipherType.value);
