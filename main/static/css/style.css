@@ -70,6 +70,7 @@ body {
 .web-logo {
     height: 60px;
     width: auto;
+    border-radius: 20px;
 }
 
 .web-title {
