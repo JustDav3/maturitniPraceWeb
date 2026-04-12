@@ -228,6 +228,27 @@
                             {% endfor %}
                         </select>
                     </div>
+
+                    <div class="delete-vysledky-container">
+                        <label class="add-text-label">Vyber výsledek k odstranění:</label>
+                        <form method="POST" class="delete-vysledky-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="akce" value="odstranit_vysledek">
+                            <div class="delete-text-group">
+                                <select name="test_id" class="form-select delete-vysledky-select">
+                                    {% for v in vysledky %}
+                                    <option value="{{ v.id }}">
+                                        #{{ v.id }} - {{ v.uzivatel.username }} ({{ v.sifra_typ }}) - {{ v.datum|date:"d.m. H:i" }}
+                                    </option>
+                                    {% empty %}
+                                    <option value="">Žádné výsledky k dispozici</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="btn-delete-text">Odstranit</button>
+                            </div>
+                        </form>
+                    </div>
+
                     {% endif %}
                     <div class="table-container">
                         <table class="vysledky-tabulka">

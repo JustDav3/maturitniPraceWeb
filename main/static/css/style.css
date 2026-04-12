@@ -266,7 +266,8 @@ body {
 
 .btn-submit,
 .btn-add-text,
-.btn-delete-text {
+.btn-delete-text,
+.btn-delete-vysledky {
     margin-top: 15px;
     padding: 10px 20px;
     background-color: var(--hlavni-zelena);
@@ -295,7 +296,9 @@ body {
 }
 
 .btn-submit:hover,
-.btn-login:hover {
+.btn-login:hover,
+.btn-delete-vysledky:hover,
+.btn-delete-text:hover {
     background-color: var(--svetla-zelena);
 }
 
@@ -382,6 +385,7 @@ textarea {
 
 
 /* 6. TABULKY A FILTRY */
+
 .vysledky-tabulka {
     width: 100%;
     border-collapse: collapse;
@@ -444,7 +448,7 @@ textarea {
     color: var(--bila);
 }
 
-.add-text-container, .delete-text-container {
+.add-text-container, .delete-text-container, .delete-vysledky-container {
     margin-bottom: 30px;
     background: rgba(255, 255, 255, 0.05);
     padding: 20px;

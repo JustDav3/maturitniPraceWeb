@@ -80,6 +80,17 @@ def home(request):
                 except TabulkaSlov.DoesNotExist:
                     messages.error(request, "Text nebyl nalezen.")
                 return redirect('home')
+            
+        if akce == "odstranit_vysledek" and request.user.is_staff:
+            vysledek_id = request.POST.get("test_id")
+            if vysledek_id:
+                try:
+                    # Smaže výsledek podle primárního klíče (id)
+                    VysledekTestu.objects.get(id=vysledek_id).delete()
+                    messages.success(request, "Výsledek testu byl úspěšně odstraněn.")
+                except VysledekTestu.DoesNotExist:
+                    messages.error(request, "Výsledek testu nebyl nalezen.")
+                return redirect('home')
 
         project = request.POST.get("projekt")
         user_input = request.POST.get("vstup", "")
