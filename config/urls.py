@@ -23,7 +23,7 @@ from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name='home'),
+    path('', views.home, name='home'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
     path('ulozit-test/', ulozit_vysledek_testu, name='api_ulozit_test'),
