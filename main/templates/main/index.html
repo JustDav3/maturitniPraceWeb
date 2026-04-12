@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webová Aplikace Uzly pro TK Rozrazil</title>
-    <link rel="stylesheet" href="{% static 'css/style.css'%}"> 
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
 </head>
 
 <body>
@@ -44,92 +44,105 @@
     <div class="container">
         <main class="panel">
             <div class="panel-content">
-                <div id="section-uvod">
+                <section id="section-uvod">
                     <h2>Vítejte</h2>
-                    <p>Vítej v aplikaci pro naučení uzlů a šifer která byla myšlena pro oddíl TK Rozrazil. Vytvoříl ji David Dvořák na maturitní práci. Některé věci ti ještě nebudou fungovat, stále na tom pracuji. Vyber sekci z menu pro pokračování.</p>
-                </div>
+                    <p>Vítej v aplikaci pro naučení uzlů a šifer která byla myšlena pro oddíl TK Rozrazil. Vytvoříl ji
+                        David Dvořák na maturitní práci. Některé věci ti ještě nebudou fungovat, stále na tom pracuji.
+                        Vyber sekci z menu pro pokračování.</p>
+                </section>
 
-                <section id="section-sifry" class="js-section-hidden">
+                <section id="section-sifry">
                     {% if messages %}
-                        <div class="messages-container">
-                            {% for message in messages %}
-                                <div class="alert alert-{{ message.tags }}">
-                                    <strong>⚠️</strong> {{ message }}
-                                </div>
-                            {% endfor %}
+                    <div class="messages-container">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            <strong>⚠️</strong> {{ message }}
                         </div>
+                        {% endfor %}
+                    </div>
                     {% endif %}
 
                     <h2 id="sifry-nazev">Šifry</h2>
                     <form method="POST">
                         {% csrf_token %}
-                        
-                        <div class="form-group mb-3">
+
+                        <div class="form-group ">
                             <label for="cipher-type">Vyber šifru:</label>
                             <select name="projekt" id="cipher-type" class="form-select small-select">
                                 <option value="morse" {% if projekt == 'morse' %}selected{% endif %}>Morseovka</option>
                                 <option value="number_code" {% if projekt == 'number_code' %}selected{% endif %}>Číselný kód</option>
-                                <option value="binary" {% if projekt == 'binary' %}selected{% endif %}>Binární kód</option>
+                                <option value="binary" {% if projekt == 'binary' %}selected{% endif %}>Binární kód </option>
                                 <option value="spirala" {% if projekt == 'spirala' %}selected{% endif %}>Spirála</option>
                                 <option value="snek" {% if projekt == 'snek' %}selected{% endif %}>Šnek</option>
                                 <option value="had" {% if projekt == 'had' %}selected{% endif %}>Had</option>
                             </select>
                         </div>
 
-                        <div id="shared-shift-container" class="mb-3 js-section-hidden">
+                        <div id="shared-shift-container">
                             <label>Posun:</label>
-                            <input type="number" name="shift" class="form-control small-select" value="{{ shift|default:0 }}">
+                            <input type="number" name="shift" class="form-control small-select"
+                                value="{{ shift|default:0 }}">
                         </div>
 
                         <div id="global-cipher-settings">
-                            <div id="container-select" class="mb-3 js-section-hidden">
+                            <div id="container-select">
                                 <label id="label-select">Nastavení:</label>
-                                <select name="dynamic_select" id="dynamic-select" class="form-select small-select" data-start-bod="{{ start_bod }}" data-smer-had="{{ smer_had }}" data-mode="{{ mode }}"></select>
+                                <select name="dynamic_select" id="dynamic-select" class="form-select small-select"
+                                    data-start-bod="{{ start_bod }}" data-smer-had="{{ smer_had }}"
+                                    data-mode="{{ mode }}"></select>
                             </div>
 
                             <div class="row">
-                                <div id="container-input-1" class="col js-section-hidden">
+                                <div id="container-input-1">
                                     <label id="label-input-1">Vstup 1:</label>
-                                    <input type="text" name="input_1" id="dynamic-input-1" class="form-control small-select" value="{{ in1|default:'.' }}">
+                                    <input type="text" name="input_1" id="dynamic-input-1"
+                                        class="form-control small-select" value="{{ in1|default:'.' }}">
                                 </div>
-                                <div id="container-input-2" class="col js-section-hidden">
+                                <div id="container-input-2">
                                     <label id="label-input-2">Vstup 2:</label>
-                                    <input type="text" name="input_2" id="dynamic-input-2" class="form-control small-select" value="{{ in2|default:'-' }}">
+                                    <input type="text" name="input_2" id="dynamic-input-2"
+                                        class="form-control small-select" value="{{ in2|default:'-' }}">
                                 </div>
-                                <div id="container-input-3" class="col js-section-hidden">
+                                <div id="container-input-3">
                                     <label id="label-input-3">Vstup 3:</label>
-                                    <input type="text" name="input_3" id="dynamic-input-3" class="form-control small-select" value="{{ in3|default:'|' }}">
+                                    <input type="text" name="input_3" id="dynamic-input-3"
+                                        class="form-control small-select" value="{{ in3|default:'|' }}">
                                 </div>
                             </div>
 
-                            <div id="container-checkbox" class="form-check mt-3 js-section-hidden">
-                                <input type="checkbox" name="dynamic_checkbox" id="dynamic-checkbox" class="form-check-input" {% if dyn_check %}checked{% endif %}>
-                                <label id="label-checkbox" class="form-check-label" for="dynamic-checkbox">Obrátit</label>
+                            <div id="container-checkbox" class="form-check">
+                                <input type="checkbox" name="dynamic_checkbox" id="dynamic-checkbox"
+                                    class="form-check-input" {% if dyn_check %}checked{% endif %}>
+                                <label id="label-checkbox" class="form-check-label"
+                                    for="dynamic-checkbox">Obrátit</label>
                             </div>
                         </div>
 
-                        <div class="form-group mt-3">
+                        <div class="form-group">
                             <label>Vstupní text:</label>
-                            <textarea name="vstup" class="form-control" rows="3" required>{{ vstup|default:"" }}</textarea>
+                            <textarea name="vstup" class="form-control" rows="3"
+                                required>{{ vstup|default:"" }}</textarea>
                         </div>
 
-                        <div class="mt-3">
+                        <div class="form-group">
                             <label>Operace:</label>
                             <div class="cipher-mode-container">
                                 <select name="akce" class="form-select small-select">
-                                    <option value="sifrovat" {% if akce == "sifrovat" %}selected{% endif %}>Zašifrovat</option>
-                                    <option value="desifrovat" {% if akce == "desifrovat" %}selected{% endif %}>Dešifrovat</option>
+                                    <option value="sifrovat" {% if akce=="sifrovat" %}selected{% endif %}>Zašifrovat
+                                    </option>
+                                    <option value="desifrovat" {% if akce=="desifrovat" %}selected{% endif %}>Dešifrovat
+                                    </option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="btn-container">
+                        <div class="center">
                             <button type="submit" class="btn-submit">Provést operaci</button>
                         </div>
                     </form>
 
                     {% if vysledek_morse or vysledek_number %}
-                    <div class="result-area mt-4">
+                    <div class="result-area">
                         <h3 id="result-nazev">Výsledek:</h3>
                         <p class="result-text">{{ vysledek_morse }}{{ vysledek_number }}</p>
                         {% if vysledek_prepis %}
@@ -141,7 +154,7 @@
                     {% endif %}
 
                     {% if vysledek_matrix %}
-                    <div class="result-area mt-4">
+                    <div class="result-area">
                         <h3 class="matrix-nazev">Maticový výsledek ({{ rozmer_matrix }}x{{ rozmer_matrix }}):</h3>
                         <div class="matrix-display">
                             {% for radek in vysledek_matrix %}
@@ -151,7 +164,7 @@
                             {% endfor %}
                         </div>
                         {% if vysledek_prepis_matrix %}
-                        <div class="mt-3">
+                        <div>
                             <small class="result-nazev-forCopy">Textový přepis (pro kopírování):</small>
                             <pre class="matrix-result-box">{{ vysledek_prepis_matrix }}</pre>
                         </div>
@@ -160,13 +173,16 @@
                     {% endif %}
                 </section>
 
-                <section id="section-uzly" class="js-section-hidden">
+                <section id="section-uzly">
                     <h2 id="uzly-nazev">Uzlů</h2>
-                    <div id="uzel-detail" class="js-section-hidden uzel-detail-box">
+                    <div id="uzel-detail" class=" uzel-detail-box">
                         <h3 id="uzel-nazev" class="uzel-title-accent"></h3>
-                        
-                        <div class="uzly-video-div mt-3">
-                            <iframe id="uzel-video-frame" width="1920" height="1080" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                        <div class="uzly-video-div ">
+                            <iframe id="uzel-video-frame" width="1920" height="1080" src="" title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         </div>
 
                         <div id="uzel-obrazky" class="uzel-images-container"></div>
@@ -174,7 +190,7 @@
                 </section>
 
                 {% if user.is_authenticated %}
-                <section id="section-test" class="js-section-hidden">
+                <section id="section-test">
                     <h2>Zkouška dovedností</h2>
                     <div class="test-container">
                         <div class="test-card">
@@ -182,26 +198,27 @@
                             <table id="test-sifra-zadani-tabulka" class="sifra-kontejner"></table>
                             <p id="test-sifra-zadani-text"></p>
                             <p class="sifra-zadani" id="test-sifra-display"></p>
-                            <input type="text" id="test-sifra-odpoved" class="form-control" placeholder="Tvoje řešení...">
+                            <input type="text" id="test-sifra-odpoved" class="form-control"
+                                placeholder="Tvoje řešení...">
                         </div>
 
-                        <div class="test-card mt-4">
+                        <div class="test-card">
                             <h3>2. Uvaž uzel</h3>
                             <p id="test-uzel-nazev" class="test-uzel-highlight"></p>
                             <div id="test-uzel-img-container"></div>
-                            <div class="form-check mt-2">
+                            <div class="form-check">
                                 <input type="checkbox" id="test-uzel-check" class="form-check-input">
                                 <label class="form-check-label">Mám hotovo a uzel drží!</label>
                             </div>
                         </div>
 
-                        <div class="btn-container mt-4">
+                        <div class="center">
                             <button type="button" id="btn-odeslat-test" class="btn-submit">Uložit výsledek</button>
                         </div>
                     </div>
                 </section>
 
-                <section id="section-vysledky" class="content-section js-section-hidden">
+                <section id="section-vysledky" class="content-section">
                     <h2 class="section-title">Historie výsledků</h2>
                     {% if is_vedouci %}
                     <div class="filter-container admin-filter-box">
@@ -209,46 +226,46 @@
                         <select id="filter-uzivatel" class="filter-dropdown">
                             <option value="all">-- Všichni členové --</option>
                             {% for clen in seznam_clenu %}
-                                <option value="{{ clen.username }}">{{ clen.username }}</option>
+                            <option value="{{ clen.username }}">{{ clen.username }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     {% endif %}
-                        <div class="table-container">
-                            <table class="vysledky-tabulka">
-                                <thead>
-                                    <tr>
-                                        <th>Datum a čas</th>
-                                        {% if is_vedouci %}<th>Uživatel</th>{% endif %}
-                                        <th>Uzel</th>
-                                        <th>Uvázal</th>
-                                        <th>Šifra zadání</th>
-                                        <th>Typ šifry</th>
-                                        <th>Rozšifroval</th> 
-                                        <th>Body</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                    <div class="table-container">
+                        <table class="vysledky-tabulka">
+                            <thead>
+                                <tr>
+                                    <th>Datum a čas</th>
+                                    {% if is_vedouci %}<th>Uživatel</th>{% endif %}
+                                    <th>Uzel</th>
+                                    <th>Uvázal</th>
+                                    <th>Šifra zadání</th>
+                                    <th>Typ šifry</th>
+                                    <th>Rozšifroval</th>
+                                    <th>Body</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 {% for v in vysledky %}
                                 <tr>
                                     <td>{{ v.datum|date:"d.m.Y H:i" }}</td>
                                     {% if is_vedouci %}<td>{{ v.uzivatel.username }}</td>{% endif %}
-                                    
+
                                     <td>{{ v.uzel_nazev }}</td>
                                     <td>{% if v.uzel_hotovo %}✅{% else %}❌{% endif %}</td>
-                                    
+
                                     <td class="td-mono">{{ v.sifra_zadani }}</td>
-                                    
+
                                     <td>{{ v.sifra_typ }}</td>
-                                    
+
                                     <td>
                                         <span class="span-italic">
                                             {{ v.sifra_odpoved_uzivatele}}
                                         </span>
                                         {% if v.sifra_spravne %}
-                                            <span class="status-ok">✅</span>
+                                        <span class="status-ok">✅</span>
                                         {% else %}
-                                            <span class="status-fail">❌</span> 
+                                        <span class="status-fail">❌</span>
                                         {% endif %}
                                     </td>
 
@@ -266,18 +283,18 @@
                 {% endif %}
 
                 {% if is_vedouci %}
-                <section id="section-nastaveni-testu" class="content-section js-section-hidden">
+                <section id="section-nastaveni-testu" class="content-section">
                     <h2 class="section-title">Nastavení testu</h2>
 
                     <div class="add-text-container">
                         <form method="POST" class="add-text-form">
                             {% csrf_token %}
                             <input type="hidden" name="akce" value="pridat_slovo">
-                            
+
                             <div class="add-text-group-main">
                                 <label for="nove_slovo" class="add-text-label">Přidej text:</label>
-                                <textarea id="nove_slovo" name="nove_slovo" required 
-                                    placeholder="např. TAJNAZPRAVA" class="add-text-input"></textarea>
+                                <textarea id="nove_slovo" name="nove_slovo" required placeholder="např. TAJNAZPRAVA"
+                                    class="add-text-input"></textarea>
                             </div>
                             <div class="center">
                                 <button type="submit" class="btn-add-text btn-add-text-custom">Uložit text</button>
@@ -309,25 +326,25 @@
                     </div>
                 </section>
                 {% endif %}
-                </div>
+            </div>
         </main>
 
         <aside class="right-container">
             <div class="right-container-content">
                 <h2 class="right-container-title">Přihlášení</h2>
-                
+
                 {% if user.is_authenticated %}
-                    <p>Jsi přihlášen jako: <strong>{{ user.username }}</strong></p>
-                    <a href="{% url 'logout' %}" class="btn-submit">Odhlásit se</a>
+                <p>Jsi přihlášen jako: <strong>{{ user.username }}</strong></p>
+                <a href="{% url 'logout' %}" class="btn-submit">Odhlásit se</a>
                 {% else %}
-                    <form method="POST" action="{% url 'login' %}">
-                        {% csrf_token %}
-                        <div class="login-form">
-                            <input type="text" name="username" placeholder="Jméno" required>
-                            <input type="password" name="password" placeholder="Heslo" required>
-                            <button type="submit" class="btn-login">Vstoupit</button>
-                        </div>
-                    </form>
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="login-form">
+                        <input type="text" name="username" placeholder="Jméno" required>
+                        <input type="password" name="password" placeholder="Heslo" required>
+                        <button type="submit" class="btn-login">Vstoupit</button>
+                    </div>
+                </form>
                 {% endif %}
             </div>
         </aside>
