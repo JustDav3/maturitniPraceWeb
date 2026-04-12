@@ -518,4 +518,27 @@ document.addEventListener('DOMContentLoaded', function () {
         cipherType.onchange = (e) => handleCipherChange(e.target.value);
         handleCipherChange(cipherType.value);
     }
+    
+    window.addEventListener('load', () => {
+        const hash = window.location.hash;
+        if (hash === '#section-uvod') {
+            prepniSekci('btn-o-mne', secUvod);
+        } 
+        else if (hash === '#section-sifry') {
+            prepniSekci('btn-sifry', secSifry);
+        } 
+        else if (hash === '#section-uzly') {
+            prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
+        }
+        else if (hash === '#section-nastaveni-testu') {
+            prepniSekci('btn-nastaveni-testu', secNastaveniTestu);
+        } 
+        else if (hash === '#section-vysledky') {
+            prepniSekci('btn-vysledky', secVysledky);
+        }
+        else {
+            prepniSekci('btn-o-mne', secUvod);
+        }
+    });
+
 });
