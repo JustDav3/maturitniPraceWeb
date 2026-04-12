@@ -317,6 +317,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!detail || !obrazkyContainer) return;
 
+        document.getElementById('uzel-nazev').style.display = 'block';
         document.getElementById('uzel-nazev').innerText = nazev;
 
         if (iframe) {
