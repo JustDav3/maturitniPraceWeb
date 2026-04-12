@@ -486,6 +486,43 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 5. EVENT LISTENERY
+    // Mapování hashtagů na tvoje existující proměnné sekcí a tlačítek
+    const mapaSekci = {
+        '#sec-uvod': { sekce: secUvod, tlacitko: 'btn-o-mne' },
+        '#sec-sifry': { sekce: secSifry, tlacitko: 'btn-sifry' },
+        '#sec-vysledky': { sekce: secVysledky, tlacitko: 'btn-vysledky' },
+        '#sec-nastaveni-testu': { sekce: secNastaveniTestu, tlacitko: 'btn-nastaveni-testu' },
+        // Přidej další podle potřeby
+    };
+
+    function synchronizujWebPodleURL() {
+        const hash = window.location.hash || '#sec-uvod';
+        const data = mapaSekci[hash];
+
+        if (data) {
+            // 1. Schovej všechny sekce (použije tvoje pole vsechnySekce)
+            vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
+            if (submenu) submenu.style.display = 'none';
+
+            // 2. Zobraz tu správnou
+            data.sekce.style.display = 'block';
+
+            // 3. Zvýrazni tlačítko (použije tvou existující funkci)
+            nastavAktivniTlacitko(data.tlacitko);
+            
+            // 4. Pokud má sekce speciální funkci (např. u uzlů), můžeš ji tu zavolat
+            if (hash === '#sec-uzly' && window.generujMenuUzlu) window.generujMenuUzlu();
+        }
+    }
+
+    // Nasloucháme změnám v URL (kliknutí na tlačítko nebo redirect z Django)
+    window.addEventListener('hashchange', synchronizujWebPodleURL);
+
+    // Spustíme hned po načtení
+    window.addEventListener('load', synchronizujWebPodleURL);
+
+    
+    /*
     function prepniSekci(idTlacitka, sekceKeZobrazeni, extraFunkce = null) {
         vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
         if (submenu) submenu.style.display = 'none';
@@ -500,7 +537,7 @@ document.addEventListener('DOMContentLoaded', function () {
         nastavAktivniTlacitko(idTlacitka);
         if (extraFunkce) extraFunkce();
     }
-    /*
+    
     btnOMne.onclick = () => prepniSekci('btn-o-mne', secUvod);
     btnSifry.onclick = () => prepniSekci('btn-sifry', secSifry);
     btnUzly.onclick = () => prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
@@ -546,5 +583,7 @@ document.addEventListener('DOMContentLoaded', function () {
             prepniSekci('btn-o-mne', secUvod);
         }
     });
+
+    */
 
 });
