@@ -34,7 +34,7 @@ body {
     font-family: var(--font);
 }
 
-#section-sifry, #section-uzly, #section-test, #section-vyslesky, #section-nastaveni-testu {
+#section-sifry, #section-uzly, #section-test, #section-vysledky, #section-nastaveni-testu {
     display: none;
 }
 
@@ -314,7 +314,7 @@ body {
     box-sizing: border-box;
 }
 
-.form-control {
+textarea {
     resize: vertical;
     min-height: 200px;
     width: stretch;

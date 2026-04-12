@@ -278,10 +278,7 @@
                         </table>
                     </div>
                 </section>
-                {% endif %}
-
-
-                {% if is_vedouci %}
+                
                 <section id="section-nastaveni-testu" class="content-section">
                     <h2 class="section-title">Nastavení testu</h2>
 
@@ -297,6 +294,22 @@
                             </div>
                             <div class="center">
                                 <button type="submit" class="btn-add-text btn-add-text-custom">Uložit text</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="delete-text-container">
+                        <label>Vyber text k odstranění:</label>
+                        <form method="POST" class="delete-text-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="akce" value="odstranit_text">
+                            <div class="delete-text-group">
+                                <select name="slovo_id" class="form-select delete-text-select">
+                                    {% for slovo in seznam_slov %}
+                                    <option value="{{ slovo.TextId }}">#{{ slovo.TextId }} - {{ slovo.text|truncatechars:50 }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="btn-delete-text">Odstranit</button>
                             </div>
                         </form>
                     </div>
