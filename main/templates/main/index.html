@@ -28,15 +28,15 @@
     <nav class="menu-bar">
         <h2 class="menu-title">Menu</h2>
         <div class="menu-items">
-            <button id="btn-o-mne">Hlavní stránka</button>
-            <button id="btn-sifry">Šifry</button>
-            <button id="btn-uzly">Uzly</button>
+            <button href="#section-uvod" id="btn-o-mne">Hlavní stránka</button>
+            <button href="#section-sifry" id="btn-sifry">Šifry</button>
+            <button href="#section-uzly" id="btn-uzly">Uzly</button>
             <div id="uzly-submenu" class="submenu-container"></div>
             {% if user.is_authenticated %}
-            <button id="btn-test">Test</button>
-            <button id="btn-vysledky">Výsledky testu</button>
-            <button id="btn-prihlasky">Přihlášky</button>
-            <button id="btn-nastaveni-testu">Nastavení testu</button>
+            <button href="#section-test" id="btn-test">Test</button>
+            <button href="#section-vysledky" id="btn-vysledky">Výsledky testu</button>
+            <button href="#section-prihlasky" id="btn-prihlasky">Přihlášky</button>
+            <button href="#section-nastaveni-testu" id="btn-nastaveni-testu">Nastavení testu</button>
             {% endif %}
         </div>
     </nav>
