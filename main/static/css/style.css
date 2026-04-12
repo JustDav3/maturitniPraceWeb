@@ -207,13 +207,27 @@ body {
     cursor: pointer;
 }
 
-.btn-submit, .btn-login, .btn-add-text {
+.btn-submit, .btn-add-text {
     padding: 10px 20px;
     background-color: var(--hlavni-zelena);
     color: var(--bila);
     border: 1px solid var(--svetla-zelena);
     border-radius: 6px;
     cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.btn-login {
+    display: table;
+    margin: 20px auto;
+    padding: 12px 54px;
+    background-color: var(--hlavni-zelena);
+    color: var(--bila);
+    border: 1px solid var(--svetla-zelena);
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: var(--font);
     font-weight: bold;
     transition: 0.3s ease;
 }
