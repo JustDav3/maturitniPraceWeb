@@ -492,6 +492,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (sekceKeZobrazeni) sekceKeZobrazeni.style.display = 'block';
 
+        window.location.hash = sekceKeZobrazeni.id;
+        
         nastavAktivniTlacitko(idTlacitka);
 
         if (extraFunkce) extraFunkce();
