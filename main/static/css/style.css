@@ -265,7 +265,8 @@ body {
 }
 
 .btn-submit,
-.btn-add-text {
+.btn-add-text,
+.btn-delete-text {
     margin-top: 15px;
     padding: 10px 20px;
     background-color: var(--hlavni-zelena);
@@ -442,7 +443,7 @@ textarea {
     color: var(--bila);
 }
 
-.add-text-container {
+.add-text-container, .delete-text-container {
     margin-bottom: 30px;
     background: rgba(255, 255, 255, 0.05);
     padding: 20px;
