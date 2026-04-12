@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const nahodnyUzel = uzly[Math.floor(Math.random() * uzly.length)];
 
                 if (uzelNazevElement) {
-                    uzelNazevElement.innerText = nahodnyUzel.nazev;
+                    uzelNazevElement.innerText = "Uvaž tento uzel: " + nahodnyUzel.nazev;
                 }
 
                 window.aktualniSifraSpravne = data.spravne;
