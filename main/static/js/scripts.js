@@ -355,9 +355,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (userFilter) {
         userFilter.addEventListener('change', function() {
             const selectedUser = this.value;
-            const table = document.getElementById('tabulka-vysledku');
+            const table = document.getElementsByClassName('vysledky-tabulka')[0];
             if (!table) {
-                console.error("Tabulka s ID 'tabulka-vysledku' nebyla nalezena!");
+                console.error("Tabulka s ID 'vysledky-tabulka' nebyla nalezena!");
                 return;
             }
 
