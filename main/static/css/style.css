@@ -10,17 +10,17 @@
     --hover: #b5e48c;
     --table-header: #402915;
     --table-data: #736055;
-    
+
 
     /* TYPY PÍSMA*/
     --font: 'Comic Sans MS', cursive;
     --font-mono: monospace;
 
     /* VELIKOSTI PÍSMA */
-    --size-nadpis: clamp(1.6406rem, 1.4915rem + 0.5966vi, 1.9688rem);    
-    --size-podnadpis: clamp(1.3125rem, 1.1932rem + 0.4773vi, 1.575rem); 
-    --size-text: clamp(0.9844rem, 0.8949rem + 0.358vi, 1.1813rem);       
-    --size-maly-text: clamp(0.7292rem, 0.6629rem + 0.2652vi, 0.875rem); 
+    --size-nadpis: clamp(1.6406rem, 1.4915rem + 0.5966vi, 1.9688rem);
+    --size-podnadpis: clamp(1.3125rem, 1.1932rem + 0.4773vi, 1.575rem);
+    --size-text: clamp(0.9844rem, 0.8949rem + 0.358vi, 1.1813rem);
+    --size-maly-text: clamp(0.7292rem, 0.6629rem + 0.2652vi, 0.875rem);
 }
 
 body {
@@ -38,7 +38,7 @@ body {
 .main-header {
     width: 100%;
     border-bottom: 2px solid var(--bila);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     position: fixed;
     top: 0;
     display: flex;
@@ -89,23 +89,31 @@ body {
     min-height: 450px;
     padding: 25px 20px;
     background: linear-gradient(180deg, var(--hlavni-zelena) 0%, var(--svetla-zelena) 100%);
-    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
     border-radius: 4px;
     overflow: hidden;
     box-sizing: border-box;
 }
 
-.row { display: flex; gap: 10px; flex-wrap: wrap; }
-.col { flex: 1; }
+.row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.col {
+    flex: 1;
+}
 
 /* 3. BOČNÍ PANELY (MENU A LOGIN) */
-.menu-bar, .right-container {
+.menu-bar,
+.right-container {
     position: fixed;
     top: 95px;
     width: 240px;
     height: calc(100vh - 110px);
     background: linear-gradient(180deg, var(--hlavni-zelena) 0%, var(--svetla-zelena) 100%);
-    box-shadow: inset 0 0 30px rgba(0,0,0,0.5), 5px 5px 15px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5), 5px 5px 15px rgba(0, 0, 0, 0.3);
     border-radius: 8px;
     padding: 20px 10px;
     z-index: 1000;
@@ -113,8 +121,13 @@ body {
     overflow-y: auto;
 }
 
-.menu-bar { left: 15px; }
-.right-container { right: 15px;}
+.menu-bar {
+    left: 15px;
+}
+
+.right-container {
+    right: 15px;
+}
 
 .right-container-content {
     display: flex;
@@ -123,7 +136,8 @@ body {
     text-align: center;
 }
 
-.menu-title, .right-container-title {
+.menu-title,
+.right-container-title {
     text-align: center;
     font-size: var(--size-text);
     color: var(--bila);
@@ -168,7 +182,7 @@ body {
 .menu-items button.active {
     background-color: var(--svetla-zelena) !important;
     font-weight: bold;
-    box-shadow: inset 0 4px 8px rgba(0,0,0,0.3);
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .center {
@@ -185,7 +199,7 @@ body {
     margin-top: -15px;
     padding: 5px 0;
     border-left: 3px solid var(--bila);
-    width: 97%; 
+    width: 97%;
     position: relative;
     left: 3px;
     box-sizing: border-box;
@@ -209,16 +223,20 @@ body {
     margin-left: 14px;
 }
 
-.submenu-item-link:hover { background: var(--svetla-zelena); }
+.submenu-item-link:hover {
+    background: var(--svetla-zelena);
+}
 
 /* 4. FORMULÁŘE A ELEMENTY */
-#sifry-nazev , #uzly-nazev {
+#sifry-nazev,
+#uzly-nazev {
     border-bottom: 1px solid var(--bila);
     padding-bottom: 5px;
 }
 
 
-.form-control, .form-select {
+.form-control,
+.form-select {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
@@ -229,7 +247,11 @@ body {
     font-size: var(--size-text);
 }
 
-.small-select { width: 172px !important; margin: 5px 0; display: block; }
+.small-select {
+    width: 172px !important;
+    margin: 5px 0;
+    display: block;
+}
 
 .form-check {
     display: flex;
@@ -238,7 +260,9 @@ body {
     cursor: pointer;
 }
 
-.btn-submit, .btn-add-text {
+.btn-submit,
+.btn-add-text {
+    margin-top: 15px;
     padding: 10px 20px;
     background-color: var(--hlavni-zelena);
     color: var(--bila);
@@ -264,11 +288,14 @@ body {
     transition: 0.3s ease;
 }
 
-.btn-submit:hover, .btn-login:hover { background-color: var(--svetla-zelena); }
+.btn-submit:hover,
+.btn-login:hover {
+    background-color: var(--svetla-zelena);
+}
 
-.form-control, 
-.form-select, 
-.add-text-input, 
+.form-control,
+.form-select,
+.add-text-input,
 .login-form input {
     width: 100%;
     margin: 5px 0;
@@ -282,7 +309,9 @@ body {
     box-sizing: border-box;
 }
 
-.form-control { resize: vertical; }
+.form-control {
+    resize: vertical;
+}
 
 /* 5. SPECIFICKÉ KOMPONENTY */
 .uzel-title-accent {
@@ -303,7 +332,10 @@ body {
 
 .uzly-video-div iframe {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border-radius: 8px;
 }
 
@@ -315,6 +347,10 @@ body {
 .sifra-zadani {
     font-size: var(--size-text);
     letter-spacing: 5px;
+}
+
+.test-title {
+    margin-top: 0;
 }
 
 .test-uzel-highlight {
@@ -340,7 +376,8 @@ body {
     background: var(--cerna);
 }
 
-.vysledky-tabulka th, .vysledky-tabulka td {
+.vysledky-tabulka th,
+.vysledky-tabulka td {
     padding: 12px;
 }
 
@@ -358,13 +395,33 @@ body {
     border: 1px solid var(--bila);
 }
 
-.td-mono { font-family: var(--font-mono); font-size: var(--size-text); }
-.span-italic { font-style: italic; margin-right: 5px; }
-.status-ok { color: var(--green); }
-.status-fail { color: var(--red); }
+.td-mono {
+    font-family: var(--font-mono);
+    font-size: var(--size-text);
+}
 
-.admin-filter-box { margin-bottom: 20px; text-align: center; }
-.filter-dropdown { padding: 5px; border-radius: 5px; }
+.span-italic {
+    font-style: italic;
+    margin-right: 5px;
+}
+
+.status-ok {
+    color: var(--green);
+}
+
+.status-fail {
+    color: var(--red);
+}
+
+.admin-filter-box {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.filter-dropdown {
+    padding: 5px;
+    border-radius: 5px;
+}
 
 
 .add-text-label {
@@ -382,10 +439,18 @@ body {
     border: 1px solid var(--svetla-zelena);
 }
 
-.btn-add-text-custom { margin: 0; height: 40px; }
+.btn-add-text-custom {
+    margin: 0;
+    height: 40px;
+}
 
 
 
 /* 7. POMOCNÉ TŘÍDY */
-.hidden-data { display: none; }
-.js-section-hidden { display: none; }
+.hidden-data {
+    display: none;
+}
+
+.js-section-hidden {
+    display: none;
+}
