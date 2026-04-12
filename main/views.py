@@ -35,7 +35,7 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
-def home(request):
+def home(request, sekce=None, uzel_id=None):
     context = {
         'vysledky': [],
         'seznam_clenu': [],
