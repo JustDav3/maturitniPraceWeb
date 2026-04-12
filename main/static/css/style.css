@@ -322,6 +322,16 @@ body {
     font-weight: bold;
 }
 
+.test-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid var(--svetla-zelena);
+    margin-top: 20px;
+}
+
+
+
 /* 6. TABULKY A FILTRY */
 .vysledky-tabulka {
     width: 100%;
