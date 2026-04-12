@@ -208,13 +208,28 @@ body {
     background-color: var(--hlavni-zelena);
     color: var(--bila);
     border: 1px solid var(--svetla-zelena);
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
     transition: 0.3s ease;
 }
 
 .btn-submit:hover, .btn-login:hover { background-color: var(--svetla-zelena); }
+
+.form-control, 
+.form-select, 
+.add-text-input, 
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    background: var(--bila);
+    color: var(--cerna);
+    border: none;
+    border-radius: 4px;
+    font-family: var(--font);
+    font-size: var(--size-text);
+    box-sizing: border-box;
+}
 
 /* 5. SPECIFICKÉ KOMPONENTY */
 .uzel-title-accent {
@@ -273,7 +288,25 @@ body {
 .admin-filter-box { margin-bottom: 20px; text-align: center; }
 .filter-dropdown { padding: 5px; border-radius: 5px; }
 
+
+.add-text-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: var(--size-text);
+    color: var(--bila);
+}
+
+.add-text-container {
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--svetla-zelena);
+}
+
 .btn-add-text-custom { margin: 0; height: 40px; }
+
+
 
 /* 7. POMOCNÉ TŘÍDY */
 .hidden-data { display: none; }
