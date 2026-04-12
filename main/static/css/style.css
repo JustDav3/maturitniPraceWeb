@@ -57,6 +57,10 @@ body {
     margin: 0 auto;
 }
 
+.section-title {
+    border-bottom: 1px solid rgba(181, 228, 140, 0.2);
+}
+
 .web-logo {
     height: 60px;
     width: auto;
@@ -117,14 +121,23 @@ body {
     text-align: center;
 }
 
+.right-container-title {
+    width: 100%;
+    margin: 0;
+}
+
 .menu-title, .right-container-title {
     text-align: center;
     font-size: var(--size-text);
     color: var(--bila);
-    margin: 0 0 20px 0;
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(181, 228, 140, 0.2);
     text-transform: uppercase;
+}
+
+.menu-title {
+    margin: 0;
+    margin-bottom: 15px;
 }
 
 .menu-items {
@@ -154,6 +167,13 @@ body {
     background-color: var(--svetla-zelena) !important;
     font-weight: bold;
     box-shadow: inset 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 /* 3.1 SUBMENU PRO UZLY */
