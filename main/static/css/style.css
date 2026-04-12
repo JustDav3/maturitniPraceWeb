@@ -183,6 +183,10 @@ body {
 .submenu-item-link:hover { background: var(--svetla-zelena); }
 
 /* 4. FORMULÁŘE A ELEMENTY */
+#sifry-nazev {
+    border-bottom: 1px solid var(--bila);
+    padding-bottom: 5px;
+}
 .form-control, .form-select {
     width: 100%;
     padding: 10px;
@@ -278,7 +282,18 @@ body {
 
 .vysledky-tabulka th, .vysledky-tabulka td {
     padding: 12px;
-    border: 1px solid var(--bila);
+}
+
+.vysledky-tabulka th {
+    background: var(--table-header);
+    color: var(--bila);
+    font-size: var(--size-text);
+}
+
+.vysledky-tabulka td {
+    background: var(--table-data);
+    color: var(--bila);
+    font-size: var(--size-maly-text);
 }
 
 .td-mono { font-family: var(--font-mono); font-size: var(--size-text); }
