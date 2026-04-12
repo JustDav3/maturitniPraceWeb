@@ -128,10 +128,8 @@
                             <label>Operace:</label>
                             <div class="cipher-mode-container">
                                 <select name="akce" class="form-select small-select">
-                                    <option value="sifrovat" {% if akce=="sifrovat" %}selected{% endif %}>Zašifrovat
-                                    </option>
-                                    <option value="desifrovat" {% if akce=="desifrovat" %}selected{% endif %}>Dešifrovat
-                                    </option>
+                                    <option value="sifrovat" {% if akce == "sifrovat" %}selected{% endif %}>Zašifrovat</option>
+                                    <option value="desifrovat" {% if akce == "desifrovat" %}selected{% endif %}>Dešifrovat</option>
                                 </select>
                             </div>
                         </div>
