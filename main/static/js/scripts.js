@@ -490,12 +490,14 @@ document.addEventListener('DOMContentLoaded', function () {
         vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
         if (submenu) submenu.style.display = 'none';
 
-        if (sekceKeZobrazeni) sekceKeZobrazeni.style.display = 'block';
-
-        window.location.hash = sekceKeZobrazeni.id;
+        if (sekceKeZobrazeni) {
+            sekceKeZobrazeni.style.display = 'block';
+            
+            // PŘIDEJ TENTO ŘÁDEK: Aktualizuje URL adresu o ID sekce
+            history.pushState(null, null, `#${sekceKeZobrazeni.id}`);
+        }
         
         nastavAktivniTlacitko(idTlacitka);
-
         if (extraFunkce) extraFunkce();
     }
     /*
@@ -524,6 +526,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     window.addEventListener('load', () => {
         const hash = window.location.hash;
+        console.log("Aktuální hash v URL:", window.location.hash);
         if (hash === '#section-uvod') {
             prepniSekci('btn-o-mne', secUvod);
         } 
