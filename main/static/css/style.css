@@ -277,6 +277,7 @@ body {
 .btn-login {
     display: table;
     margin: 20px auto;
+    margin-top: 0;
     padding: 12px 54px;
     background-color: var(--hlavni-zelena);
     color: var(--bila);
