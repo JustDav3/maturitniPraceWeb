@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from main.views import home, login_view, logout_view, ulozit_vysledek_testu, generuj_zadani_api
+from main.views import *
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -27,4 +27,5 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('ulozit-test/', ulozit_vysledek_testu, name='api_ulozit_test'),
     path('generuj-zadani/', generuj_zadani_api, name='api_generuj_zadani'),
+    path('smazat-slovo/<int:slovo_id>/', smazat_slovo, name='smazat_slovo'),
 ]

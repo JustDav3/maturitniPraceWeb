@@ -70,6 +70,16 @@ def home(request):
             if novy_text:
                 TabulkaSlov.objects.create(text=novy_text)
                 return redirect('home')
+            
+        if akce == "odstranit_text" and request.user.is_staff:
+            slovo_id = request.POST.get("slovo_id")
+            if slovo_id:
+                try:
+                    TabulkaSlov.objects.get(TextId=slovo_id).delete()
+                    messages.success(request, "Text byl úspěšně odstraněn.")
+                except TabulkaSlov.DoesNotExist:
+                    messages.error(request, "Text nebyl nalezen.")
+                return redirect('home')
 
         project = request.POST.get("projekt")
         user_input = request.POST.get("vstup", "")
