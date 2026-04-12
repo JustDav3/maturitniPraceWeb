@@ -282,6 +282,8 @@ body {
     box-sizing: border-box;
 }
 
+.form-control { resize: vertical; }
+
 /* 5. SPECIFICKÉ KOMPONENTY */
 .uzel-title-accent {
     color: #b5e48c;
