@@ -517,7 +517,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Defaultní stav: vše schovat
         vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
 
-        // PŘÍPAD A: Hlavní sekce (např. /sifry nebo /vysledky)
         if (path.length === 1) {
             const cil = path[0];
             const mapa = {

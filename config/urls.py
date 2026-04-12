@@ -31,5 +31,5 @@ urlpatterns = [
 
 
     path('<str:sekce>/', views.home, name='home_sekce'),
-    path('<str:slug>/', views.home, name='home_slug'),
+    path('uzly/<str:uzel_id>/', views.home, name='home_uzel'),
 ]
