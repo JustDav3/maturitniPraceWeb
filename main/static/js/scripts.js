@@ -513,16 +513,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // 2. Samotná logika po načtení stránky
     window.addEventListener('load', () => {
         const path = window.location.pathname.split('/').filter(p => p !== '');
-        
-        const mapa = {
-            'uvod': { s: secUvod, b: 'btn-o-mne' },
-            'sifry': { s: secSifry, b: 'btn-sifry' },
-            'uzly': { s: secUzly, b: 'btn-uzly', f: window.generujMenuUzlu },
-            'test': { s: secTest, b: 'btn-test', f: typeof generujNahodnyTest !== 'undefined' ? generujNahodnyTest : null },
-            'vysledky': { s: secVysledky, b: 'btn-vysledky' },
-            'nastaveni-testu': { s: secNastaveniTestu, b: 'btn-nastaveni-testu' }
-        };
-
         console.log("Detekovaná cesta:", path);
 
         // 1. PŘÍPAD: Jsem v sekci UZLY a chci konkrétní UZEL (/uzly/ambulak)
