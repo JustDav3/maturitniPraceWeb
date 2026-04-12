@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // DYNAMICKÉ FILTROVÁNÍ UŽIVATELŮ
     if (userFilter) {
-        userFilter.addEventListener('change', function() {
+        userFilter.addEventListener('change', function () {
             const selectedUser = this.value;
             const table = document.getElementsByClassName('vysledky-tabulka')[0];
             if (!table) {
@@ -363,23 +363,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const rows = table.querySelectorAll('tbody tr');
 
-            console.log("Filtruji pro uživatele:", selectedUser);
-            console.log("Počet nalezených řádků:", rows.length);
-            
             rows.forEach((row, index) => {
-                const usernameCell = row.cells[1]; 
-                
+                const usernameCell = row.cells[1];
                 if (usernameCell) {
                     const rowUsername = usernameCell.textContent.trim();
-                    console.log(`Řádek ${index} patří uživateli: ${rowUsername}`);
-
                     if (selectedUser === 'all' || rowUsername === selectedUser) {
                         row.style.display = "";
                     } else {
                         row.style.display = "none";
                     }
                 } else {
-                    console.warn(`Řádek ${index} nemá buňku s indexem 1!`);
+                    console.error("Buňka s uživatelským jménem nebyla nalezena v řádku " + (index + 1));
                 }
             });
         });
@@ -414,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             const znaky = radek.split('');
                             znaky.forEach(znak => {
                                 const obsah = (znak === ' _') ? '&nbsp;' : znak;
-                                htmlObsah += `<td>${obsah}</td>`; 
+                                htmlObsah += `<td>${obsah}</td>`;
                             });
                             htmlObsah += '</tr>';
                         }
@@ -447,80 +441,80 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('test-sifra-odpoved').value = "";
                 document.getElementById('test-uzel-check').checked = false;
 
-            } 
+            }
         }
         catch (error) {
-                console.error("Chyba:", error);
-            }
+            console.error("Chyba:", error);
         }
+    }
 
     async function ulozitVysledekTestu() {
-            const odpovedUzivatele = document.getElementById('test-sifra-odpoved').value.trim();
-            const sifra_spravne = odpovedUzivatele.toLowerCase() === window.aktualniSifraSpravne.toLowerCase();
+        const odpovedUzivatele = document.getElementById('test-sifra-odpoved').value.trim();
+        const sifra_spravne = odpovedUzivatele.toLowerCase() === window.aktualniSifraSpravne.toLowerCase();
 
-            const data = {
-                data_sifra_typ: window.posledniTypSifry || "neuvedeno",
-                data_sifra_zadani: window.aktualniSifraZadani || "",
-                data_sifra_spravne_reseni: window.aktualniSifraSpravne || "",
-                data_sifra_odpoved: odpovedUzivatele,
-                data_sifra_spravne: sifra_spravne,
-                data_uzel_nazev: window.aktualniUzelNazev || "neuvedeno",
-                data_uzel_hotovo: document.getElementById('test-uzel-check').checked,
-                data_body_celkem: 0,
-            };
+        const data = {
+            data_sifra_typ: window.posledniTypSifry || "neuvedeno",
+            data_sifra_zadani: window.aktualniSifraZadani || "",
+            data_sifra_spravne_reseni: window.aktualniSifraSpravne || "",
+            data_sifra_odpoved: odpovedUzivatele,
+            data_sifra_spravne: sifra_spravne,
+            data_uzel_nazev: window.aktualniUzelNazev || "neuvedeno",
+            data_uzel_hotovo: document.getElementById('test-uzel-check').checked,
+            data_body_celkem: 0,
+        };
 
-            try {
-                const response = await fetch('/ulozit-test/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getCookie('csrftoken')
-                    },
-                    body: JSON.stringify(data)
-                });
+        try {
+            const response = await fetch('/ulozit-test/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(data)
+            });
 
-                const result = await response.json();
-                if (result.status === 'success') {
-                    location.reload();
-                } else {
-                    alert("Chyba: " + result.message);
-                }
-            } catch (error) {
-                console.error("Chyba spojení:", error);
+            const result = await response.json();
+            if (result.status === 'success') {
+                location.reload();
+            } else {
+                alert("Chyba: " + result.message);
             }
+        } catch (error) {
+            console.error("Chyba spojení:", error);
         }
+    }
 
-        // 5. EVENT LISTENERY
-        function prepniSekci(idTlacitka, sekceKeZobrazeni, extraFunkce = null) {
-            vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
-            if (submenu) submenu.style.display = 'none';
+    // 5. EVENT LISTENERY
+    function prepniSekci(idTlacitka, sekceKeZobrazeni, extraFunkce = null) {
+        vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
+        if (submenu) submenu.style.display = 'none';
 
-            if (sekceKeZobrazeni) sekceKeZobrazeni.style.display = 'block';
+        if (sekceKeZobrazeni) sekceKeZobrazeni.style.display = 'block';
 
-            nastavAktivniTlacitko(idTlacitka);
+        nastavAktivniTlacitko(idTlacitka);
 
-            if (extraFunkce) extraFunkce();
-        }
+        if (extraFunkce) extraFunkce();
+    }
 
-        btnOMne.onclick = () => prepniSekci('btn-o-mne', secUvod);
-        btnSifry.onclick = () => prepniSekci('btn-sifry', secSifry);
-        btnUzly.onclick = () => prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
-        btnNastaveniTestu.onclick = () => prepniSekci('btn-nastaveni-testu', secNastaveniTestu);
+    btnOMne.onclick = () => prepniSekci('btn-o-mne', secUvod);
+    btnSifry.onclick = () => prepniSekci('btn-sifry', secSifry);
+    btnUzly.onclick = () => prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
+    btnNastaveniTestu.onclick = () => prepniSekci('btn-nastaveni-testu', secNastaveniTestu);
 
-        if (btnTest) {
-            btnTest.onclick = () => prepniSekci('btn-test', secTest, generujNahodnyTest);
-        }
+    if (btnTest) {
+        btnTest.onclick = () => prepniSekci('btn-test', secTest, generujNahodnyTest);
+    }
 
-        if (btnVysledky) {
-            btnVysledky.onclick = () => prepniSekci('btn-vysledky', secVysledky);
-        }
+    if (btnVysledky) {
+        btnVysledky.onclick = () => prepniSekci('btn-vysledky', secVysledky);
+    }
 
-        if (btnOdeslat) {
-            btnOdeslat.onclick = ulozitVysledekTestu;
-        }
+    if (btnOdeslat) {
+        btnOdeslat.onclick = ulozitVysledekTestu;
+    }
 
-        if (cipherType) {
-            cipherType.onchange = (e) => handleCipherChange(e.target.value);
-            handleCipherChange(cipherType.value);
-        }
-    });
+    if (cipherType) {
+        cipherType.onchange = (e) => handleCipherChange(e.target.value);
+        handleCipherChange(cipherType.value);
+    }
+});
