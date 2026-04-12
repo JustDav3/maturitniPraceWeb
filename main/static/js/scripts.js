@@ -509,64 +509,47 @@ document.addEventListener('DOMContentLoaded', function () {
         nastavAktivniTlacitko(data.b);
         if (data.f) data.f();
     }
+    
+    if (cipherType) {
+        cipherType.onchange = (e) => handleCipherChange(e.target.value);
+        handleCipherChange(cipherType.value);
+    }
+
 
     // 2. Samotná logika po načtení stránky
     window.addEventListener('load', () => {
         const path = window.location.pathname.split('/').filter(p => p !== '');
         console.log("Detekovaná cesta:", path);
 
-        // 1. PŘÍPAD: Jsem v sekci UZLY a chci konkrétní UZEL (/uzly/ambulak)
+        // PŘÍPAD 1: /uzly/ambulak
         if (path[0] === 'uzly' && path[1]) {
-            const uzelId = path[1];
-
-            // Zobrazíme hlavní sekci uzlů
+            const hledaneId = path[1];
+            
+            // Zobrazíme sekci uzlů a menu
             vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
             secUzly.style.display = 'block';
             nastavAktivniTlacitko('btn-uzly');
-
-            // Vygenerujeme menu (aby se uzel měl kam vykreslit)
             if (window.generujMenuUzlu) window.generujMenuUzlu();
 
-            // Najdeme uzel v datech a vykreslíme ho
-            let nalezenyUzel = null;
+            // Najdeme uzel v datech
+            let uzelData = null;
             for (const kat in KATEGORIE_UZLU) {
-                const uzel = KATEGORIE_UZLU[kat].find(u => u.id === uzelId);
-                if (uzel) {
-                    nalezenyUzel = uzel;
-                    break;
-                }
+                uzelData = KATEGORIE_UZLU[kat].find(u => u.id === hledaneId);
+                if (uzelData) break;
             }
 
-            if (nalezenyUzel) {
-                // Důležité: Voláme funkci, která uzel vykreslí
-                window.zobrazUzel(nalezenyUzel);
+            if (uzelData) {
+                console.log("Našel jsem uzel:", uzelData.nazev);
+                window.zobrazUzel(uzelData);
             }
-        }
-        // 2. PŘÍPAD: Jsem v běžné sekci (/sifry, /vysledky)
-        else if (path.length === 1) {
-            const cil = path[0];
-            const mapa = {
-                'uvod': { s: secUvod, b: 'btn-o-mne' },
-                'sifry': { s: secSifry, b: 'btn-sifry' },
-                'uzly': { s: secUzly, b: 'btn-uzly', f: window.generujMenuUzlu },
-                'test': { s: secTest, b: 'btn-test', f: typeof generujNahodnyTest !== 'undefined' ? generujNahodnyTest : null },
-                'vysledky': { s: secVysledky, b: 'btn-vysledky' },
-                'nastaveni-testu': { s: secNastaveniTestu, b: 'btn-nastaveni-testu' }
-            };
-
-            if (mapa[cil]) {
-                const d = mapa[cil];
-                vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
-                d.s.style.display = 'block';
-                nastavAktivniTlacitko(d.b);
-                if (d.f) d.f();
-            }
+        } 
+        // PŘÍPAD 2: Klasická sekce jako /sifry
+        else if (path.length === 1 && sekceMapa[path[0]]) {
+            const data = sekceMapa[path[0]];
+            vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
+            data.s.style.display = 'block';
+            nastavAktivniTlacitko(data.b);
+            if (data.f) data.f();
         }
     });
-
-    if (cipherType) {
-        cipherType.onchange = (e) => handleCipherChange(e.target.value);
-        handleCipherChange(cipherType.value);
-    }
-
 });
