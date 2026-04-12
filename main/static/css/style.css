@@ -298,6 +298,10 @@ body {
     background-color: var(--svetla-zelena);
 }
 
+.btn-submit {
+    margin-top: 0;
+}
+
 .form-control,
 .form-select,
 .add-text-input,
