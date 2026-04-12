@@ -311,6 +311,8 @@ body {
 
 .form-control {
     resize: vertical;
+    min-height: 200px;
+    width: stretch;
 }
 
 /* 5. SPECIFICKÉ KOMPONENTY */
@@ -442,6 +444,12 @@ body {
 .btn-add-text-custom {
     margin: 0;
     height: 40px;
+}
+
+.add-text-input {
+    min-height: 50px;
+    resize: vertical;
+    width: stretch;
 }
 
 
