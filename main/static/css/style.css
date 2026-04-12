@@ -110,6 +110,13 @@ body {
 .menu-bar { left: 15px; }
 .right-container { right: 15px; padding: 25px 20px; }
 
+.right-container-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
 .menu-title, .right-container-title {
     text-align: center;
     font-size: var(--size-text);
@@ -302,12 +309,14 @@ body {
     background: var(--table-header);
     color: var(--bila);
     font-size: var(--size-text);
+    border: 1px solid var(--bila);
 }
 
 .vysledky-tabulka td {
     background: var(--table-data);
     color: var(--bila);
     font-size: var(--size-maly-text);
+    border: 1px solid var(--bila);
 }
 
 .td-mono { font-family: var(--font-mono); font-size: var(--size-text); }
