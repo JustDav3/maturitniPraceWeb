@@ -503,43 +503,59 @@ document.addEventListener('DOMContentLoaded', function () {
         if (extraFunkce) extraFunkce();
     }
 
+    // Pomocná funkce pro zkrácení kódu
+    function zobraz(data) {
+        data.s.style.display = 'block';
+        nastavAktivniTlacitko(data.b);
+        if (data.f) data.f();
+    }
+
 
     window.addEventListener('load', () => {
-        let identifikator = window.location.pathname.replace(/^\//, '');
+        const path = window.location.pathname.split('/').filter(p => p !== '');
+        
+        // Defaultní stav: vše schovat
+        vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
 
-        if (!identifikator) {
-            identifikator = window.location.hash.replace('#', '');
-        }
-
-        console.log("Hledám obsah pro:", identifikator);
-
-        if (identifikator) {
-            const sekceMapa = {
-                'uvod': { sekce: secUvod, btn: 'btn-o-mne' },
-                'sifry': { sekce: secSifry, btn: 'btn-sifry' },
-                'uzly': { sekce: secUzly, btn: 'btn-uzly', extra: generujMenuUzlu },
-                'test': { sekce: secTest, btn: 'btn-test', extra: generujNahodnyTest },
-                'vysledky': { sekce: secVysledky, btn: 'btn-vysledky' },
-                'nastaveni-testu': { sekce: secNastaveniTestu, btn: 'btn-nastaveni-testu' },
+        // PŘÍPAD A: Hlavní sekce (např. /sifry nebo /vysledky)
+        if (path.length === 1) {
+            const cil = path[0];
+            const mapa = {
+                'uvod': { s: secUvod, b: 'btn-o-mne' },
+                'sifry': { s: secSifry, b: 'btn-sifry' },
+                'uzly': { s: secUzly, b: 'btn-uzly', f: window.generujMenuUzlu },
+                'test': { s: secTest, b: 'btn-test' },
+                'vysledky': { s: secVysledky, b: 'btn-vysledky' },
+                'nastaveni-testu': { s: secNastaveniTestu, b: 'btn-nastaveni-testu' }
             };
 
-            if (sekceMapa[identifikator]) {
-                const s = sekceMapa[identifikator];
-                prepniSekci(s.btn, s.sekce, s.extra);
-                return;
-            }
-
-            for (const kat in KATEGORIE_UZLU) {
-                const uzel = KATEGORIE_UZLU[kat].find(u => u.id === cesta);
-                if (uzel) {
-                    prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
-                    window.zobrazUzel(uzel);
-                    return;
-                }
+            if (mapa[cil]) {
+                zobraz(mapa[cil]);
+            } else {
+                zobraz(mapa['uvod']);
             }
         }
+        
+        else if (path.length === 2 && path[0] === 'uzly') {
+            const uzelId = path[1];
+            
+            secUzly.style.display = 'block';
+            nastavAktivniTlacitko('btn-uzly');
+            if (window.generujMenuUzlu) window.generujMenuUzlu();
 
-        prepniSekci('btn-o-mne', secUvod);
+            // 2. Najdeme konkrétní uzel v datech a otevřeme ho
+            for (const kat in KATEGORIE_UZLU) {
+                const uzel = KATEGORIE_UZLU[kat].find(u => u.id === uzelId);
+                if (uzel && typeof window.zobrazUzel === 'function') {
+                    window.zobrazUzel(uzel);
+                    break;
+                }
+            }
+        } 
+        else {
+            secUvod.style.display = 'block';
+            nastavAktivniTlacitko('btn-o-mne');
+        }
     });
 
     if (cipherType) {

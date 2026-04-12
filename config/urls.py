@@ -30,6 +30,6 @@ urlpatterns = [
     path('generuj-zadani/', generuj_zadani_api, name='api_generuj_zadani'),
 
 
-
+    path('<str:sekce>/', views.home, name='home_sekce'),
     path('<str:slug>/', views.home, name='home_slug'),
 ]
