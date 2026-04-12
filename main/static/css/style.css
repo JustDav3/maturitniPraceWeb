@@ -121,11 +121,6 @@ body {
     text-align: center;
 }
 
-.right-container-title {
-    width: 100%;
-    margin: 0;
-}
-
 .menu-title, .right-container-title {
     text-align: center;
     font-size: var(--size-text);
@@ -133,6 +128,11 @@ body {
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(181, 228, 140, 0.2);
     text-transform: uppercase;
+}
+
+.right-container-title {
+    width: 100%;
+    margin: 0;
 }
 
 .menu-title {
