@@ -488,23 +488,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 5. EVENT LISTENERY
-    // Mapování hashtagů na tvoje existující proměnné sekcí a tlačítek
-    const mapaSekci = {
-        '#sec-uvod': { sekce: secUvod, tlacitko: 'btn-o-mne' },
-        '#sec-sifry': { sekce: secSifry, tlacitko: 'btn-sifry' },
-        '#sec-uzly': { sekce: secUzly, tlacitko: 'btn-uzly' },
-        '#sec-test': { sekce: secTest, tlacitko: 'btn-test' },
-        '#sec-vysledky': { sekce: secVysledky, tlacitko: 'btn-vysledky' },
-        '#sec-nastaveni-testu': { sekce: secNastaveniTestu, tlacitko: 'btn-nastaveni-testu' },
-    };
-
     function prepniSekci(idTlacitka, sekceKeZobrazeni, extraFunkce = null) {
         vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
         if (submenu) submenu.style.display = 'none';
 
         if (sekceKeZobrazeni) {
             sekceKeZobrazeni.style.display = 'block';
-            
+
             const hashId = sekceKeZobrazeni.id.replace('section-', '');
             history.pushState({ sekceId: hashId }, '', `/${hashId}`);
         }
@@ -516,7 +506,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('load', () => {
         let identifikator = window.location.pathname.replace(/^\//, '');
-        
+
         if (!identifikator) {
             identifikator = window.location.hash.replace('#', '');
         }
@@ -527,8 +517,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const sekceMapa = {
                 'uvod': { sekce: secUvod, btn: 'btn-o-mne' },
                 'sifry': { sekce: secSifry, btn: 'btn-sifry' },
-                'uzly': { sekce: secUzly, btn: 'btn-uzly' , extra: window.generujMenuUzlu },
-                'test': { sekce: secTest, btn: 'btn-test' },
+                'uzly': { sekce: secUzly, btn: 'btn-uzly', extra: generujMenuUzlu },
+                'test': { sekce: secTest, btn: 'btn-test', extra: generujNahodnyTest },
                 'vysledky': { sekce: secVysledky, btn: 'btn-vysledky' },
                 'nastaveni-testu': { sekce: secNastaveniTestu, btn: 'btn-nastaveni-testu' },
             };
@@ -543,12 +533,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 const uzel = KATEGORIE_UZLU[kat].find(u => u.id === cesta);
                 if (uzel) {
                     prepniSekci('btn-uzly', secUzly, window.generujMenuUzlu);
-                    window.zobrazUzel(uzel); // Voláme sjednocenou funkci
+                    window.zobrazUzel(uzel);
                     return;
                 }
             }
-        } 
-        
+        }
+
         prepniSekci('btn-o-mne', secUvod);
     });
 
