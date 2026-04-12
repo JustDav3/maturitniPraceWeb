@@ -371,7 +371,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                 if (usernameCell) {
                     const rowUsername = usernameCell.textContent.trim();
-                    // Tento log už MUSÍŠ vidět, pokud rows.length > 0
                     console.log(`Řádek ${index} patří uživateli: ${rowUsername}`);
 
                     if (selectedUser === 'all' || rowUsername === selectedUser) {

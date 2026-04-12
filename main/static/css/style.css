@@ -221,6 +221,7 @@ body {
 .add-text-input, 
 .login-form input {
     width: 100%;
+    margin: 5px 0;
     padding: 10px;
     background: var(--bila);
     color: var(--cerna);
