@@ -490,9 +490,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const mapaSekci = {
         '#sec-uvod': { sekce: secUvod, tlacitko: 'btn-o-mne' },
         '#sec-sifry': { sekce: secSifry, tlacitko: 'btn-sifry' },
+        '#sec-uzly': { sekce: secUzly, tlacitko: 'btn-uzly' },
+        '#sec-test': { sekce: secTest, tlacitko: 'btn-test' },
         '#sec-vysledky': { sekce: secVysledky, tlacitko: 'btn-vysledky' },
         '#sec-nastaveni-testu': { sekce: secNastaveniTestu, tlacitko: 'btn-nastaveni-testu' },
-        // Přidej další podle potřeby
     };
 
     function synchronizujWebPodleURL() {
@@ -521,7 +522,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Spustíme hned po načtení
     window.addEventListener('load', synchronizujWebPodleURL);
 
-    
+
     /*
     function prepniSekci(idTlacitka, sekceKeZobrazeni, extraFunkce = null) {
         vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
@@ -554,7 +555,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (btnOdeslat) {
         btnOdeslat.onclick = ulozitVysledekTestu;
     }
-    */
+    
    
     if (cipherType) {
         cipherType.onchange = (e) => handleCipherChange(e.target.value);

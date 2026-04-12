@@ -28,15 +28,15 @@
     <nav class="menu-bar">
         <h2 class="menu-title">Menu</h2>
         <div class="menu-items">
-            <button href="https://maturitnipraceweb.onrender.com/#section-uvod" id="btn-o-mne">Hlavní stránka</button>
-            <button href="https://maturitnipraceweb.onrender.com/#section-sifry" id="btn-sifry">Šifry</button>
-            <button href="https://maturitnipraceweb.onrender.com/#section-uzly" id="btn-uzly">Uzly</button>
+            <button onclick="location.hash='sec-uvod'" id="btn-o-mne">Hlavní stránka</button>
+            <button onclick="location.hash='sec-sifry'" id="btn-sifry">Šifry</button>
+            <button onclick="location.hash='sec-uzly'" id="btn-uzly">Uzly</button>
             <div id="uzly-submenu" class="submenu-container"></div>
             {% if user.is_authenticated %}
-            <button href="https://maturitnipraceweb.onrender.com/#section-test" id="btn-test">Test</button>
-            <button href="https://maturitnipraceweb.onrender.com/#section-vysledky" id="btn-vysledky">Výsledky testu</button>
-            <button href="https://maturitnipraceweb.onrender.com/#section-prihlasky" id="btn-prihlasky">Přihlášky</button>
-            <button href="https://maturitnipraceweb.onrender.com/#section-nastaveni-testu" id="btn-nastaveni-testu">Nastavení testu</button>
+            <button onclick="location.hash='sec-test'" id="btn-test">Test</button>
+            <button onclick="location.hash='sec-vysledky'" id="btn-vysledky">Výsledky testu</button>
+            <button onclick="location.hash='sec-prihlasky'" id="btn-prihlasky">Přihlášky</button>
+            <button onclick="location.hash='sec-nastaveni-testu'" id="btn-nastaveni-testu">Nastavení testu</button>
             {% endif %}
         </div>
     </nav>
