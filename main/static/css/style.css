@@ -212,7 +212,7 @@ body {
 .submenu-item-link:hover { background: var(--svetla-zelena); }
 
 /* 4. FORMULÁŘE A ELEMENTY */
-#sifry-nazev , #uzly-nazev , #vysledky-nazev {
+#sifry-nazev , #uzly-nazev {
     border-bottom: 1px solid var(--bila);
     padding-bottom: 5px;
 }
