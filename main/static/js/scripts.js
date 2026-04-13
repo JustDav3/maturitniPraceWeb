@@ -778,7 +778,10 @@ document.addEventListener('DOMContentLoaded', function () {
             nastavAktivniTlacitko('btn-uzly');
 
             // Vygenerujeme boční menu uzlů z nové konstanty
-            if (window.generujMenuUzlu) window.generujMenuUzlu();
+            if (window.generujMenuUzlu) {
+                window.generujMenuUzlu();
+                console.log("Vygenerováno menu uzlů z nové konstanty.");
+            }
 
             // Pokud je v URL i ID konkrétního uzlu (např. path[1] je "ambulak")
             if (path[1]) {
@@ -803,6 +806,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 data.s.style.display = 'block';
                 nastavAktivniTlacitko(data.b);
                 if (data.f) data.f();
+                console.log("Zobrazena sekce path1:", cil);
             }
         } 
         
@@ -811,6 +815,7 @@ document.addEventListener('DOMContentLoaded', function () {
             vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
             secUvod.style.display = 'block';
             nastavAktivniTlacitko('btn-o-mne');
+            console.log("Zobrazena výchozí sekce: úvod");
         }
         /*
         const path = window.location.pathname.split('/').filter(p => p !== '');
