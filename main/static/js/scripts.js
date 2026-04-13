@@ -618,10 +618,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (sifraTyp) sifraTyp.innerText = data.typ;
 
-                const kategorie = Object.keys(KATEGORIE_UZLU);
-                const nahodnaKat = kategorie[Math.floor(Math.random() * kategorie.length)];
-                const uzly = KATEGORIE_UZLU[nahodnaKat];
-                const nahodnyUzel = uzly[Math.floor(Math.random() * uzly.length)];
+                const vsechnaId = Object.keys(DATABAZE_UZLU);
+                const nahodneId = vsechnaId[Math.floor(Math.random() * vsechnaId.length)];
+                const nahodnyUzel = DATABAZE_UZLU[nahodneId];
 
                 if (uzelNazevElement) {
                     uzelNazevElement.innerText = "Uvaž tento uzel: " + nahodnyUzel.nazev;
