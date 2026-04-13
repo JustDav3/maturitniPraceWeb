@@ -449,7 +449,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const uzel = DATABAZE_UZLU[id];
             if (kategorie[uzel.kategorie]) {
                 kategorie[uzel.kategorie].push(uzel);
-                console.log(`Přiřazuji uzel ${uzel.nazev} do kategorie ${uzel.kategorie}`);
             }
         }
 
@@ -475,6 +474,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 container.appendChild(katDiv);
             }
         }
+        container.style.display = 'block';
     };
 
 
@@ -684,6 +684,13 @@ document.addEventListener('DOMContentLoaded', function () {
         handleCipherChange(cipherType.value);
     }
 
+    if (btnOdeslat) {
+        btnOdeslat.onclick = (e) => {
+            e.preventDefault();
+            ulozitVysledekTestu();
+        };
+    }
+
 
     // 2. Samotná logika po načtení stránky
     window.addEventListener('load', () => {
@@ -729,7 +736,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 data.s.style.display = 'block';
                 nastavAktivniTlacitko(data.b);
                 if (data.f) data.f();
-                console.log("Zobrazena sekce path1:", cil);
             }
         }
 
@@ -738,51 +744,8 @@ document.addEventListener('DOMContentLoaded', function () {
             vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
             secUvod.style.display = 'block';
             nastavAktivniTlacitko('btn-o-mne');
-            console.log("Zobrazena výchozí sekce: úvod");
+            console.log("Error: Zobrazena výchozí sekce: úvod");
         }
-        /*
-        const path = window.location.pathname.split('/').filter(p => p !== '');
-        const mapa = {
-            'uvod': { s: secUvod, b: 'btn-o-mne' },
-            'sifry': { s: secSifry, b: 'btn-sifry' },
-            'uzly': { s: secUzly, b: 'btn-uzly', f: window.generujMenuUzlu },
-            'test': { s: secTest, b: 'btn-test', f: typeof generujNahodnyTest !== 'undefined' ? generujNahodnyTest : null },
-            'vysledky': { s: secVysledky, b: 'btn-vysledky' },
-            'nastaveni-testu': { s: secNastaveniTestu, b: 'btn-nastaveni-testu' }
-        };
-        console.log("Detekovaná cesta:", path);
-
-        // PŘÍPAD 1: /uzly/ambulak
-        if (path[0] === 'uzly' && path[1]) {
-            const hledaneId = path[1];
-            
-            // Zobrazíme sekci uzlů a menu
-            vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
-            secUzly.style.display = 'block';
-            nastavAktivniTlacitko('btn-uzly');
-            if (window.generujMenuUzlu) window.generujMenuUzlu();
-
-            // Najdeme uzel v datech
-            let uzelData = null;
-            for (const kat in KATEGORIE_UZLU) {
-                uzelData = KATEGORIE_UZLU[kat].find(u => u.id === hledaneId);
-                if (uzelData) break;
-            }
-
-            if (uzelData) {
-                console.log("Našel jsem uzel:", uzelData.nazev);
-                window.zobrazUzel(uzelData);
-            }
-        } 
-        // PŘÍPAD 2: Klasická sekce jako /sifry
-        else if (path.length === 1 && mapa[path[0]]) {
-            const data = mapa[path[0]];
-            vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
-            data.s.style.display = 'block';
-            nastavAktivniTlacitko(data.b);
-            if (data.f) data.f();
-        }
-        */
     });
 
 });
