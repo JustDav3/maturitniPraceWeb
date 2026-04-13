@@ -317,24 +317,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!detail || !uzel) return;
 
-        document.getElementById('uzel-nazev').style.display = 'block';
-        document.getElementById('uzel-nazev').innerText = uzel.nazev;
-
-        if (iframe) {
-            iframe.src = uzel.ytUrl;
+        const nazevEl = document.getElementById('uzel-nazev');
+        if (nazevEl) {
+            nazevEl.style.display = 'block';
+            nazevEl.innerText = uzel.nazev;
         }
 
-        history.pushState({ uzelId: uzel.id }, '', `/${uzel.id}`);
+        if (iframe) {
+            iframe.src = uzel.url; 
+        }
 
+        history.pushState({ uzelId: uzel.id }, '', `/uzly/${uzel.id}/`);
+
+        // Logika pro návody z DATA_UZLU
         let textHtml = '';
         const data = DATA_UZLU[uzel.id];
 
         if (data) {
             textHtml += `
-            <div class="uzel-zajimavost" style="padding: 15px; margin-bottom: 20px;">
-                <p style="font-style: italic; color: #ffffff; margin-bottom: 0;">${data[0]}</p>
-            </div>
-        `;
+                <div class="uzel-zajimavost" style="padding: 15px; margin-bottom: 20px;">
+                    <p style="font-style: italic; color: #ffffff; margin-bottom: 0;">${data[0]}</p>
+                </div>
+            `;
 
             textHtml += `<div class="uzel-navod-text" style="color: white; font-family: Comic Sans MS; line-height: 1.6;">`;
             for (let i = 1; i < data.length; i++) {
