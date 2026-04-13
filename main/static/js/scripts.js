@@ -319,7 +319,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         container.innerHTML = ''; 
 
-        // Seskupení uzlů podle kategorií (používám tvou strukturu)
         const kategorie = {};
         for (const id in DATABAZE_UZLU) {
             const uzel = DATABAZE_UZLU[id];
@@ -331,18 +330,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const katSekce = document.createElement('div');
             katSekce.className = 'kategorie-sekce';
 
-            // Vytvoříme nadpis, který bude sloužit jako přepínač
             const nadpis = document.createElement('h4');
             nadpis.innerText = nazevKat.toUpperCase();
             nadpis.style.cursor = 'pointer';
             nadpis.className = 'kategorie-header';
 
-            // Kontejner pro tlačítka uzlů v této kategorii
             const seznamUzlu = document.createElement('div');
             seznamUzlu.className = 'seznam-uzlu-v-kategorii';
-            seznamUzlu.style.display = 'none'; // NA ZAČÁTKU SCHOVANÉ
+            seznamUzlu.style.display = 'none';
 
-            // Přidání uzlů do seznamu
             kategorie[nazevKat].forEach(uzel => {
                 const btn = document.createElement('button');
                 btn.innerText = uzel.nazev;
@@ -351,7 +347,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 seznamUzlu.appendChild(btn);
             });
 
-            // Funkce pro rozbalení/zabalení
             nadpis.onclick = () => {
                 const jeSchovany = seznamUzlu.style.display === 'none';
                 // Volitelné: zavřít ostatní otevřené kategorie (pokud chceš jen jednu najednou)
@@ -364,6 +359,7 @@ document.addEventListener('DOMContentLoaded', function () {
             katSekce.appendChild(nadpis);
             katSekce.appendChild(seznamUzlu);
             container.appendChild(katSekce);
+            container.style.display = 'block';
         }
     };
 
