@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 4. LOGIKA UZLŮ
     window.generujMenuUzlu = function () {
-        const container = document.getElementById('uzly-submenu');
+        const container = document.getElementsByClassName('submenu-container');
         if (!container) return;
 
         container.innerHTML = '';
@@ -449,17 +449,21 @@ document.addEventListener('DOMContentLoaded', function () {
             const uzel = DATABAZE_UZLU[id];
             if (kategorie[uzel.kategorie]) {
                 kategorie[uzel.kategorie].push(uzel);
+                console.log(`Přiřazuji uzel ${uzel.nazev} do kategorie ${uzel.kategorie}`);
             }
         }
 
         // Vykreslíme kategorie a jejich tlačítka
         for (const nazevKat in kategorie) {
+            console.log(`Kategorie: ${nazevKat}, počet uzlů: ${kategorie[nazevKat].length}`);
             if (kategorie[nazevKat].length > 0) {
+                console.log(`Vykresluji kategorii: ${nazevKat}`);
                 const katDiv = document.createElement('div');
                 katDiv.className = 'kategorie-sekce';
                 katDiv.innerHTML = `<h4 style="color: #d4f0c7; margin-top: 15px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1);">${nazevKat}</h4>`;
                 
                 kategorie[nazevKat].forEach(uzel => {
+                    console.log(`Přidávám uzel do kategorie ${nazevKat}: ${uzel.nazev} (ID: ${uzel.id})`);
                     const btn = document.createElement('button');
                     btn.innerText = uzel.nazev;
                     btn.className = 'uzel-menu-btn';
