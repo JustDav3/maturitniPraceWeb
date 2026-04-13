@@ -336,13 +336,13 @@ document.addEventListener('DOMContentLoaded', function () {
             nadpis.className = 'kategorie-header';
 
             const seznamUzlu = document.createElement('div');
-            seznamUzlu.className = 'seznam-uzlu-v-kategorii';
+            seznamUzlu.className = 'submenu-category';
             seznamUzlu.style.display = 'none';
 
             kategorie[nazevKat].forEach(uzel => {
                 const btn = document.createElement('button');
                 btn.innerText = uzel.nazev;
-                btn.className = 'uzel-menu-btn';
+                btn.className = 'submenu-item-button';
                 btn.onclick = () => window.zobrazUzel(uzel.id);
                 seznamUzlu.appendChild(btn);
             });

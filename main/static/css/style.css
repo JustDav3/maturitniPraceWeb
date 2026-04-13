@@ -219,7 +219,7 @@ body {
     border-bottom: 1px solid var(--hlavni-zelena);
 }
 
-.submenu-item-link {
+.submenu-item-button {
     padding: 6px 15px;
     font-size: var(--size-maly-text);
     background: var(--hlavni-zelena);
@@ -229,7 +229,7 @@ body {
     margin-left: 14px;
 }
 
-.submenu-item-link:hover {
+.submenu-item-button:hover {
     background: var(--svetla-zelena);
 }
 
