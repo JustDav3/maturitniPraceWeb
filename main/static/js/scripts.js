@@ -1,3 +1,4 @@
+/*
 const KATEGORIE_UZLU = {
     'Spojovací': [
         { id: 'ambulak', nazev: 'Ambulák', url: 'https://www.youtube-nocookie.com/embed/zUTuDpYQsvI?si=ctbF-ET3qkjTc4N4' },
@@ -113,6 +114,167 @@ const DATA_UZLU = {
         "3. Za tyhle 'uši' lano napni.",
         "4. Uzel drží jen pod stálým tahem, jinak se může rozpadnout!"
     ]
+};
+ */
+const DATABAZE_UZLU = {
+    'ambulak': {
+        id: 'ambulak',
+        nazev: 'Ambulák',
+        url: 'https://www.youtube-nocookie.com/embed/zUTuDpYQsvI?si=ctbF-ET3qkjTc4N4',
+        kategorie: 'Spojovací',
+        zajimavost: "Zajímavost: Slouží ke spojování dvou stejně silných lan. Je plochý a netlačí, proto se používá i v první pomoci k zavázání trojcípého šátku.",
+        navod: [
+            "NÁVOD:",
+            "1. Jeden konec lana pevně ukotvi.",
+            "2. Na laně vytvoř pevnou smyčku (Alpský motýlek).",
+            "3. Volný konec obtoč kolem druhého bodu a provlékni ho smyčkou.",
+            "4. Silným tahem lano vypni.",
+            "5. Zajisti dvěma polovičními lodními smyčkami."
+        ]
+    },
+    'auticka': {
+        id: 'auticka',
+        nazev: 'Autíčka',
+        url: 'https://www.youtube-nocookie.com/embed/ltyfdXzHZi8?si=ezOOsv_N3RB4tKEq',
+        kategorie: 'Spojovací',
+        zajimavost: "Zajímavost: Oficiálně se jmenuje 'Rybářská spojka'. Je to nejlepší uzel na spojování kluzkých silonů nebo mokrých šňůr. Říká se mu autíčka, protože dvě očka do sebe zapadnou jako nárazníky.",
+        navod: [
+            "NÁVOD:",
+            "1. Polož dvě lana konci proti sobě.",
+            "2. Na prvním laně uvaž jednoduchý uzel kolem druhého lana.",
+            "3. Na druhém laně uvaž jednoduchý uzel kolem prvního lana.",
+            "4. Zatáhni za dlouhé konce tak, aby se uzly k sobě sjely.",
+            "5. Zkontroluj, zda oba volné konce koukají na opačné strany."
+        ]
+    },
+    'skotak': {
+        id: 'skotak',
+        nazev: 'Škoťák',
+        url: 'https://www.youtube-nocookie.com/embed/n5P6xnNa5nI?si=o6lbmg5zuNQFmmM3',
+        kategorie: 'Spojovací',
+        zajimavost: "Zajímavost: Nejlepší způsob, jak spojit dvě lana, která mají různou tloušťku (třeba tlusté lano a tkaničku). Skoták drží tam, kde se ambulantní uzel rozvazuje.",
+        navod: [
+            "NÁVOD:",
+            "1. Na silnějším laně vytvoř ohyb (podkovu).",
+            "2. Slabší lano provlékni ohybem spodem.",
+            "3. Obtoč slabší lano kolem celého ohybu.",
+            "4. Konec slabšího lana provlékni pod sebou samým.",
+            "5. Dotaž."
+        ]
+    },
+    'drevarak': {
+        id: 'drevarak',
+        nazev: 'Dřevařák',
+        url: 'https://www.youtube-nocookie.com/embed/kXSCqdBSdQM?si=xnSGgd_jwu6EXOkn',
+        kategorie: 'Nahazované',
+        zajimavost: "Zajímavost: Ideální uzel na tahání klád z lesa. Čím víc za lano taháš, tím víc se uzel do dřeva zakusuje. Na hladkém kůlu ale může klouzat, tak bacha!",
+        navod: [
+            "NÁVOD:",
+            "1. Obtoč lano kolem kmene nebo klády.",
+            "2. Volný konec obtoč kolem pevné části lana.",
+            "3. Poté volný konec omotej alespoň 3x kolem sebe samého uvnitř smyčky.",
+            "4. Utáhni tak, aby ovinutí přiléhalo ke dřevu."
+        ]
+    },
+    'liscak': {
+        id: 'liscak',
+        nazev: 'Liščák',
+        url: 'https://www.youtube-nocookie.com/embed/bdw2_9jnkwc?si=2HWge-0mYYF8zj4X',
+        kategorie: 'Nahazované',
+        zajimavost: "Zajímavost: Nejjednodušší uzel na světě. Používá se na připevnění provazu ke kroužku nebo když chceš na šňůru pověsit hrneček. Drží jen tehdy, když jsou oba konce stejně zatížené.",
+        navod: [
+            "NÁVOD:",
+            "1. Ohni lano napůl, abys vytvořil očko.",
+            "2. Očko přilož ke kůlu nebo břevnu.",
+            "3. Oba volné konce protáhni vnitřkem očka přes kůl.",
+            "4. Stejnoměrně dotáhni."
+        ]
+    },
+    'lodak': {
+        id: 'lodak',
+        nazev: 'Lodák',
+        url: 'https://www.youtube-nocookie.com/embed/HEW92nDCrmg?si=IXPPXmO0DkgKAUPh',
+        kategorie: 'Nahazované',
+        zajimavost: "Zajímavost: Základní uzel pro každého vodáka i stavitele. Drží skvěle na kulatém dřevě. Uvázat ho můžeš buď nahozením, nebo postupným provlékáním.",
+        navod: [
+            "NÁVOD:",
+            "1. Obtoč lano kolem kůlu.",
+            "2. Překřiž lano a obtoč ho kolem kůlu podruhé.",
+            "3. Konec lana provlékni pod posledním ovinem.",
+            "4. Utáhni oba konce směrem od sebe."
+        ]
+    },
+    'zkracovacka': {
+        id: 'zkracovacka',
+        nazev: 'Zkracovačka',
+        url: 'https://www.youtube-nocookie.com/embed/gdoa6zCbR5A?si=sb8H_6HtUd1qRlXk',
+        kategorie: 'Nahazované',
+        zajimavost: "Zajímavost: Kouzelný uzel, který zkrátí lano, aniž bys ho musel řezat. Navíc tím můžeš vyřadit poškozený kus lana – stačí, aby to poškození bylo uprostřed uzlu.",
+        navod: [
+            "NÁVOD:",
+            "1. Vytvoř na laně tři smyčky za sebou (jako vlnovku).",
+            "2. Krajní smyčky částečně protáhni prostřední smyčkou.",
+            "3. Za tyhle 'uši' lano napni.",
+            "4. Uzel drží jen pod stálým tahem, jinak se může rozpadnout!"
+        ]
+    },
+    'dobracek': {
+        id: 'dobracek',
+        nazev: 'Dobráček',
+        url: 'https://www.youtube-nocookie.com/embed/eT47TEOTS8A?si=YZ2N0_qQfnUEIGoq',
+        kategorie: 'Estetické',
+        zajimavost: "Zajímavost: Dobráček (nebo dobrý uzel) je symbol přátelství. Skauti ho nosí na cípu šátku. Je to uzel, který tě má naučit, že každý den máš vykonat alespoň jeden dobrý skutek.",
+        navod: [
+            "NÁVOD:",
+            "1. Vezmi cíp šátku a udělej na něm jednoduchou smyčku.",
+            "2. Druhý cíp provlékni smyčkou, obtoč kolem a znovu provlékni.",
+            "3. Uzel musí po dotažení tvořit pravidelný čtverec.",
+            "4. Srovnej prameny, aby uzel vypadal úhledně."
+        ]
+    },
+    'dracak': {
+        id: 'dracak',
+        nazev: 'Dračák',
+        url: 'https://www.youtube-nocookie.com/embed/_E0KBUc2GFg?si=L7smB5MGd_tReHke',
+        kategorie: 'Estetické',
+        zajimavost: "Zajímavost: Král uzlů. Je to pevná smyčka, která se nikdy sama nestáhne a nezadrhne, ale přitom se lehce rozvazuje. Používá se všude tam, kde potřebuješ oko, kterému můžeš věřit život.",
+        navod: [
+            "NÁVOD:",
+            "1. Udělej na laně malé očko (vypadá jako jezírko).",
+            "2. Konec lana (princezna) vyleze z jezírka spodem.",
+            "3. Oběhne strom (dlouhé lano) zezadu.",
+            "4. Skočí zpátky do jezírka.",
+            "5. Pořádně dotáhni."
+        ]
+    },
+    'sevcak': {
+        id: 'sevcak',
+        nazev: 'Ševčák',
+        url: 'https://www.youtube-nocookie.com/embed/gleZlA655WI?si=Tx170LZfq0l5VGOd',
+        kategorie: 'Estetické',
+        zajimavost: "Zajímavost: Nejsilnější spojka na dvě lana. Ševčák (nebo rybářský kříž) se používá, když potřebuješ spojit dvě lana tak pevně, aby spoj nepovolil ani pod velkým tahem.",
+        navod: [
+            "NÁVOD:",
+            "1. Překřiž konce dvou lan.",
+            "2. Prvním koncem udělej smyčku kolem druhého lana a provlékni.",
+            "3. To samé zopakuj na druhé straně.",
+            "4. Uzly k sobě pevně dotáhni."
+        ]
+    },
+    'pouta': {
+        id: 'pouta',
+        nazev: 'Pouta',
+        url: 'https://www.youtube-nocookie.com/embed/GHfZHNNelAM?si=5UZQwaCJwNetN4dG',
+        kategorie: 'Kolem ruky',
+        zajimavost: "Zajímavost: Vytvoří dvě pevná oka, která se dají stáhnout. V nouzi se používal na fixaci rukou, ale v oddíle ho využiješ spíš jako efektní uzel na hry nebo fixaci břemen.",
+        navod: [
+            "NÁVOD:",
+            "1. Udělej dvě smyčky vedle sebe (jako brýle).",
+            "2. Vnitřní části smyček provlékni navzájem skrz sebe.",
+            "3. Zatáhni za vzniklá oka.",
+            "4. Uzlem se dá posouvat a měnit velikost ok před dotažením."
+        ]
+    }
 };
 
 function getCookie(name) {
@@ -270,11 +432,59 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 4. LOGIKA UZLŮ
     window.generujMenuUzlu = function () {
+        const container = document.getElementById('uzly-menu');
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        const kategorie = {
+            'Spojovací': [],
+            'Nahazované': [],
+            'Estetické': [],
+            'Kolem ruky': []
+        };
+
+        // Roztřídíme uzly z nové DATABAZE_UZLU do kategorií
+        for (const id in DATABAZE_UZLU) {
+            const uzel = DATABAZE_UZLU[id];
+            if (kategorie[uzel.kategorie]) {
+                kategorie[uzel.kategorie].push(uzel);
+            }
+        }
+
+        // Vykreslíme kategorie a jejich tlačítka
+        for (const nazevKat in kategorie) {
+            if (kategorie[nazevKat].length > 0) {
+                const katDiv = document.createElement('div');
+                katDiv.className = 'kategorie-sekce';
+                katDiv.innerHTML = `<h4 style="color: #d4f0c7; margin-top: 15px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1);">${nazevKat}</h4>`;
+                
+                kategorie[nazevKat].forEach(uzel => {
+                    const btn = document.createElement('button');
+                    btn.innerText = uzel.nazev;
+                    btn.className = 'uzel-menu-btn';
+                    btn.style.display = 'block';
+                    btn.style.width = '100%';
+                    btn.style.textAlign = 'left';
+                    btn.style.marginBottom = '3px';
+
+
+                    btn.onclick = () => {
+                        window.location.href = `/uzly/${uzel.id}/`;
+                    };
+
+                    katDiv.appendChild(btn);
+                });
+                
+                container.appendChild(katDiv);
+            }
+        }
+        /*
         const submenu = document.getElementById('uzly-submenu');
         if (!submenu) return;
 
         if (submenu.innerHTML.trim() === "") {
-            for (const [nazevKat, uzly] of Object.entries(KATEGORIE_UZLU)) {
+            for (const [nazevKat, uzly] of Object.entries(DATABAZE_UZLU).reduce((acc, [key, value]) => {
                 const katDiv = document.createElement('div');
                 katDiv.className = 'submenu-category';
                 katDiv.innerText = nazevKat;
@@ -306,56 +516,75 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
         submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
+        */
     };
 
 
 
     window.zobrazUzel = function (uzel) {
+        // 1. Vytáhneme data z nové sjednocené konstanty
+        const uzel = DATABAZE_UZLU[uzelId];
+        
+        // Pokud uzel neexistuje, raději nic neděláme
+        if (!uzel) {
+            console.error("Uzel nenalezen v databázi:", uzelId);
+            return;
+        }
+
+        // 2. Najdeme HTML elementy, do kterých budeme zapisovat
         const detail = document.getElementById('uzel-detail');
         const iframe = document.getElementById('uzel-video-frame');
         const obrazkyContainer = document.getElementById('uzel-obrazky');
-
-        if (!detail || !uzel) return;
-
         const nazevEl = document.getElementById('uzel-nazev');
+
+        // 3. Nastavení videa a hlavního nadpisu
         if (nazevEl) {
-            nazevEl.style.display = 'block';
             nazevEl.innerText = uzel.nazev;
+            nazevEl.style.display = 'block';
         }
-
+        
         if (iframe) {
-            iframe.src = uzel.url; 
+            // Použije URL přímo z objektu uzlu
+            iframe.src = uzel.url;
         }
 
-        history.pushState({ uzelId: uzel.id }, '', `/uzly/${uzel.id}/`);
+        // 4. Sestavení HTML pro návod a zajímavost
+        let htmlContent = `
+            <div class="uzel-zajimavost" style="padding: 15px; margin-bottom: 20px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                <p style="font-style: italic; color: #ffffff; margin: 0;">${uzel.zajimavost}</p>
+            </div>
+            <div class="uzel-navod-text" style="color: white; font-family: 'Comic Sans MS', cursive; line-height: 1.6;">
+        `;
 
-        // Logika pro návody z DATA_UZLU
-        let textHtml = '';
-        const data = DATA_UZLU[uzel.id];
-
-        if (data) {
-            textHtml += `
-                <div class="uzel-zajimavost" style="padding: 15px; margin-bottom: 20px;">
-                    <p style="font-style: italic; color: #ffffff; margin-bottom: 0;">${data[0]}</p>
-                </div>
-            `;
-
-            textHtml += `<div class="uzel-navod-text" style="color: white; font-family: Comic Sans MS; line-height: 1.6;">`;
-            for (let i = 1; i < data.length; i++) {
-                if (data[i] === "NÁVOD:") {
-                    textHtml += `<h4 style="color: #d4f0c7; margin-top: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">${data[i]}</h4>`;
-                } else {
-                    textHtml += `<p style="margin-bottom: 8px;">${data[i]}</p>`;
-                }
+        // Projdeme pole navod a vykreslíme řádky
+        uzel.navod.forEach(radek => {
+            if (radek === "NÁVOD:") {
+                htmlContent += `<h4 style="color: #d4f0c7; margin-top: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">${radek}</h4>`;
+            } else {
+                htmlContent += `<p style="margin-bottom: 8px;">${radek}</p>`;
             }
-            textHtml += `</div>`;
-        } else {
-            textHtml = '<p style="color: white;">Návod pro tento uzel připravujeme.</p>';
+        });
+
+        htmlContent += `</div>`;
+
+        // 5. Vložení vygenerovaného obsahu do stránky
+        if (obrazkyContainer) {
+            obrazkyContainer.innerHTML = htmlContent;
         }
 
-        obrazkyContainer.innerHTML = textHtml;
-        detail.style.display = 'block';
-        detail.scrollIntoView({ behavior: 'smooth' });
+        // 6. Zobrazení sekce a plynulé odscrollování k detailu
+        if (detail) {
+            detail.style.display = 'block';
+            detail.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 7. Aktualizace URL bez reloadu (aby uživatel mohl kopírovat odkaz)
+        const novaUrl = `/uzly/${uzel.id}/`;
+        if (window.location.pathname !== novaUrl) {
+            history.pushState({ uzelId: uzel.id }, '', novaUrl);
+        }
+        
+        console.log("Vykreslen detail uzlu:", uzel.nazev);
     };
 
     // DYNAMICKÉ FILTROVÁNÍ UŽIVATELŮ
@@ -522,6 +751,61 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 2. Samotná logika po načtení stránky
     window.addEventListener('load', () => {
+        // 1. Rozsekáme cestu v URL (např. /uzly/ambulak/ -> ["uzly", "ambulak"])
+        const path = window.location.pathname.split('/').filter(p => p !== '');
+        
+        // Mapa pro základní sekce (když cesta obsahuje jen jedno slovo)
+        const sekceMapa = {
+            'uvod': { s: secUvod, b: 'btn-o-mne' },
+            'sifry': { s: secSifry, b: 'btn-sifry' },
+            'uzly': { s: secUzly, b: 'btn-uzly', f: window.generujMenuUzlu },
+            'vysledky': { s: secVysledky, b: 'btn-vysledky' },
+            'nastaveni-testu': { s: secNastaveniTestu, b: 'btn-nastaveni-testu' }
+        };
+
+        // --- LOGIKA PRO UZLY (/uzly/id-uzlu) ---
+        if (path[0] === 'uzly') {
+            // Vždy zobrazíme sekci uzly a aktivujeme tlačítko v horním menu
+            vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
+            secUzly.style.display = 'block';
+            nastavAktivniTlacitko('btn-uzly');
+
+            // Vygenerujeme boční menu uzlů z nové konstanty
+            if (window.generujMenuUzlu) window.generujMenuUzlu();
+
+            // Pokud je v URL i ID konkrétního uzlu (např. path[1] je "ambulak")
+            if (path[1]) {
+                const uzelId = path[1];
+                
+                // Ověříme, zda uzel v naší nové konstantě existuje
+                if (DATABAZE_UZLU[uzelId]) {
+                    console.log("Načítám uzel z konstanty:", uzelId);
+                    window.zobrazUzel(uzelId);
+                } else {
+                    console.warn("Uzel s tímto ID neexistuje v DATABAZE_UZLU:", uzelId);
+                }
+            }
+        } 
+        
+        // --- LOGIKA PRO OSTATNÍ SEKCE (/sifry, /vysledky atd.) ---
+        else if (path.length === 1) {
+            const cil = path[0];
+            if (sekceMapa[cil]) {
+                const data = sekceMapa[cil];
+                vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
+                data.s.style.display = 'block';
+                nastavAktivniTlacitko(data.b);
+                if (data.f) data.f();
+            }
+        } 
+        
+        // --- DEFAULT (Úvodní stránka) ---
+        else {
+            vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
+            secUvod.style.display = 'block';
+            nastavAktivniTlacitko('btn-o-mne');
+        }
+        /*
         const path = window.location.pathname.split('/').filter(p => p !== '');
         const mapa = {
             'uvod': { s: secUvod, b: 'btn-o-mne' },
@@ -556,12 +840,13 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         } 
         // PŘÍPAD 2: Klasická sekce jako /sifry
-        else if (path.length === 1 && sekceMapa[path[0]]) {
-            const data = sekceMapa[path[0]];
+        else if (path.length === 1 && mapa[path[0]]) {
+            const data = mapa[path[0]];
             vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
             data.s.style.display = 'block';
             nastavAktivniTlacitko(data.b);
             if (data.f) data.f();
         }
     });
+    */
 });
