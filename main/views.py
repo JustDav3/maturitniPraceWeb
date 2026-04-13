@@ -65,12 +65,11 @@ def home(request, sekce=None, uzel_id=None):
     if request.method == "POST":
         akce = request.POST.get("akce")
         
-        # LOGIKA PRO TVOJI NOVOU SEKCI NASTAVENÍ
         if akce == "pridat_slovo" and request.user.is_staff:
             novy_text = request.POST.get("nove_slovo", "").strip().upper()
             if novy_text:
                 TabulkaSlov.objects.create(text=novy_text)
-                return redirect(reverse('home') + '#section-nastaveni-testu')
+                return redirect('home')
             
         if akce == "odstranit_text" and request.user.is_staff:
             slovo_id = request.POST.get("slovo_id")
@@ -80,18 +79,17 @@ def home(request, sekce=None, uzel_id=None):
                     messages.success(request, "Text byl úspěšně odstraněn.")
                 except TabulkaSlov.DoesNotExist:
                     messages.error(request, "Text nebyl nalezen.")
-                return redirect(reverse('home') + '#section-nastaveni-testu')
+                return redirect('home')
             
         if akce == "odstranit_vysledek" and request.user.is_staff:
             vysledek_id = request.POST.get("test_id")
             if vysledek_id:
                 try:
-                    # Smaže výsledek podle primárního klíče (id)
                     VysledekTestu.objects.get(id=vysledek_id).delete()
                     messages.success(request, "Výsledek testu byl úspěšně odstraněn.")
                 except VysledekTestu.DoesNotExist:
                     messages.error(request, "Výsledek testu nebyl nalezen.")
-                return redirect(reverse('home') + '#section-vysledky')
+                return redirect('home')
 
         project = request.POST.get("projekt")
         user_input = request.POST.get("vstup", "")
