@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 4. LOGIKA UZLŮ
     window.generujMenuUzlu = function () {
-        const container = document.getElementsByClassName('submenu-container');
+        const container = document.querySelector('.submenu-container');
         if (!container) return;
 
         container.innerHTML = '';
@@ -455,31 +455,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Vykreslíme kategorie a jejich tlačítka
         for (const nazevKat in kategorie) {
-            console.log(`Kategorie: ${nazevKat}, počet uzlů: ${kategorie[nazevKat].length}`);
             if (kategorie[nazevKat].length > 0) {
-                console.log(`Vykresluji kategorii: ${nazevKat}`);
                 const katDiv = document.createElement('div');
                 katDiv.className = 'kategorie-sekce';
-                katDiv.innerHTML = `<h4 style="color: #d4f0c7; margin-top: 15px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1);">${nazevKat}</h4>`;
+                katDiv.innerHTML = `<h4 style="color: #d4f0c7; margin-top: 15px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.9em;">${nazevKat.toUpperCase()}</h4>`;
 
                 kategorie[nazevKat].forEach(uzel => {
-                    console.log(`Přidávám uzel do kategorie ${nazevKat}: ${uzel.nazev} (ID: ${uzel.id})`);
                     const btn = document.createElement('button');
                     btn.innerText = uzel.nazev;
                     btn.className = 'uzel-menu-btn';
-                    btn.style.display = 'block';
-                    btn.style.width = '100%';
-                    btn.style.textAlign = 'left';
-                    btn.style.marginBottom = '3px';
-
-
+                    
+                    // OPRAVA: Plynulé zobrazení bez reloadu celého webu
                     btn.onclick = () => {
-                        window.location.href = `/uzly/${uzel.id}/`;
+                        window.zobrazUzel(uzel.id);
                     };
 
                     katDiv.appendChild(btn);
                 });
-                console.log(`container.appendChild(katDiv) pro kategorii ${nazevKat}`);
                 container.appendChild(katDiv);
             }
         }
