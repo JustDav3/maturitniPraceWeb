@@ -431,7 +431,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 4. LOGIKA UZLŮ
-    window.generujMenuUzlu = function () {
+    window.generujMenuUzlu = function() {
         const container = document.getElementsByClassName('submenu-container');
         if (!container) return;
 
@@ -772,30 +772,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // --- LOGIKA PRO UZLY (/uzly/id-uzlu) ---
         if (path[0] === 'uzly') {
-            // Vždy zobrazíme sekci uzly a aktivujeme tlačítko v horním menu
             vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
             secUzly.style.display = 'block';
             nastavAktivniTlacitko('btn-uzly');
 
-            // Vygenerujeme boční menu uzlů z nové konstanty
-            if (window.generujMenuUzlu) {
+            // 1. Nejdřív vygeneruj menu vlevo
+            if (typeof window.generujMenuUzlu === 'function') {
                 window.generujMenuUzlu();
-                console.log("Vygenerováno menu uzlů z nové konstanty.");
             }
 
-            // Pokud je v URL i ID konkrétního uzlu (např. path[1] je "ambulak")
+            // 2. Pokud je v URL id uzlu, zobraz jeho detail
             if (path[1]) {
-                const uzelId = path[1];
-                
-                // Ověříme, zda uzel v naší nové konstantě existuje
-                if (DATABAZE_UZLU[uzelId]) {
-                    console.log("Načítám uzel z konstanty:", uzelId);
-                    window.zobrazUzel(uzelId);
-                } else {
-                    console.warn("Uzel s tímto ID neexistuje v DATABAZE_UZLU:", uzelId);
+                const uzelIdFromUrl = path[1]; 
+                if (DATABAZE_UZLU[uzelIdFromUrl]) {
+                    window.zobrazUzel(uzelIdFromUrl);
                 }
             }
-        } 
+        }
         
         // --- LOGIKA PRO OSTATNÍ SEKCE (/sifry, /vysledky atd.) ---
         else if (path.length === 1) {
