@@ -167,7 +167,7 @@ body {
     gap: 12px;
 }
 
-.menu-items button {
+.menu-btn {
     width: 100%;
     background: rgba(255, 255, 255, 0.05);
     border: none;
@@ -180,11 +180,11 @@ body {
     transition: all 0.2s ease;
 }
 
-.menu-items button:hover {
+.menu-btn:hover {
     background: rgba(181, 228, 140, 0.2);
 }
 
-.menu-items button.active {
+.menu-btn.active {
     background-color: var(--svetla-zelena) !important;
     font-weight: bold;
     box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
