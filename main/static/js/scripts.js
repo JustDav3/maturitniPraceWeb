@@ -479,7 +479,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     katDiv.appendChild(btn);
                 });
-                
+                console.log(`container.appendChild(katDiv) pro kategorii ${nazevKat}`);
                 container.appendChild(katDiv);
             }
         }
@@ -739,16 +739,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     */
 
-    function zobrazCil(data) {
-        if (!data) return;
-        vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
-        if (submenu) submenu.style.display = 'none';
-        
-        data.s.style.display = 'block';
-        nastavAktivniTlacitko(data.b);
-        if (data.f) data.f();
-    }
-    
     if (cipherType) {
         cipherType.onchange = (e) => handleCipherChange(e.target.value);
         handleCipherChange(cipherType.value);
