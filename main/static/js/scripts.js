@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 4. LOGIKA UZLŮ
     window.generujMenuUzlu = function () {
-        const container = document.getElementById('uzly-menu');
+        const container = document.getElementById('uzly-submenu');
         if (!container) return;
 
         container.innerHTML = '';
