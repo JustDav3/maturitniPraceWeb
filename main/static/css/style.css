@@ -222,6 +222,7 @@ body {
 .submenu-item-link {
     padding: 6px 15px;
     font-size: var(--size-maly-text);
+    background: var(--hlavni-zelena);
     color: var(--bila);
     cursor: pointer;
     transition: 0.2s;
