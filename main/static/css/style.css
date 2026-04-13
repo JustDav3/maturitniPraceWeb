@@ -233,6 +233,20 @@ body {
     background: var(--svetla-zelena);
 }
 
+.kategorie-header {
+    color: #b5e48c;
+    padding: 8px 5px;
+    margin: 2px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.3s;
+    font-size: 0.8em;
+}
+
+.seznam-uzlu-v-kategorii {
+    padding-left: 15px;
+    margin-bottom: 10px;
+}
+
 /* 4. FORMULÁŘE A ELEMENTY */
 #sifry-nazev,
 #uzly-nazev {

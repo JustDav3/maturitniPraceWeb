@@ -317,43 +317,54 @@ document.addEventListener('DOMContentLoaded', function () {
         const container = document.querySelector('.submenu-container');
         if (!container) return;
 
-        container.innerHTML = '';
+        container.innerHTML = ''; 
 
-        const kategorie = {
-            'Spojovací': [],
-            'Nahazované': [],
-            'Estetické': [],
-            'Kolem ruky': []
-        };
-
+        // Seskupení uzlů podle kategorií (používám tvou strukturu)
+        const kategorie = {};
         for (const id in DATABAZE_UZLU) {
             const uzel = DATABAZE_UZLU[id];
-            if (kategorie[uzel.kategorie]) {
-                kategorie[uzel.kategorie].push(uzel);
-            }
+            if (!kategorie[uzel.kategorie]) kategorie[uzel.kategorie] = [];
+            kategorie[uzel.kategorie].push(uzel);
         }
 
         for (const nazevKat in kategorie) {
-            if (kategorie[nazevKat].length > 0) {
-                const katDiv = document.createElement('div');
-                katDiv.className = 'submenu-category';
-                katDiv.innerHTML = `<h4 style="color: #d4f0c7; margin-top: 15px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.9em;">${nazevKat.toUpperCase()}</h4>`;
+            const katSekce = document.createElement('div');
+            katSekce.className = 'kategorie-sekce';
 
-                kategorie[nazevKat].forEach(uzel => {
-                    const btn = document.createElement('button');
-                    btn.innerText = uzel.nazev;
-                    btn.className = 'submenu-item-link';
+            // Vytvoříme nadpis, který bude sloužit jako přepínač
+            const nadpis = document.createElement('h4');
+            nadpis.innerText = nazevKat.toUpperCase();
+            nadpis.style.cursor = 'pointer';
+            nadpis.className = 'kategorie-header';
 
-                    btn.onclick = () => {
-                        window.zobrazUzel(uzel.id);
-                    };
+            // Kontejner pro tlačítka uzlů v této kategorii
+            const seznamUzlu = document.createElement('div');
+            seznamUzlu.className = 'seznam-uzlu-v-kategorii';
+            seznamUzlu.style.display = 'none'; // NA ZAČÁTKU SCHOVANÉ
 
-                    katDiv.appendChild(btn);
-                });
-                container.appendChild(katDiv);
-            }
+            // Přidání uzlů do seznamu
+            kategorie[nazevKat].forEach(uzel => {
+                const btn = document.createElement('button');
+                btn.innerText = uzel.nazev;
+                btn.className = 'uzel-menu-btn';
+                btn.onclick = () => window.zobrazUzel(uzel.id);
+                seznamUzlu.appendChild(btn);
+            });
+
+            // Funkce pro rozbalení/zabalení
+            nadpis.onclick = () => {
+                const jeSchovany = seznamUzlu.style.display === 'none';
+                // Volitelné: zavřít ostatní otevřené kategorie (pokud chceš jen jednu najednou)
+                // document.querySelectorAll('.seznam-uzlu-v-kategorii').forEach(el => el.style.display = 'none');
+                
+                seznamUzlu.style.display = jeSchovany ? 'block' : 'none';
+                nadpis.classList.toggle('active', jeSchovany);
+            };
+
+            katSekce.appendChild(nadpis);
+            katSekce.appendChild(seznamUzlu);
+            container.appendChild(katSekce);
         }
-        container.style.display = 'block';
     };
 
 
