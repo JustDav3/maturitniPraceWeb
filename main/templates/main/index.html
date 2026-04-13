@@ -253,6 +253,7 @@
                         <table class="vysledky-tabulka">
                             <thead>
                                 <tr>
+                                    <th>Id</th>
                                     <th>Datum a čas</th>
                                     {% if is_vedouci %}<th>Uživatel</th>{% endif %}
                                     <th>Uzel</th>
@@ -266,6 +267,7 @@
                             <tbody>
                                 {% for v in vysledky %}
                                 <tr>
+                                    <td>#{{ v.id }}</td>
                                     <td>{{ v.datum|date:"d.m.Y H:i" }}</td>
                                     {% if is_vedouci %}<td>{{ v.uzivatel.username }}</td>{% endif %}
 
