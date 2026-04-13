@@ -431,7 +431,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 4. LOGIKA UZLŮ
-    window.generujMenuUzlu = function() {
+    window.generujMenuUzlu = function () {
         const container = document.getElementsByClassName('submenu-container');
         if (!container) return;
 
@@ -461,7 +461,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const katDiv = document.createElement('div');
                 katDiv.className = 'kategorie-sekce';
                 katDiv.innerHTML = `<h4 style="color: #d4f0c7; margin-top: 15px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1);">${nazevKat}</h4>`;
-                
+
                 kategorie[nazevKat].forEach(uzel => {
                     console.log(`Přidávám uzel do kategorie ${nazevKat}: ${uzel.nazev} (ID: ${uzel.id})`);
                     const btn = document.createElement('button');
@@ -483,44 +483,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 container.appendChild(katDiv);
             }
         }
-        /*
-        const submenu = document.getElementById('uzly-submenu');
-        if (!submenu) return;
-
-        if (submenu.innerHTML.trim() === "") {
-            for (const [nazevKat, uzly] of Object.entries(DATABAZE_UZLU).reduce((acc, [key, value]) => {
-                const katDiv = document.createElement('div');
-                katDiv.className = 'submenu-category';
-                katDiv.innerText = nazevKat;
-
-                const podMenuUzly = document.createElement('div');
-                podMenuUzly.className = 'submenu-items-list';
-                podMenuUzly.style.display = 'none';
-
-                uzly.forEach(uzel => {
-                    const uzelLink = document.createElement('div');
-                    uzelLink.className = 'submenu-item-link';
-                    uzelLink.innerText = uzel.nazev;
-                    uzelLink.onclick = (e) => {
-                        e.stopPropagation();
-                        window.zobrazUzel(uzel.id, uzel.nazev, uzel.url);
-                    };
-                    podMenuUzly.appendChild(uzelLink);
-                });
-
-                katDiv.onclick = (e) => {
-                    e.stopPropagation();
-                    const isVisible = podMenuUzly.style.display === 'block';
-                    document.querySelectorAll('.submenu-items-list').forEach(el => el.style.display = 'none');
-                    podMenuUzly.style.display = isVisible ? 'none' : 'block';
-                };
-
-                submenu.appendChild(katDiv);
-                submenu.appendChild(podMenuUzly);
-            }
-        }
-        submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
-        */
     };
 
 
@@ -528,7 +490,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.zobrazUzel = function (uzelId) {
         // 1. Vytáhneme data z nové sjednocené konstanty
         const uzel = DATABAZE_UZLU[uzelId];
-        
+
         // Pokud uzel neexistuje, raději nic neděláme
         if (!uzel) {
             console.error("Uzel nenalezen v databázi:", uzelId);
@@ -546,7 +508,7 @@ document.addEventListener('DOMContentLoaded', function () {
             nazevEl.innerText = uzel.nazev;
             nazevEl.style.display = 'block';
         }
-        
+
         if (iframe) {
             // Použije URL přímo z objektu uzlu
             iframe.src = uzel.url;
@@ -587,7 +549,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (window.location.pathname !== novaUrl) {
             history.pushState({ uzelId: uzel.id }, '', novaUrl);
         }
-        
+
         console.log("Vykreslen detail uzlu:", uzel.nazev);
     };
 
@@ -725,20 +687,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 5. EVENT LISTENERY
-    /*
-    function prepniSekci(idTlacitka, sekceKeZobrazeni, extraFunkce = null) {
-        vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
-        if (submenu) submenu.style.display = 'none';
-
-        if (sekceKeZobrazeni) {
-            sekceKeZobrazeni.style.display = 'block';
-        }
-
-        nastavAktivniTlacitko(idTlacitka);
-        if (extraFunkce) extraFunkce();
-    }
-    */
-
     if (cipherType) {
         cipherType.onchange = (e) => handleCipherChange(e.target.value);
         handleCipherChange(cipherType.value);
@@ -749,7 +697,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('load', () => {
         // 1. Rozsekáme cestu v URL (např. /uzly/ambulak/ -> ["uzly", "ambulak"])
         const path = window.location.pathname.split('/').filter(p => p !== '');
-        
+
         // Mapa pro základní sekce (když cesta obsahuje jen jedno slovo)
         const sekceMapa = {
             'uvod': { s: secUvod, b: 'btn-o-mne' },
@@ -773,13 +721,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // 2. Pokud je v URL id uzlu, zobraz jeho detail
             if (path[1]) {
-                const uzelIdFromUrl = path[1]; 
+                const uzelIdFromUrl = path[1];
                 if (DATABAZE_UZLU[uzelIdFromUrl]) {
                     window.zobrazUzel(uzelIdFromUrl);
                 }
             }
         }
-        
+
         // --- LOGIKA PRO OSTATNÍ SEKCE (/sifry, /vysledky atd.) ---
         else if (path.length === 1) {
             const cil = path[0];
@@ -791,8 +739,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.f) data.f();
                 console.log("Zobrazena sekce path1:", cil);
             }
-        } 
-        
+        }
+
         // --- DEFAULT (Úvodní stránka) ---
         else {
             vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
@@ -844,5 +792,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         */
     });
-    
+
 });
