@@ -457,13 +457,13 @@ document.addEventListener('DOMContentLoaded', function () {
         for (const nazevKat in kategorie) {
             if (kategorie[nazevKat].length > 0) {
                 const katDiv = document.createElement('div');
-                katDiv.className = 'kategorie-sekce';
+                katDiv.className = 'submenu-category';
                 katDiv.innerHTML = `<h4 style="color: #d4f0c7; margin-top: 15px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.9em;">${nazevKat.toUpperCase()}</h4>`;
 
                 kategorie[nazevKat].forEach(uzel => {
                     const btn = document.createElement('button');
                     btn.innerText = uzel.nazev;
-                    btn.className = 'uzel-menu-btn';
+                    btn.className = 'submenu-item-link';
                     
                     // OPRAVA: Plynulé zobrazení bez reloadu celého webu
                     btn.onclick = () => {
