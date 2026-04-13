@@ -521,7 +521,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    window.zobrazUzel = function (uzel) {
+    window.zobrazUzel = function (uzelId) {
         // 1. Vytáhneme data z nové sjednocené konstanty
         const uzel = DATABAZE_UZLU[uzelId];
         
@@ -721,6 +721,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 5. EVENT LISTENERY
+    /*
     function prepniSekci(idTlacitka, sekceKeZobrazeni, extraFunkce = null) {
         vsechnySekce.forEach(s => { if (s) s.style.display = 'none'; });
         if (submenu) submenu.style.display = 'none';
@@ -732,6 +733,7 @@ document.addEventListener('DOMContentLoaded', function () {
         nastavAktivniTlacitko(idTlacitka);
         if (extraFunkce) extraFunkce();
     }
+    */
 
     function zobrazCil(data) {
         if (!data) return;
@@ -759,6 +761,7 @@ document.addEventListener('DOMContentLoaded', function () {
             'uvod': { s: secUvod, b: 'btn-o-mne' },
             'sifry': { s: secSifry, b: 'btn-sifry' },
             'uzly': { s: secUzly, b: 'btn-uzly', f: window.generujMenuUzlu },
+            'test': { s: secTest, b: 'btn-test', f: typeof generujNahodnyTest !== 'undefined' ? generujNahodnyTest : null },
             'vysledky': { s: secVysledky, b: 'btn-vysledky' },
             'nastaveni-testu': { s: secNastaveniTestu, b: 'btn-nastaveni-testu' }
         };
