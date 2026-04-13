@@ -847,6 +847,7 @@ document.addEventListener('DOMContentLoaded', function () {
             nastavAktivniTlacitko(data.b);
             if (data.f) data.f();
         }
+        */
     });
-    */
+    
 });
