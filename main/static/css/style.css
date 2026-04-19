@@ -234,7 +234,7 @@ body {
 .submenu-item-button:hover {
     background-color: rgba(255, 255, 255, 0.1) !important;
     color: var(--bila); 
-    padding-left: 30px;
+    font-size: var(--size-text);
 }
 
 .kategorie-header {
