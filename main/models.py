@@ -12,7 +12,6 @@ class VysledekTestu(models.Model):
     sifra_odpoved_uzivatele = models.TextField(verbose_name="Odpověď uživatele", blank=True)
     sifra_spravne = models.BooleanField(default=False, verbose_name="Šifra správně?")
     
-    
     # Uzly
     uzel_nazev = models.CharField(max_length=100, verbose_name="Název uzlu")
     uzel_hotovo = models.BooleanField(default=False, verbose_name="Uzel uvázán")
