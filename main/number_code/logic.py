@@ -1,14 +1,20 @@
 def encrypt(message, current_dict):
     # message - jako text (msg)
     cipher = ""
+    last_was_space = False
     for letter in message:
         # letter - písmena
         if letter == ".":
             cipher = cipher[:-1] + ". "
+            last_was_space = False
         elif letter == " ":
-            cipher = cipher[:-1] + "; "
+            # Více mezer za sebou nepřidá další oddělovač slov.
+            if cipher and not last_was_space:
+                cipher = cipher[:-1] + "; "
+                last_was_space = True
         elif letter in current_dict:
             cipher += current_dict[letter] + ','
+            last_was_space = False
     return cipher
 
 
