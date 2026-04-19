@@ -220,6 +220,8 @@ body {
 }
 
 .submenu-item-button {
+    width: 100%;
+    margin: 0;
     padding: 6px 15px;
     background: transparent;
     border: none;
@@ -227,7 +229,6 @@ body {
     color: var(--bila);
     cursor: pointer;
     transition: 0.2s;
-    margin-left: 14px;
 }
 
 .submenu-item-button:hover {
