@@ -244,7 +244,7 @@ def ulozit_vysledek_testu(request):
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
 @login_required
-def generuj_zadani_api(request):
+def generuj_zadani(request):
     db_slova = list(TabulkaSlov.objects.values_list('text', flat=True))
 
     ZALOHA_SLOVA = ["LES", "STROM", "VODA", "UZEL"]

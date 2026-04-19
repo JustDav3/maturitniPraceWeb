@@ -423,7 +423,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (userFilter) {
         userFilter.addEventListener('change', function () {
             const selectedUser = this.value;
-            const table = document.getElementsByClassName('vysledky-tabulka')[0];
+            const table = document.getElementById('vysledky-tabulka');
             if (!table) {
                 console.error("Tabulka s ID 'vysledky-tabulka' nebyla nalezena!");
                 return;
@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const rows = table.querySelectorAll('tbody tr');
 
             rows.forEach((row, index) => {
-                const usernameCell = row.cells[1];
+                const usernameCell = row.cells[2];
                 if (usernameCell) {
                     const rowUsername = usernameCell.textContent.trim();
                     if (selectedUser === 'all' || rowUsername === selectedUser) {

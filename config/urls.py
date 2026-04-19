@@ -16,7 +16,7 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
     path('ulozit-test/', ulozit_vysledek_testu, name='api_ulozit_test'),
-    path('generuj-zadani/', generuj_zadani_api, name='api_generuj_zadani'),
+    path('generuj-zadani/', generuj_zadani, name='api_generuj_zadani'),
 
 
     path('<str:sekce>/', views.home, name='home_sekce'),
