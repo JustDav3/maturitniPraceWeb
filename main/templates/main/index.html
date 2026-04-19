@@ -23,8 +23,6 @@
         class="hidden-data">
     </div>
 
-    <div class="spacer-top"></div>
-
     <nav class="menu-bar">
         <h2 class="menu-title">Menu</h2>
         <div class="menu-items">
@@ -44,6 +42,9 @@
         <main class="panel">
             <div class="panel-content">
                 <section id="section-uvod">
+                    <div class="alert alert-{{ message.tags }}">
+                        <strong>⚠️</strong> {{ message }}
+                    </div>
                     <h2>Vítejte</h2>
                     <p>Vítej v aplikaci pro naučení uzlů a šifer která byla myšlena pro oddíl TK Rozrazil. Vytvoříl ji
                         David Dvořák na maturitní práci. Některé věci ti ještě nebudou fungovat, stále na tom pracuji.
@@ -54,9 +55,6 @@
                     {% if messages %}
                     <div class="messages-container">
                         {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}">
-                            <strong>⚠️</strong> {{ message }}
-                        </div>
                         {% endfor %}
                     </div>
                     {% endif %}

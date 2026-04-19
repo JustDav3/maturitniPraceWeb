@@ -221,6 +221,7 @@ body {
 
 .submenu-item-button {
     padding: 6px 15px;
+    border: 0;
     font-size: var(--size-maly-text);
     background: var(--hlavni-zelena);
     color: var(--bila);
@@ -342,6 +343,15 @@ textarea {
     resize: vertical;
     min-height: 200px;
     width: stretch;
+}
+
+.result-area {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--svetla-zelena);
 }
 
 /* 5. SPECIFICKÉ KOMPONENTY */
