@@ -466,8 +466,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 zadaniText.style.display = 'none';
                 zadaniTabulka.style.display = 'none';
 
-                if (data.zadani.includes(';')) {
-                    const radky = data.zadani.split(';');
+                if (data.zadani.includes('&')) {
+                    const radky = data.zadani.split('&');
                     let htmlObsah = '';
 
                     radky.forEach(radek => {

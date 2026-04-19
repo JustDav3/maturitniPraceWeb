@@ -306,7 +306,7 @@ def generuj_zadani(request):
                 radek_znaku += znak if znak and znak.strip() else "_"
             radky_text.append(radek_znaku)
         
-        zadani = ";".join(radky_text)
+        zadani = "&".join(radky_text)
         typ_display = f"Matice ({vybrany_typ.capitalize()})"
 
     return JsonResponse({
