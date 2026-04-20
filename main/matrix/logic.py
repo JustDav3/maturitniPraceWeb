@@ -4,10 +4,15 @@ import math
 def get_indices(n, typ, start_pozice, pocet_znaku):
     match typ:
         case "1" | "2":  # SPIRÁLA (1=ven, 2=dovnitř)
-            # Definice středů pro sudou matici (např. 10x10 pro tvých 90 písmen)
             if n % 2 != 0:
                 r, s = n // 2, n // 2
-                pohyby_zaklad = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+                pohyby_info = {
+                    "1": [(0, 1), (1, 0), (0, -1), (-1, 0)],
+                    "2": [(1, 0), (0, -1), (-1, 0), (0, 1)],
+                    "3": [(-1, 0), (0, 1), (1, 0), (0, -1)],
+                    "4": [(0, -1), (-1, 0), (0, 1), (1, 0)]
+                }
+                pohyby_zaklad = pohyby_info.get(start_pozice, pohyby_info["1"])
             else:
                 stredy_info = {
                     "1": {"pos": (n // 2 - 1, n // 2 - 1), "pohyby": [(0, 1), (1, 0), (0, -1), (-1, 0)]},
@@ -33,7 +38,6 @@ def get_indices(n, typ, start_pozice, pocet_znaku):
                 delka_kroku += 1
 
             if typ == "2":
-                # Šnek: Vezme jen počet znaků a otočí pořadí (končí v daném středu)
                 pouzite_pozice = path[:pocet_znaku]
                 return pouzite_pozice[::-1]
             return path

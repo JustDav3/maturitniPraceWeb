@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (val === 'had') setupSelect('Směr pohybu hada:', [{ val: 'shora', text: 'Shora dolů' }, { val: 'zdola', text: 'Zdola nahoru' }], savedSmerHad);
         }
 
-        [shiftBox, dCheck, dInp1, dInp2, dInp3].forEach(el => {
+        [shiftBox, dContainer, dCheck, dInp1, dInp2, dInp3].forEach(el => {
             if (el && el.style.display !== 'none') {
                 el.querySelectorAll('select, input').forEach(i => i.disabled = false);
             }
