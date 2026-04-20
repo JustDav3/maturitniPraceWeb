@@ -1,205 +1,512 @@
-/* --- 1. GLOBÁLNÍ NASTAVENÍ (Základní kameny) --- */
-body {
-    display: flex;
-    justify-content: center;
-    margin: 0;
-    padding: 40px 20px;
-    background-color: #080d07;
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* 1. GLOBÁLNÍ NASTAVENÍ */
+:root {
+    --hlavni-zelena: #093F1C;
+    --svetla-zelena: #016429;
+    --cerna: #030D05;
+    --bila: #F1EDD0;
+    --seda: #3C3D36;
+    --red: #64181A;
+    --green: #00DE00;
+    --hover: #b5e48c;
+    --table-header: #402915;
+    --table-data: #736055;
+
+
+    /* TYPY PÍSMA*/
+    --font: 'Comic Sans MS', cursive;
+    --font-mono: monospace;
+
+    /* VELIKOSTI PÍSMA */
+    --size-nadpis: clamp(1.6406rem, 1.4915rem + 0.5966vi, 1.9688rem);
+    --size-podnadpis: clamp(1.3125rem, 1.1932rem + 0.4773vi, 1.575rem);
+    --size-text: clamp(0.9844rem, 0.8949rem + 0.358vi, 1.1813rem);
+    --size-maly-text: clamp(0.7292rem, 0.6629rem + 0.2652vi, 0.875rem);
 }
 
-/* --- 2. LAYOUT STRÁNKY (Mřížka a panely) --- */
+body {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    padding-top: 80px;
+    color: var(--bila);
+    background: var(--bila);
+    background-attachment: fixed;
+    font-family: var(--font);
+}
+
+#section-sifry, #section-uzly, #section-test, #section-vysledky, #section-nastaveni-testu, #uzel-nazev {
+    display: none;
+}
+
+/* 2. LAYOUT STRÁNKY */
+.main-header {
+    width: 100%;
+    border-bottom: 2px solid var(--bila);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    z-index: 2000;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, var(--hlavni-zelena) 0%, var(--svetla-zelena) 100%);
+    gap: 15px;
+    width: 100%;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+.section-title {
+    border-bottom: 1px solid rgba(181, 228, 140, 0.2);
+    padding-bottom: 5px;
+}
+
+
+.web-logo {
+    height: 60px;
+    width: auto;
+    border-radius: 20px;
+}
+
+.web-title {
+    margin: 0;
+    font-size: var(--size-nadpis);
+    color: var(--bila);
+}
+
 .container {
     display: grid;
-    grid-template-columns: 250px 1fr 240px;
+    grid-template-columns: 1fr;
     gap: 20px;
     width: 100%;
-    max-width: 1200px;
+    padding: 20px 270px;
+    box-sizing: border-box;
 }
 
 .panel {
     position: relative;
+    width: 100%;
     min-height: 450px;
     padding: 25px 20px;
-    background: linear-gradient(180deg, #5b8a4d 0%, #2d4526 100%);
-    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+    background: linear-gradient(180deg, var(--hlavni-zelena) 0%, var(--svetla-zelena) 100%);
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
     border-radius: 4px;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
-/* Pomocné třídy pro rozvržení */
-.row { display: flex; gap: 10px; }
-.col { flex: 1; }
+.row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
 
-/* --- 3. KOMPONENTY FORMULÁŘE --- */
-.form-control, 
+.col {
+    flex: 1;
+}
+
+/* 3. BOČNÍ PANELY (MENU A LOGIN) */
+.menu-bar,
+.right-container {
+    position: fixed;
+    top: 95px;
+    width: 240px;
+    height: calc(100vh - 110px);
+    background: linear-gradient(180deg, var(--hlavni-zelena) 0%, var(--svetla-zelena) 100%);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5), 5px 5px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 20px 10px;
+    z-index: 1000;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.menu-bar {
+    left: 15px;
+}
+
+.right-container {
+    right: 15px;
+}
+
+.right-container-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.menu-title,
+.right-container-title {
+    text-align: center;
+    font-size: var(--size-text);
+    color: var(--bila);
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(181, 228, 140, 0.2);
+    text-transform: uppercase;
+}
+
+.right-container-title {
+    width: 100%;
+    margin: 0;
+}
+
+.menu-title {
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.menu-btn {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    color: var(--bila);
+    padding: 12px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font);
+    transition: all 0.2s ease;
+}
+
+.menu-btn:hover {
+    background: rgba(181, 228, 140, 0.2);
+}
+
+.menu-btn.active {
+    background-color: var(--svetla-zelena) !important;
+    font-weight: bold;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* 3.1 SUBMENU PRO UZLY */
+.submenu-container {
+    display: none;
+    background: rgba(0, 0, 0, 0.15);
+    margin-top: -15px;
+    padding: 5px 0;
+    border-left: 3px solid var(--bila);
+    width: 97%;
+    position: relative;
+    left: 3px;
+    box-sizing: border-box;
+}
+
+.submenu-category {
+    padding: 10px 15px;
+    color: var(--bila);
+    font-size: var(--size-maly-text);
+    font-weight: bold;
+    cursor: pointer;
+    border-bottom: 1px solid var(--hlavni-zelena);
+}
+
+.submenu-item-button {
+    width: 100%;
+    margin: 0;
+    padding: 6px 15px;
+    background: transparent;
+    border: none;
+    font-size: var(--size-maly-text);
+    color: var(--bila);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.submenu-item-button:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: var(--bila); 
+    font-size: var(--size-text);
+}
+
+.kategorie-header {
+    color: #b5e48c;
+    padding: 8px 5px;
+    margin: 2px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.3s;
+    font-size: 0.8em;
+}
+
+.seznam-uzlu-v-kategorii {
+    padding-left: 15px;
+    margin-bottom: 10px;
+}
+
+/* 4. FORMULÁŘE A ELEMENTY */
+#sifry-nazev,
+#uzly-nazev {
+    border-bottom: 1px solid var(--bila);
+    padding-bottom: 5px;
+}
+
+
+.form-control,
 .form-select {
     width: 100%;
-    max-width: 100%;
     padding: 10px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, 0.9);
-    color: #333;
-    border: none;
+    color: var(--cerna);
     border-radius: 2px;
-    resize: vertical;
+    font-family: var(--font);
+    font-size: var(--size-text);
+}
+
+.small-select {
+    width: 172px !important;
+    margin: 5px 0;
+    display: block;
 }
 
 .form-check {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 10px;
     cursor: pointer;
 }
 
-.form-check-input {
-    width: 18px;
-    height: 18px;
+.btn-submit,
+.btn-add-text,
+.btn-delete-text,
+.btn-delete-vysledky {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: var(--hlavni-zelena);
+    color: var(--bila);
+    border: 1px solid var(--svetla-zelena);
+    border-radius: 6px;
     cursor: pointer;
-}
-
-textarea {
-    margin-top: 5px;
-    max-width: 100%;
-}
-
-.small-select {
-    display: block;
-    width: 150px !important;
-    margin: 5px;
-}
-
-/* 4. TLAČÍTKA A CENTROVÁNÍ */
-.btn-container {
-    margin-top: 25px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-}
-
-.btn-submit {
-    padding: 12px 40px;
-    margin: 5px auto;
-    
-    color: white;
     font-weight: bold;
+    transition: 0.3s ease;
     text-decoration: none;
-    
-    background-color: #1a2a16;
-    border: 1px solid #4a6d3f;
-    cursor: pointer;
+}
+
+.btn-login {
+    display: table;
+    margin: 20px auto;
+    margin-top: 0;
+    padding: 12px 54px;
+    background-color: var(--hlavni-zelena);
+    color: var(--bila);
+    border: 1px solid var(--svetla-zelena);
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: var(--font);
+    font-weight: bold;
     transition: 0.3s ease;
 }
 
-.btn-submit:hover {
-    background-color: #2d4526;
+.btn-submit:hover,
+.btn-login:hover,
+.btn-delete-vysledky:hover,
+.btn-delete-text:hover {
+    background-color: var(--svetla-zelena);
 }
 
-.btn-uzel-text {
-    display: inline-block;
-    padding: 8px 15px;
-    margin: 5px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    cursor: pointer;
-    transition: all 0.3s ease;
+.btn-submit {
+    margin-top: 0;
 }
 
-.btn-uzel-text:hover {
-    background: #77a868;
-    color: #1a2a16;
-    font-weight: bold;
+#btn-odeslat-test {
+    margin-top: 15px;
 }
 
-/* --- 5. MENU A NAVIGACE --- */
-.menu-list {
-    padding: 0;
-    list-style: none;
-}
-
-.menu-list li {
-    padding: 12px 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+.form-control,
+.form-select,
+.add-text-input,
+.login-form input {
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    background: var(--bila);
+    color: var(--cerna);
+    border: none;
     border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s ease;
+    font-family: var(--font);
+    font-size: var(--size-text);
+    box-sizing: border-box;
 }
 
-.menu-list li:hover {
-    background: rgba(255, 255, 255, 0.15);
-}
-
-/* --- 6. VÝSLEDKY A MATICE --- */
-.result-text {
-    word-break: break-all;      /* Rozbije slovo na konci řádku kdekoli */
-    white-space: normal;       /* Povolí přirozené zalamování */
-    line-height: 1.6;          /* Zlepší čitelnost */
+textarea {
+    resize: vertical;
+    min-height: 200px;
+    width: stretch;
 }
 
 .result-area {
-    margin-top: 10px;
-    padding: 15px;
-    background: rgba(0, 0, 0, 0.3);
-    border-left: 4px solid #77a868;
-    border-radius: 4px;
-}
-
-.result-text-copy {
-    display: block;
-    margin-top: 5px;
-    padding: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    font-family: monospace;
-    word-break: break-all;
-}
-
-.result-prepis-box {
-    font-family: monospace;
+    margin-top: 20px;
+    margin-bottom: 30px;
     background: rgba(255, 255, 255, 0.05);
-    padding: 10px;
-    word-break: break-all;     /* Důležité: text se zalomí přesně podle šířky panelu */
-    white-space: pre-wrap;     /* Zachová mezery, ale zalomí dlouhé řádky */
-    border-radius: 4px;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--svetla-zelena);
 }
 
-.matrix-display {
-    margin-top: 10px;
-    text-align: center;
-    font-family: monospace;
+/* 5. SPECIFICKÉ KOMPONENTY */
+.uzel-title-accent {
+    color: #b5e48c;
+    border-bottom: 1px solid rgba(181, 228, 140, 0.3);
+    padding-bottom: 10px;
+    padding-right: 10px;
+    width: fit-content;
+    padding-left: 5px;
 }
 
-.matrix-cell {
-    display: inline-block;
-    width: 35px;
-    font-weight: bold;
-}
-
-small {
-    word-break: break-all;     /* Důležité: text se zalomí přesně podle šířky panelu */
-    white-space: pre-wrap;     /* Zachová mezery, ale zalomí dlouhé řádky */
-}
-/* Uzly videa a obrázky */
-.video-wrapper {
+.uzly-video-div {
     position: relative;
-    padding-bottom: 56.25%; /* Poměr 16:9 */
+    width: 80%;
+    margin: 20px auto;
+    padding-bottom: 45%;
     height: 0;
 }
-.video-wrapper iframe {
+
+.uzly-video-div iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 4px;
+    border-radius: 8px;
 }
 
-/* Obrázky v galerii */
-.uzel-img-step {
+.uzel-images-container {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.sifra-zadani {
+    font-size: var(--size-text);
+    letter-spacing: 5px;
+}
+
+.test-title {
+    margin-top: 0;
+}
+
+.test-uzel-highlight {
+    color: var(--bila);
+    font-weight: bold;
+}
+
+.test-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid var(--svetla-zelena);
+    margin-top: 20px;
+}
+
+
+
+/* 6. TABULKY A FILTRY */
+
+.vysledky-tabulka {
     width: 100%;
-    height: auto;
-    border-radius: 4px;
-    border: 1px solid rgba(255,255,255,0.1);
-    margin-bottom: 10px;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: var(--cerna);
+}
+
+.vysledky-tabulka th,
+.vysledky-tabulka td {
+    padding: 12px;
+}
+
+.vysledky-tabulka th {
+    background: var(--table-header);
+    color: var(--bila);
+    font-size: var(--size-text);
+    border: 1px solid var(--bila);
+}
+
+.vysledky-tabulka td {
+    background: var(--table-data);
+    color: var(--bila);
+    font-size: var(--size-maly-text);
+    border: 1px solid var(--bila);
+}
+
+.td-mono {
+    font-family: var(--font-mono);
+    font-size: var(--size-text);
+}
+
+.span-italic {
+    font-style: italic;
+    margin-right: 5px;
+}
+
+.status-ok {
+    color: var(--green);
+}
+
+.status-fail {
+    color: var(--red);
+}
+
+.admin-filter-box {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.filter-dropdown {
+    padding: 5px;
+    border-radius: 5px;
+}
+
+
+.add-text-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: var(--size-text);
+    color: var(--bila);
+}
+
+.add-text-container, .delete-text-container, .delete-vysledky-container {
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--svetla-zelena);
+}
+
+.btn-add-text-custom {
+    margin: 0;
+    height: 40px;
+}
+
+.add-text-input {
+    min-height: 50px;
+    resize: vertical;
+    width: stretch;
+}
+
+
+
+/* 7. POMOCNÉ TŘÍDY */
+.hidden-data {
+    display: none;
+}
+
+.js-section-hidden {
+    display: none;
 }
