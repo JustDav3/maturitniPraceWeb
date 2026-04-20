@@ -17,19 +17,15 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-hbg1=cl$@*jb0%d*j)fc#6cfv1_wvkw75k!x$onfhca)0v2-$m"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-# Povolení domény Renderu pro CSRF
 CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com', '*.cron-job.org']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 
 
 # Application definition
@@ -80,8 +76,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     'default': dj_database_url.config(
-        # Pokud DATABASE_URL na Renderu existuje, použije ji.
-        # Pokud ne (třeba u tebe v PC), použije se lokální sqlite.
         default='sqlite:///db.sqlite3',
         conn_max_age=600
     )
