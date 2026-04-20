@@ -226,6 +226,7 @@ body {
     background: transparent;
     border: none;
     font-size: var(--size-maly-text);
+    font-family: var(--font);
     color: var(--bila);
     cursor: pointer;
     transition: 0.2s;
@@ -296,6 +297,7 @@ body {
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
+    font-family: var(--font);
     transition: 0.3s ease;
     text-decoration: none;
 }
@@ -328,6 +330,7 @@ body {
 
 #btn-odeslat-test {
     margin-top: 15px;
+    font-family: var(--font);
 }
 
 .form-control,
