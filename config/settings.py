@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
+import sys
 from pathlib import Path
 import dj_database_url
 
@@ -74,13 +75,50 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',
-        conn_max_age=600
-    )
-}
+# Cesta k tvému SQLite souboru
+DATABASE_FILE = BASE_DIR / 'db.sqlite3'
 
+if not DATABASE_FILE.exists():
+    # Výpis varování do konzole při spuštění serveru
+    print("\n" + "="*50)
+    print("  POZOR: Databáze 'db.sqlite3' nebyla nalezena!")
+    print("  Aplikace běží v BEZDATABÁZOVÉM režimu (In-Memory).")
+    print("="*50 + "\n")
+    
+    # Záložní konfigurace v paměti RAM - aplikace nastartuje, ale data neukládá
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',
+        }
+    }
+
+    # Detekce, zda běží server (nechceme to spouštět při běžných příkazech)
+    if 'runserver' in sys.argv:
+        # Triky pro automatickou migraci v paměti před startem serveru
+        import django
+        django.setup()
+        from django.core.management import call_command
+        
+        # 1. Vytvoříme strukturu tabulek (výsledky, šifry, testy...)
+        call_command('migrate', interactive=False)
+        
+        # 2. Načteme výchozí data (vysvětlím níže)
+        try:
+            call_command('loaddata', 'vychozi_data.json')
+            print("[OK] Výchozí šifry a testy byly úspěšně načteny do paměti.\n")
+        except Exception as e:
+            print(f"[VAROVÁNÍ] Nepodařilo se načíst výchozí data: {e}\n")
+
+    
+else:
+    # Standardní načtení databáze, pokud soubor existuje
+        DATABASES = {
+        'default': dj_database_url.config(
+            default='sqlite:///db.sqlite3',
+            conn_max_age=600
+        )
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
