@@ -82,15 +82,8 @@ RENDER_DB_URL = os.environ.get('DATABASE_URL')
 DISABLE_DATABASE = False 
 
 if DISABLE_DATABASE or not RENDER_DB_URL:
-    # -------------------------------------------------------------
-    # BEZDATABÁZOVÝ REŽIM (Nouzový fallback)
-    # -------------------------------------------------------------
-    print("\n" + "="*60)
-    print("  VAROVÁNÍ: Produkční databáze na Renderu byla ODPOJENA!")
-    print("  Aplikace běží v BEZDATABÁZOVÉM režimu (In-Memory RAM).")
-    print("="*60 + "\n")
+    print("\nBěh v BEZDATABÁZOVÉM režimu (In-Memory RAM).")
     
-    # Django vyžaduje konfiguraci, podhodíme mu dočasnou paměť RAM
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -98,13 +91,17 @@ if DISABLE_DATABASE or not RENDER_DB_URL:
         }
     }
     
-    # Automaticky vytvoříme prázdné tabulky v paměti RAM, aby web nespadl na chybách
+    # Inicializace tabulek a dat
     import django
     django.setup()
     from django.core.management import call_command
     try:
+        # Vytvoří prázdné tabulky
         call_command('migrate', interactive=False)
-        print("[OK] Tabulky pro nouzový režim byly vytvořeny v paměti.")
+        
+        # TADY SE NAČTOU TVOJE VÝCHOZÍ DATA ZE SOUBORU
+        call_command('loaddata', 'vychozi_data.json')
+        print("[OK] Výchozí tabulky a data byly úspěšně nahrány do RAM.")
     except Exception as e:
         print(f"[CHYBA] Nepodařilo se inicializovat nouzovou DB: {e}")
 

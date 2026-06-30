@@ -1,0 +1,133 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$salt123456789$D70q7O4+qg54VzM/hE3nO1V0FjU8vWzLhX+K8pYQ2bA=",
+            "last_login": "2026-06-30T22:00:00Z",
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "Admin",
+            "last_name": "Rozrazil",
+            "email": "elektrobrn22@gmail.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2026-06-30T22:00:00Z"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$salt987654321$yZ8b9X7c6V5b4N3m2L1k0J9h8G7f6D5s4A3p2O1i0U9=",
+            "last_login": "2026-06-30T22:05:00Z",
+            "is_superuser": false,
+            "username": "Bob",
+            "first_name": "Bob",
+            "last_name": "Dítě",
+            "email": "bob@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2026-06-30T22:05:00Z"
+        }
+    },
+    {
+        "model": "main.tabulkaslov",
+        "pk": 1,
+        "fields": {
+            "text": "Nevím"
+        }
+    },
+    {
+        "model": "main.tabulkaslov",
+        "pk": 2,
+        "fields": {
+            "text": "Tábornický klub Rozrazil"
+        }
+    },
+    {
+        "model": "main.tabulkaslov",
+        "pk": 3,
+        "fields": {
+            "text": "Binární Šifra"
+        }
+    },
+    {
+        "model": "main.tabulkaslov",
+        "pk": 4,
+        "fields": {
+            "text": "Ambulák jako uzel"
+        }
+    },
+    {
+        "model": "main.tabulkaslov",
+        "pk": 5,
+        "fields": {
+            "text": "Táborak"
+        }
+    },
+    {
+        "model": "main.vysledektestu",
+        "pk": 1,
+        "fields": {
+            "uzivatel": 1,
+            "datum": "2026-06-30T22:15:00Z",
+            "sifra_zadani": "PDWXULWD",
+            "sifra_typ": "Caesarova šifra",
+            "sifra_spravne_zadani": "MATURITA",
+            "sifra_odpoved_uzivatele": "MATURITA",
+            "sifra_spravne": true,
+            "uzel_nazev": "Amborský uzel",
+            "uzel_hotovo": true,
+            "body_celkem": 2
+        }
+    },
+    {
+        "model": "main.vysledektestu",
+        "pk": 2,
+        "fields": {
+            "uzivatel": 1,
+            "datum": "2026-06-30T22:20:00Z",
+            "sifra_zadani": ".-. --- --.. .-. .- --.. .. .-..",
+            "sifra_typ": "Morseova abeceda",
+            "sifra_spravne_zadani": "ROZRAZIL",
+            "sifra_odpoved_uzivatele": "ROZMAZIL",
+            "sifra_spravne": false,
+            "uzel_nazev": "Lodní smyčka",
+            "uzel_hotovo": false,
+            "body_celkem": 0
+        }
+    },
+    {
+        "model": "main.vysledektestu",
+        "pk": 3,
+        "fields": {
+            "uzivatel": 2,
+            "datum": "2026-06-30T22:30:00Z",
+            "sifra_zadani": "FKDHVDU",
+            "sifra_typ": "Caesarova šifra",
+            "sifra_spravne_zadani": "CAESAR",
+            "sifra_odpoved_uzivatele": "CAESAR",
+            "sifra_spravne": true,
+            "uzel_nazev": "Plochá spojka",
+            "uzel_hotovo": true,
+            "body_celkem": 2
+        }
+    },
+    {
+        "model": "main.vysledektestu",
+        "pk": 4,
+        "fields": {
+            "uzivatel": 2,
+            "datum": "2026-06-30T22:35:00Z",
+            "sifra_zadani": "-.. .--- .- -. --. ---",
+            "sifra_typ": "Morseova abeceda",
+            "sifra_spravne_zadani": "Ambulák jako uzel",
+            "sifra_odpoved_uzivatele": "Amb",
+            "sifra_spravne": false,
+            "uzel_nazev": "Dračí smyčka",
+            "uzel_hotovo": false,
+            "body_celkem": 0
+        }
+    }
+]
