@@ -75,15 +75,22 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# Cesta k tvému SQLite souboru
-DATABASE_FILE = BASE_DIR / 'db.sqlite3'
-
 # Detekce prostředí Renderu
-IS_RENDER = 'RENDER' in os.environ
+RENDER_DB_URL = os.environ.get('DATABASE_URL')
 
-if IS_RENDER or not DATABASE_FILE.exists():
-    # Django NEMŮŽE běžet zcela bez DB. 
-    # Tento blok vytvoří dočasnou databázi v paměti RAM, takže web nespadne.
+# CHCEŠ DATABÁZI SCHVÁLNĚ VYPNUT? Můžeš změnit na True nebo smazat DATABASE_URL v Renderu
+DISABLE_DATABASE = False 
+
+if DISABLE_DATABASE or not RENDER_DB_URL:
+    # -------------------------------------------------------------
+    # BEZDATABÁZOVÝ REŽIM (Nouzový fallback)
+    # -------------------------------------------------------------
+    print("\n" + "="*60)
+    print("  VAROVÁNÍ: Produkční databáze na Renderu byla ODPOJENA!")
+    print("  Aplikace běží v BEZDATABÁZOVÉM režimu (In-Memory RAM).")
+    print("="*60 + "\n")
+    
+    # Django vyžaduje konfiguraci, podhodíme mu dočasnou paměť RAM
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -91,21 +98,25 @@ if IS_RENDER or not DATABASE_FILE.exists():
         }
     }
     
-    # Automatická migrace struktury tabulek v paměti RAM při startu
+    # Automaticky vytvoříme prázdné tabulky v paměti RAM, aby web nespadl na chybách
     import django
     django.setup()
     from django.core.management import call_command
     try:
         call_command('migrate', interactive=False)
+        print("[OK] Tabulky pro nouzový režim byly vytvořeny v paměti.")
     except Exception as e:
-        print(f"Chyba při automatické migraci: {e}")
+        print(f"[CHYBA] Nepodařilo se inicializovat nouzovou DB: {e}")
+
 else:
-    # Klasické lokální spuštění s reálným souborem db.sqlite3
+    # -------------------------------------------------------------
+    # STANDARDNÍ REŽIM (Propojení na Render PostgreSQL / MySQL)
+    # -------------------------------------------------------------
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': DATABASE_FILE,
-        }
+        'default': dj_database_url.config(
+            default=RENDER_DB_URL,
+            conn_max_age=600
+        )
     }
 
 # Password validation
