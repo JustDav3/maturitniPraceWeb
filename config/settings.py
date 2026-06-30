@@ -13,6 +13,8 @@ import os
 import sys
 from pathlib import Path
 import dj_database_url
+from django.db import connections
+from django.db.utils import OperationalError
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,46 +77,34 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# Detekce prostředí Renderu
-RENDER_DB_URL = os.environ.get('DATABASE_URL')
-
-# CHCEŠ DATABÁZI SCHVÁLNĚ VYPNUT? Můžeš změnit na True nebo smazat DATABASE_URL v Renderu
-DISABLE_DATABASE = False 
-
-if DISABLE_DATABASE or not RENDER_DB_URL:
-    print("\nBěh v BEZDATABÁZOVÉM režimu (In-Memory RAM).")
-    
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': ':memory:',
-        }
+# 1. Definujeme záložní SQLite databázi jako základní nastavení
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+}
+
+# 2. Pokud existuje proměnná pro PostgreSQL, pokusíme se ji aplikovat
+if os.environ.get('DATABASE_URL'):
+    prod_db = dj_database_url.config(conn_max_age=600, ssl_require=True)
     
-    # Inicializace tabulek a dat
-    import django
-    django.setup()
-    from django.core.management import call_command
+    # Dočasně přepíšeme konfiguraci na PostgreSQL
+    DATABASES['default'] = prod_db
+    
+    # 3. Kontrola, zda PostgreSQL opravdu funguje
     try:
-        # Vytvoří prázdné tabulky
-        call_command('migrate', interactive=False)
-        
-        # TADY SE NAČTOU TVOJE VÝCHOZÍ DATA ZE SOUBORU
-        call_command('loaddata', 'vychozi_data.json')
-        print("[OK] Výchozí tabulky a data byly úspěšně nahrány do RAM.")
-    except Exception as e:
-        print(f"[CHYBA] Nepodařilo se inicializovat nouzovou DB: {e}")
-
-else:
-    # -------------------------------------------------------------
-    # STANDARDNÍ REŽIM (Propojení na Render PostgreSQL / MySQL)
-    # -------------------------------------------------------------
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=RENDER_DB_URL,
-            conn_max_age=600
-        )
-    }
+        # Pokusíme se otestovat spojení s databází
+        db_conn = connections['default']
+        db_conn.cursor()
+    except (OperationalError, Exception):
+        # Pokud se spojení nezdaří (databáze je smazaná nebo má výpadek),
+        # vrátíme konfiguraci zpět na záložní SQLite
+        DATABASES['default'] = {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+        print("UPOZORNĚNÍ: PostgreSQL databáze je nedostupná. Aplikace se přepíná do nouzového režimu s SQLite.")
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
