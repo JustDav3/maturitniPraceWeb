@@ -78,46 +78,34 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Cesta k tvému SQLite souboru
 DATABASE_FILE = BASE_DIR / 'db.sqlite3'
 
-if not DATABASE_FILE.exists():
-    # Výpis varování do konzole při spuštění serveru
-    print("\n" + "="*50)
-    print("  POZOR: Databáze 'db.sqlite3' nebyla nalezena!")
-    print("  Aplikace běží v BEZDATABÁZOVÉM režimu (In-Memory).")
-    print("="*50 + "\n")
-    
-    # Záložní konfigurace v paměti RAM - aplikace nastartuje, ale data neukládá
+# Detekce prostředí Renderu
+IS_RENDER = 'RENDER' in os.environ
+
+if IS_RENDER or not DATABASE_FILE.exists():
+    # Django NEMŮŽE běžet zcela bez DB. 
+    # Tento blok vytvoří dočasnou databázi v paměti RAM, takže web nespadne.
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': ':memory:',
         }
     }
-
-    # Detekce, zda běží server (nechceme to spouštět při běžných příkazech)
-    if 'runserver' in sys.argv:
-        # Triky pro automatickou migraci v paměti před startem serveru
-        import django
-        django.setup()
-        from django.core.management import call_command
-        
-        # 1. Vytvoříme strukturu tabulek (výsledky, šifry, testy...)
-        call_command('migrate', interactive=False)
-        
-        # 2. Načteme výchozí data (vysvětlím níže)
-        try:
-            call_command('loaddata', 'vychozi_data.json')
-            print("[OK] Výchozí šifry a testy byly úspěšně načteny do paměti.\n")
-        except Exception as e:
-            print(f"[VAROVÁNÍ] Nepodařilo se načíst výchozí data: {e}\n")
-
     
+    # Automatická migrace struktury tabulek v paměti RAM při startu
+    import django
+    django.setup()
+    from django.core.management import call_command
+    try:
+        call_command('migrate', interactive=False)
+    except Exception as e:
+        print(f"Chyba při automatické migraci: {e}")
 else:
-    # Standardní načtení databáze, pokud soubor existuje
-        DATABASES = {
-        'default': dj_database_url.config(
-            default='sqlite:///db.sqlite3',
-            conn_max_age=600
-        )
+    # Klasické lokální spuštění s reálným souborem db.sqlite3
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': DATABASE_FILE,
+        }
     }
 
 # Password validation
