@@ -3,7 +3,7 @@
         "model": "auth.user",
         "pk": 1,
         "fields": {
-            "password": "pbkdf2_sha256$600000$salt123456789$D70q7O4+qg54VzM/hE3nO1V0FjU8vWzLhX+K8pYQ2bA=",
+            "password": "pbkdf2_sha256$1200000$I1DfrnXYAy2TFwdcUSzA5T$VTAMs//qYtYb5sXKUooNqSUqtArqhBAVNHuzVCdHPeY=",
             "last_login": "2026-06-30T22:00:00Z",
             "is_superuser": true,
             "username": "admin",
@@ -19,7 +19,7 @@
         "model": "auth.user",
         "pk": 2,
         "fields": {
-            "password": "pbkdf2_sha256$600000$salt987654321$yZ8b9X7c6V5b4N3m2L1k0J9h8G7f6D5s4A3p2O1i0U9=",
+            "password": "pbkdf2_sha256$1200000$QATM2YMk7zIb6Z2wyGfTxU$JDTtt+oKqGCTTOVeu3DRDuug8Dcj112xWolf2v6EJkI=",
             "last_login": "2026-06-30T22:05:00Z",
             "is_superuser": false,
             "username": "Bob",
