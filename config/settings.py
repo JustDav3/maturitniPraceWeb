@@ -23,11 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-hbg1=cl$@*jb0%d*j)fc#6cfv1_wvkw75k!x$onfhca)0v2-$m"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
+ALLOWED_HOSTS = [
+    'maturitniPraceWeb.onrender.com', 
+    '127.0.0.1', 
+    'localhost'
+]
 
 
 # Application definition
