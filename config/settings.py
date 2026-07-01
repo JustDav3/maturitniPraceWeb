@@ -10,11 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
-import sys
 from pathlib import Path
 import dj_database_url
+import psycopg2
 from django.db import connections
-from django.db.utils import OperationalError
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,34 +76,48 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# 1. Definujeme záložní SQLite databázi jako základní nastavení
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# 1. Načteme URL databáze z prostředí
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
-# 2. Pokud existuje proměnná pro PostgreSQL, pokusíme se ji aplikovat
-if os.environ.get('DATABASE_URL'):
-    prod_db = dj_database_url.config(conn_max_age=600, ssl_require=True)
+# 2. Výchozí stav: zkusíme nastavit PostgreSQL, pokud máme URL
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
     
-    # Dočasně přepíšeme konfiguraci na PostgreSQL
-    DATABASES['default'] = prod_db
-    
-    # 3. Kontrola, zda PostgreSQL opravdu funguje
+    # Rychlý test, jestli se k PostgreSQL vůbec dokážeme připojit
     try:
-        # Pokusíme se otestovat spojení s databází
-        db_conn = connections['default']
-        db_conn.cursor()
-    except (OperationalError, Exception):
-        # Pokud se spojení nezdaří (databáze je smazaná nebo má výpadek),
-        # vrátíme konfiguraci zpět na záložní SQLite
-        DATABASES['default'] = {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # Použijeme dsn z vygenerované konfigurace
+        conn_params = DATABASES['default']
+        psycopg2.connect(
+            dbname=conn_params['NAME'],
+            user=conn_params['USER'],
+            password=conn_params['PASSWORD'],
+            host=conn_params['HOST'],
+            port=conn_params['PORT'],
+            connect_timeout=3  # Timeout 3 vteřiny, ať build nevisí
+        ).close()
+        print("PostgreSQL databáze je online a připravena.")
+    except Exception:
+        print("UPOZORNĚNÍ: PostgreSQL databáze je nedostupná. Kompletní přepnutí na SQLite v paměti.")
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': ':memory:',
+            }
         }
-        print("UPOZORNĚNÍ: PostgreSQL databáze je nedostupná. Aplikace se přepíná do nouzového režimu s SQLite.")
+else:
+    # Pokud DATABASE_URL vůbec neexistuje
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
