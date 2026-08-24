@@ -3,7 +3,7 @@
 Tento repozitář obsahuje maturitní práci, jejímž cílem je digitalizace vzdělávacích materiálů a zjednodušení výuky skautských dovedností (uzlování a šifer) pro turistický oddíl **TK Rozrazil**.
 
 Aplikace byla původně navržena jako komplexní informační systém s databázovým pozadím, správou uživatelských rolí a ukládáním výsledků. Pro účely zjednodušení obhajoby a eliminace závislostí na externích databázových serverech byla aplikace upravena do **odlehčeného bezdatabázového režimu**.
-
+Web: https://maturitnipraceweb.onrender.com
 ---
 
 ## 🚀 Hlavní Funkce Aplikace
